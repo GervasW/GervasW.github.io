@@ -38,37 +38,6 @@
             padding: 0 16px;
         }
         
-        /* 顶部导航 */
-        .navbar {
-            position: sticky;
-            top: 0;
-            background: white;
-            padding: 12px 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--food-primary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            margin-right: 8px;
-            font-size: 20px;
-        }
-        
-        .nav-menu {
-            font-size: 20px;
-            color: var(--dark);
-        }
-        
         /* 个人资料区 */
         .profile {
             background: linear-gradient(135deg, var(--food-primary), #c0392b);
@@ -321,19 +290,6 @@
             color: var(--food-primary);
         }
         
-        .wechat-qr {
-            width: 180px;
-            height: 180px;
-            background: #f5f5f5;
-            margin: 15px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            color: #ccc;
-            font-size: 14px;
-        }
-        
         .wechat-id {
             background: #f5f5f5;
             padding: 12px;
@@ -343,6 +299,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 18px;
         }
         
         .copy-btn {
@@ -408,15 +365,6 @@
     </style>
 </head>
 <body>
-    <!-- 顶部导航 -->
-    <nav class="navbar">
-        <div class="logo">
-            <span class="logo-icon">📦</span>
-            包装采购
-        </div>
-        <div class="nav-menu">☰</div>
-    </nav>
-
     <!-- 个人资料区 -->
     <section class="profile">
         <div class="avatar">
@@ -434,7 +382,7 @@
         </div>
         <div class="contact-buttons">
             <a href="tel:18094719236" class="contact-btn">📞 电话联系</a>
-            <a href="#" id="eastseao" class="contact-btn eastseao">💬 添加微信</a>
+            <a href="#" id="wechat-btn" class="contact-btn wechat-btn">💬 添加微信</a>
         </div>
     </section>
 
@@ -535,14 +483,9 @@
         <div class="modal-content">
             <button class="close-modal">&times;</button>
             <h3>添加微信</h3>
-            <p>扫描下方二维码或手动添加微信号</p>
-            <div class="wechat-qr">
-                <!-- 这里可以替换为真实的微信二维码图片 -->
-                <!-- <img src="wechat-qr.jpg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;"> -->
-                <div>微信二维码图片</div>
-            </div>
+            <p>请复制以下微信号添加好友</p>
             <div class="wechat-id">
-                <span>微信号: 18094719236</span>
+                <span>EastSeaO</span>
             </div>
             <button class="copy-btn" id="copy-wechat">复制微信号</button>
         </div>
@@ -586,7 +529,7 @@
             
             // 复制微信号功能
             copyWechatBtn.addEventListener('click', function() {
-                const wechatId = '18094719236';
+                const wechatId = 'EastSeaO';
                 navigator.clipboard.writeText(wechatId).then(function() {
                     alert('微信号已复制到剪贴板: ' + wechatId);
                 }, function() {
@@ -605,11 +548,6 @@
             const contactBtn = document.querySelector('.contact-btn');
             contactBtn.addEventListener('click', function() {
                 alert('感谢您的联系！我会尽快回复您。');
-            });
-            
-            // 导航菜单点击
-            document.querySelector('.nav-menu').addEventListener('click', function() {
-                alert('导航菜单展开 - 更多选项');
             });
             
             // 技能项点击效果
