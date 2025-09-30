@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>食品包装采购 | 个人主页</title>
+    <title>王维 - 食品包装采购专家 | 个人主页</title>
     <style>
         /* 基础样式 */
         * {
@@ -99,15 +99,24 @@
             border-radius: 50%;
             border: 4px solid rgba(255, 255, 255, 0.3);
             margin: 0 auto 15px;
-            background-color: #fff;
+            background-color: #f5f5f5;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--food-primary);
-            font-size: 50px;
             position: relative;
             z-index: 2;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .avatar-placeholder {
+            font-size: 50px;
+            color: #aaa;
         }
         
         .status {
@@ -155,6 +164,14 @@
             z-index: 2;
         }
         
+        .contact-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        
         .contact-btn {
             display: inline-block;
             background: white;
@@ -164,8 +181,14 @@
             font-weight: bold;
             text-decoration: none;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 2;
+            flex: 1;
+            max-width: 140px;
+            text-align: center;
+        }
+        
+        .wechat-btn {
+            background: #07c160;
+            color: white;
         }
         
         /* 内容卡片 */
@@ -275,6 +298,80 @@
             font-size: 18px;
         }
         
+        /* 微信弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            max-width: 280px;
+            width: 90%;
+        }
+        
+        .modal h3 {
+            margin-bottom: 15px;
+            color: var(--food-primary);
+        }
+        
+        .wechat-qr {
+            width: 180px;
+            height: 180px;
+            background: #f5f5f5;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .wechat-id {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copy-btn {
+            background: var(--food-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+        }
+        
         /* 页脚 */
         .footer {
             background: var(--dark);
@@ -320,7 +417,7 @@
     <nav class="navbar">
         <div class="logo">
             <span class="logo-icon">📦</span>
-            包装采购
+            包装采购专家
         </div>
         <div class="nav-menu">☰</div>
     </nav>
@@ -328,100 +425,140 @@
     <!-- 个人资料区 -->
     <section class="profile">
         <div class="avatar">
-            👨‍💼
+            <!-- 替换为真人头像 -->
+            <!-- 方法1: 使用在线图片URL -->
+            <!-- <img src="https://cdn4.winhlb.com/2025/10/01/68dc2bd442859.jpg
+" alt="王维"> -->
+            
+            <!-- 方法2: 使用本地图片 -->
+            <!-- <img src="images/wangwei.jpg" alt="王维"> -->
+            
+            <!-- 默认占位符 -->
+            <div class="avatar-placeholder">👨‍💼</div>
         </div>
         <div class="status">
             <span class="status-dot"></span>
             在线可联系
         </div>
         <h1>王维</h1>
-        <p>食品行业包装采购 | 多年行业经验</p>
+        <p>北京同仁堂健康药业（青海）有限公司 | 包装采购专家</p>
         <div class="location">
-            📍 杭州 · 常驻办公地址
+            📍 常驻杭州办公 | 服务全国
         </div>
-        <a href="tel:18094719236" class="contact-btn">📞 立即联系</a>
+        <div class="contact-buttons">
+            <a href="tel:18094719236" class="contact-btn">📞 电话联系</a>
+            <a href="#" id="wechat-btn" class="contact-btn wechat-btn">💬 添加微信</a>
+        </div>
     </section>
 
     <div class="container">
         <!-- 个人简介 -->
         <section class="card">
             <h2 class="card-title">👤 个人简介</h2>
-            <p class="intro-text">拥有多年食品行业包装采购经验，专注于为食品企业提供全方位的包装解决方案。熟悉各类食品包装材料、工艺及成本控制，擅长优化采购流程，确保包装质量符合食品安全标准。</p>
+            <p class="intro-text">拥有多年食品行业包装采购经验，目前就职于北京同仁堂健康药业（青海）有限公司。专注于为食品及健康产品企业提供全方位的包装解决方案，熟悉各类食品包装材料、工艺及成本控制。</p>
             
             <ul class="skills-list">
                 <li>
                     <div class="skill-icon">📊</div>
                     <div class="skill-content">
-                        <div class="skill-title">成本优化</div>
-                        <div class="skill-desc">平均为食品企业节省15-20%包装成本</div>
+                        <div class="skill-title">成本优化专家</div>
+                        <div class="skill-desc">平均为企业节省15-20%包装采购成本</div>
                     </div>
                 </li>
                 <li>
                     <div class="skill-icon">🔍</div>
                     <div class="skill-content">
-                        <div class="skill-title">供应商管理</div>
-                        <div class="skill-desc">与50+优质包装供应商保持长期合作关系</div>
+                        <div class="skill-title">供应商资源丰富</div>
+                        <div class="skill-desc">与全国50+优质包装供应商保持长期合作</div>
                     </div>
                 </li>
                 <li>
                     <div class="skill-icon">📝</div>
                     <div class="skill-content">
-                        <div class="skill-title">质量管控</div>
+                        <div class="skill-title">质量管控严格</div>
                         <div class="skill-desc">严格执行食品包装安全标准与质检流程</div>
                     </div>
                 </li>
             </ul>
         </section>
 
-        <!-- 工作需求 -->
+        <!-- 个人擅长 -->
         <section class="card">
-            <h2 class="card-title">📋 包装工作需求</h2>
+            <h2 class="card-title">🎯 个人擅长</h2>
             
             <div class="demand-item">
-                <div class="demand-header">▶️ 食品包装材料采购</div>
+                <div class="demand-header">▶️ 包装材料专业知识</div>
                 <ul class="demand-list">
-                    <li>食品级塑料包装（PET, PP, PE等）</li>
-                    <li>纸质包装（卡纸、瓦楞纸、食品级纸板）</li>
-                    <li>金属包装（马口铁罐、铝箔包装）</li>
-                    <li>玻璃包装（食品瓶、罐）</li>
-                    <li>复合包装材料（铝塑复合、纸塑复合）</li>
+                    <li>精通卡纸、瓦楞纸等纸质包装材料特性与应用</li>
+                    <li>熟悉各类精装盒结构设计与生产工艺</li>
+                    <li>深入了解玻璃容器、塑料制品性能与成本</li>
+                    <li>掌握复合材料制品的最新发展趋势</li>
                 </ul>
             </div>
             
             <div class="demand-item">
-                <div class="demand-header">▶️ 包装设计与印刷</div>
+                <div class="demand-header">▶️ 采购流程优化</div>
                 <ul class="demand-list">
-                    <li>食品包装结构设计与优化</li>
-                    <li>包装平面设计与品牌一致性</li>
-                    <li>食品标签与说明印刷</li>
-                    <li>特殊印刷工艺（烫金、UV、击凸等）</li>
-                    <li>包装打样与样品确认</li>
+                    <li>制定科学的供应商评估与选择体系</li>
+                    <li>建立高效的采购流程与成本控制机制</li>
+                    <li>优化库存管理，降低资金占用</li>
+                    <li>危机处理与供应链风险管控</li>
                 </ul>
             </div>
             
             <div class="demand-item">
-                <div class="demand-header">▶️ 包装功能需求</div>
+                <div class="demand-header">▶️ 行业资源整合</div>
                 <ul class="demand-list">
-                    <li>保鲜与延长食品保质期</li>
-                    <li>防潮、防氧化、避光性能</li>
-                    <li>便于运输与仓储的包装方案</li>
-                    <li>易于开启与重复封口设计</li>
-                    <li>环保与可持续包装解决方案</li>
+                    <li>广泛的包装行业人脉与资源网络</li>
+                    <li>深入了解各地区包装产业特点与优势</li>
+                    <li>定期参加行业展会，掌握最新趋势</li>
+                    <li>与设计公司、印刷厂等产业链企业紧密合作</li>
                 </ul>
             </div>
         </section>
 
-        <!-- 服务优势 -->
+        <!-- 工作需求 -->
         <section class="card">
-            <h2 class="card-title">🚀 我的服务优势</h2>
-            <ul class="demand-list">
-                <li>深度了解食品行业包装法规与标准</li>
-                <li>丰富的包装供应商资源，确保稳定供应</li>
-                <li>专业的成本分析能力，优化采购预算</li>
-                <li>严格的质量控制流程，保障食品安全</li>
-                <li>快速的响应与问题解决能力</li>
-            </ul>
+            <h2 class="card-title">📋 主要采购品类</h2>
+            
+            <div class="demand-item">
+                <div class="demand-header">▶️ 食品包装材料</div>
+                <ul class="demand-list">
+                    <li>食品级塑料包装（PET, PP, PE等）</li>
+                    <li>纸质包装（卡纸、瓦楞纸、食品级纸板）</li>
+                    <li>玻璃容器（食品瓶、罐）</li>
+                    <li>复合材料制品（铝塑复合、纸塑复合）</li>
+                </ul>
+            </div>
+            
+            <div class="demand-item">
+                <div class="demand-header">▶️ 包装制品</div>
+                <ul class="demand-list">
+                    <li>各类精装盒、礼品盒</li>
+                    <li>食品标签与说明书</li>
+                    <li>运输包装与外箱</li>
+                    <li>保鲜包装与功能性包装</li>
+                </ul>
+            </div>
         </section>
+    </div>
+
+    <!-- 微信弹窗 -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3>添加微信</h3>
+            <p>扫描下方二维码或手动添加微信号</p>
+            <div class="wechat-qr">
+                <!-- 这里可以替换为真实的微信二维码图片 -->
+                <!-- <img src="wechat-qr.jpg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;"> -->
+                <div>微信二维码图片</div>
+            </div>
+            <div class="wechat-id">
+                <span>微信号: 18094719236</span>
+            </div>
+            <button class="copy-btn" id="copy-wechat">复制微信号</button>
+        </div>
     </div>
 
     <!-- 页脚 -->
@@ -431,13 +568,53 @@
             <div class="contact-icon">📱</div>
             <div class="contact-icon">🌐</div>
         </div>
-        <div class="copyright">© 2025 王维 - 食品包装采购 | 保留所有权利</div>
+        <div class="copyright">© 2025 王维 - 北京同仁堂健康药业（青海）有限公司 | 保留所有权利</div>
     </footer>
 
     <script>
-        // 简单的交互效果
+        // 微信弹窗功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 联系按钮点击效果
+            const wechatBtn = document.getElementById('wechat-btn');
+            const wechatModal = document.getElementById('wechat-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const copyWechatBtn = document.getElementById('copy-wechat');
+            
+            // 打开微信弹窗
+            wechatBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                wechatModal.style.display = 'flex';
+            });
+            
+            // 关闭微信弹窗
+            closeModal.addEventListener('click', function() {
+                wechatModal.style.display = 'none';
+            });
+            
+            // 点击模态框外部关闭
+            wechatModal.addEventListener('click', function(e) {
+                if (e.target === wechatModal) {
+                    wechatModal.style.display = 'none';
+                }
+            });
+            
+            // 复制微信号功能
+            copyWechatBtn.addEventListener('click', function() {
+                const wechatId = '18094719236';
+                navigator.clipboard.writeText(wechatId).then(function() {
+                    alert('微信号已复制到剪贴板: ' + wechatId);
+                }, function() {
+                    // 备用方法
+                    const textArea = document.createElement('textarea');
+                    textArea.value = wechatId;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('微信号已复制到剪贴板: ' + wechatId);
+                });
+            });
+            
+            // 电话按钮点击效果
             const contactBtn = document.querySelector('.contact-btn');
             contactBtn.addEventListener('click', function() {
                 alert('感谢您的联系！我会尽快回复您。');
