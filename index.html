@@ -262,6 +262,44 @@
             font-size: 18px;
         }
         
+        /* 采购目标 */
+        .goals-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .goals-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        
+        .goals-logo img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .goals-list {
+            flex: 1;
+        }
+        
+        .goal-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--food-primary);
+        }
+        
+        .goal-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--food-primary);
+        }
+        
         /* 微信弹窗 */
         .modal {
             display: none;
@@ -361,6 +399,19 @@
                 max-width: 600px;
                 margin: 0 auto;
             }
+            
+            .goals-container {
+                flex-direction: row;
+            }
+            
+            .goals-logo {
+                flex: 0 0 200px;
+                justify-content: flex-start;
+            }
+            
+            .goals-list {
+                flex: 1;
+            }
         }
     </style>
 </head>
@@ -457,6 +508,26 @@
             <h2 class="card-title">📋 主要采购品类</h2>
             
             <div class="demand-item">
+                <div class="demand-header">▶️ 包装制品</div>
+                <ul class="demand-list">
+                    <li>各类精装盒、礼品盒</li>
+                    <li>食品标签与说明书</li>
+                    <li>运输包装与外箱</li>
+                    <li>保鲜包装与功能性包装</li>
+                </ul>
+            </div>
+            
+            <div class="demand-item">
+                <div class="demand-header">▶️ 内包装品类</div>
+                <ul class="demand-list">
+                    <li>食品直接接触内包装材料</li>
+                    <li>真空包装袋与复合膜</li>
+                    <li>吸塑包装与泡罩包装</li>
+                    <li>食品级塑料托盘与内衬</li>
+                </ul>
+            </div>
+            
+            <div class="demand-item">
                 <div class="demand-header">▶️ 食品包装材料</div>
                 <ul class="demand-list">
                     <li>食品级塑料包装（PET, PP, PE等）</li>
@@ -465,15 +536,29 @@
                     <li>复合材料制品（铝塑复合、纸塑复合）</li>
                 </ul>
             </div>
-            
-            <div class="demand-item">
-                <div class="demand-header">▶️ 包装制品</div>
-                <ul class="demand-list">
-                    <li>各类精装盒、礼品盒</li>
-                    <li>食品标签与说明书</li>
-                    <li>运输包装与外箱</li>
-                    <li>保鲜包装与功能性包装</li>
-                </ul>
+        </section>
+        
+        <!-- 采购岗位目标 -->
+        <section class="card">
+            <h2 class="card-title">🎯 采购岗位三大目标</h2>
+            <div class="goals-container">
+                <div class="goals-logo">
+                    <img src="https://cdn4.winhlb.com/2025/10/01/68dc359deeea1.jpg" alt="采购目标">
+                </div>
+                <div class="goals-list">
+                    <div class="goal-item">
+                        <div class="goal-title">质量保证</div>
+                        <div>确保所有包装材料符合食品安全标准，保障产品质量与消费者安全</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-title">成本控制</div>
+                        <div>优化采购成本，实现企业采购预算目标，提升整体利润率</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-title">供应链稳定</div>
+                        <div>建立稳定的供应商体系，确保生产连续性，降低供应链风险</div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
