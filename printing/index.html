@@ -15,26 +15,27 @@
         body {
             display: flex;
             min-height: 100vh;
-            background-color: #f5f7fa;
+            background-color: #fff;
             color: #333;
         }
         
         /* 左侧导航栏样式 */
         .sidebar {
             width: 280px;
-            background-color: #2c3e50;
-            color: white;
+            background-color: #fff;
+            color: #333;
             padding: 20px 0;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid #f0f0f0;
         }
         
         .logo {
             text-align: center;
             padding: 20px 0;
-            border-bottom: 1px solid #34495e;
+            border-bottom: 1px solid #f0f0f0;
             margin-bottom: 20px;
         }
         
@@ -46,23 +47,23 @@
         
         .nav-item {
             padding: 15px 25px;
-            border-bottom: 1px solid #34495e;
+            border-bottom: 1px solid #f0f0f0;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .nav-item:hover {
-            background-color: #34495e;
+            background-color: #fff5e6; /* 浅橙色背景 */
             padding-left: 30px;
         }
         
         .nav-item.active {
-            background-color: #e67e22; /* 橙色激活状态 */
-            border-left: 4px solid #d35400;
+            background-color: #fff5e6; /* 浅橙色激活状态 */
+            border-left: 4px solid #e67e22;
         }
         
         .nav-item a {
-            color: white;
+            color: #333;
             text-decoration: none;
             display: block;
             font-size: 16px;
@@ -73,7 +74,7 @@
             flex: 1;
             margin-left: 280px;
             padding: 30px;
-            background-color: white;
+            background-color: #fff;
             min-height: 100vh;
         }
         
@@ -88,19 +89,19 @@
         
         .section-title {
             font-size: 28px;
-            color: #2c3e50;
+            color: #e67e22; /* 橙色标题 */
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #e67e22; /* 橙色边框 */
+            border-bottom: 2px solid #e67e22;
         }
         
         .subsection {
             margin-bottom: 30px;
-            background-color: #f8f9fa;
+            background-color: #fef9f3; /* 浅橙色背景 */
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #e67e22; /* 橙色侧边 */
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(230, 126, 34, 0.1);
+            border-left: 4px solid #e67e22;
         }
         
         .subsection h3 {
@@ -118,6 +119,7 @@
             margin-bottom: 10px;
             position: relative;
             padding-left: 20px;
+            line-height: 1.6;
         }
         
         .subsection li:before {
@@ -126,51 +128,7 @@
             position: absolute;
             left: 0;
             font-weight: bold;
-        }
-        
-        /* 下单流程样式 */
-        .process-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .process-step {
-            background-color: #fff9f2; /* 浅橙色背景 */
-            border: 1px solid #fad7b0;
-            border-radius: 8px;
-            padding: 20px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .process-step:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.1);
-        }
-        
-        .step-number {
-            display: inline-block;
-            background-color: #e67e22;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        
-        .step-title {
             font-size: 18px;
-            color: #e67e22;
-            margin-bottom: 10px;
-        }
-        
-        .step-content {
-            color: #555;
-            line-height: 1.6;
         }
         
         @keyframes fadeIn {
@@ -204,9 +162,6 @@
         </div>
         <div class="nav-item active">
             <a href="#home">回到首页</a>
-        </div>
-        <div class="nav-item">
-            <a href="#section9">下单流程</a>
         </div>
         <div class="nav-item">
             <a href="#section1">印刷基础知识</a>
@@ -251,69 +206,8 @@
                     <li>理论与实践相结合，包含大量实战案例</li>
                     <li>重点突出包装采购工作中的关键知识点</li>
                     <li>提供成本核算与采购技巧等实用内容</li>
-                    <li>完整的产品下单流程指导</li>
+                    <li>完整的印刷工艺流程指导</li>
                 </ul>
-            </div>
-        </div>
-
-        <!-- 下单流程页面 -->
-        <div id="section9" class="section">
-            <h2 class="section-title">下单流程</h2>
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">1</span>产品立项</div>
-                    <div class="step-content">
-                        确定产品需求，明确包装目标，包括预算、时间节点、质量标准等关键要素。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">2</span>产品设计</div>
-                    <div class="step-content">
-                        与设计团队沟通，确定包装结构、外观设计和品牌元素，创建初步设计稿。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">3</span>产品上会</div>
-                    <div class="step-content">
-                        将设计方案提交给相关部门评审，收集反馈意见，进行必要修改。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">4</span>产品备案</div>
-                    <div class="step-content">
-                        完成内部审批流程，将最终设计方案归档，准备进入生产阶段。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">5</span>产品打样</div>
-                    <div class="step-content">
-                        向供应商提供设计文件，要求制作样品，用于确认材质、工艺和最终效果。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">6</span>产品下单</div>
-                    <div class="step-content">
-                        样品确认后，向供应商下达正式生产订单，明确数量、交期和质量要求。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">7</span>监督生产</div>
-                    <div class="step-content">
-                        定期跟进生产进度，必要时进行中期检查，确保生产按计划进行。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">8</span>发货到厂验收</div>
-                    <div class="step-content">
-                        产品生产完成后，安排物流运输，到货后进行质量检验和数量核对。
-                    </div>
-                </div>
-                <div class="process-step">
-                    <div class="step-title"><span class="step-number">9</span>开票和结算</div>
-                    <div class="step-content">
-                        验收合格后，处理发票事宜，按照合同约定完成付款结算。
-                    </div>
-                </div>
             </div>
         </div>
 
