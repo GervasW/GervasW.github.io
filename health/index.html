@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>横版视频旋转播放器</title>
+    <title>同仁堂健康青海基地</title>
     <style>
         * {
             margin: 0;
@@ -19,6 +19,7 @@
             height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            padding: 20px;
         }
         
         .video-wrapper {
@@ -35,12 +36,13 @@
             width: 80vh;  /* 使用视口高度作为宽度 */
             height: 45vh; /* 保持16:9的横版比例 */
             max-width: 90vh;
-            transform: rotate(90deg);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
             background: #000;
+            border-radius: 10px;
+            overflow: hidden;
         }
         
         video {
@@ -75,19 +77,23 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
             padding: 15px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
-            transform: rotate(-90deg); /* 控制栏反方向旋转，使其保持正常方向 */
-            transform-origin: center;
+            z-index: 5;
         }
         
         .video-container:hover .controls {
             opacity: 1;
+        }
+        
+        .left-controls, .right-controls {
+            display: flex;
+            align-items: center;
         }
         
         .control-btn {
@@ -97,7 +103,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin: 0 8px;
+            margin: 0 5px;
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -111,6 +117,32 @@
             transform: scale(1.1);
         }
         
+        .progress-container {
+            flex-grow: 1;
+            margin: 0 15px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #e74c3c;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        
+        .time-display {
+            color: white;
+            font-size: 14px;
+            margin: 0 10px;
+            min-width: 100px;
+            text-align: center;
+        }
+        
         /* 提示信息 */
         .hint {
             position: absolute;
@@ -121,6 +153,7 @@
             font-size: 14px;
             text-align: center;
             width: 100%;
+            z-index: 5;
         }
         
         /* 旋转提示 */
@@ -152,26 +185,52 @@
             .rotation-hint, .hint {
                 font-size: 14px;
             }
+            
+            .time-display {
+                font-size: 12px;
+                min-width: 80px;
+            }
+        }
+        
+        /* 全屏样式 */
+        .video-wrapper.fullscreen {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+        }
+        
+        .video-wrapper.fullscreen .video-container {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            border-radius: 0;
         }
     </style>
 </head>
 <body>
     <div class="video-wrapper">
-        <div class="rotation-hint">横版视频已旋转90度</div>
+        <div class="rotation-hint">横版视频播放器</div>
         <div class="video-container">
             <div class="loader"></div>
-            <video id="myVideo" controls>
+            <video id="myVideo">
                 <source src="https://www.tongrentang.com/file/upload/jkqinghai.mp4" type="video/mp4">
                 您的浏览器不支持 HTML5 视频播放。
             </video>
             <div class="controls">
-                <button class="control-btn" id="playPauseBtn">▶️</button>
-                <button class="control-btn" id="muteBtn">🔊</button>
-                <button class="control-btn" id="fullscreenBtn">⛶</button>
-                <button class="control-btn" id="rotateBtn">↻</button>
+                <div class="left-controls">
+                    <button class="control-btn" id="playPauseBtn">▶️</button>
+                    <button class="control-btn" id="muteBtn">🔊</button>
+                    <div class="time-display" id="timeDisplay">00:00 / 00:00</div>
+                </div>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="right-controls">
+                    <button class="control-btn" id="fullscreenBtn">⛶</button>
+                </div>
             </div>
         </div>
-        <div class="hint">提示：您可以使用旋转按钮将视频恢复原方向</div>
+        <div class="hint">柴达木的明珠 德令哈市</div>
     </div>
 
     <script>
@@ -180,17 +239,18 @@
             const playPauseBtn = document.getElementById('playPauseBtn');
             const muteBtn = document.getElementById('muteBtn');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
-            const rotateBtn = document.getElementById('rotateBtn');
+            const progressBar = document.getElementById('progressBar');
+            const progressContainer = document.getElementById('progressContainer');
+            const timeDisplay = document.getElementById('timeDisplay');
             const loader = document.querySelector('.loader');
-            const videoContainer = document.querySelector('.video-container');
+            const videoWrapper = document.querySelector('.video-wrapper');
             const rotationHint = document.querySelector('.rotation-hint');
             const hint = document.querySelector('.hint');
-            
-            let isRotated = true;
             
             // 隐藏加载动画
             video.addEventListener('loadeddata', function() {
                 loader.style.display = 'none';
+                updateTimeDisplay();
             });
             
             // 播放/暂停按钮
@@ -218,30 +278,46 @@
             // 全屏按钮
             fullscreenBtn.addEventListener('click', function() {
                 if (!document.fullscreenElement) {
-                    document.querySelector('.video-wrapper').requestFullscreen().catch(err => {
+                    videoWrapper.requestFullscreen().catch(err => {
                         console.log(`全屏请求错误: ${err.message}`);
                     });
+                    videoWrapper.classList.add('fullscreen');
+                    fullscreenBtn.innerHTML = '⛶';
                 } else {
                     if (document.exitFullscreen) {
                         document.exitFullscreen();
+                        videoWrapper.classList.remove('fullscreen');
                     }
                 }
             });
             
-            // 旋转按钮
-            rotateBtn.addEventListener('click', function() {
-                if (isRotated) {
-                    videoContainer.style.transform = 'rotate(0deg)';
-                    rotationHint.textContent = '视频已恢复原始方向';
-                    hint.textContent = '提示：您可以使用旋转按钮将视频旋转90度';
-                    isRotated = false;
-                } else {
-                    videoContainer.style.transform = 'rotate(90deg)';
-                    rotationHint.textContent = '横版视频已旋转90度';
-                    hint.textContent = '提示：您可以使用旋转按钮将视频恢复原方向';
-                    isRotated = true;
-                }
+            // 进度条更新
+            video.addEventListener('timeupdate', function() {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                updateTimeDisplay();
             });
+            
+            // 点击进度条跳转
+            progressContainer.addEventListener('click', function(e) {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                video.currentTime = percent * video.duration;
+            });
+            
+            // 更新时间显示
+            function updateTimeDisplay() {
+                const currentTime = formatTime(video.currentTime);
+                const duration = formatTime(video.duration);
+                timeDisplay.textContent = `${currentTime} / ${duration}`;
+            }
+            
+            // 格式化时间
+            function formatTime(seconds) {
+                const min = Math.floor(seconds / 60);
+                const sec = Math.floor(seconds % 60);
+                return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            }
             
             // 视频播放状态变化时更新按钮
             video.addEventListener('play', function() {
@@ -254,11 +330,16 @@
             
             // 全屏状态变化
             document.addEventListener('fullscreenchange', function() {
-                if (document.fullscreenElement) {
-                    fullscreenBtn.innerHTML = '⛶';
-                } else {
+                if (!document.fullscreenElement) {
+                    videoWrapper.classList.remove('fullscreen');
                     fullscreenBtn.innerHTML = '⛶';
                 }
+            });
+            
+            // 视频加载错误处理
+            video.addEventListener('error', function() {
+                loader.style.display = 'none';
+                alert('视频加载失败，请检查视频链接或网络连接');
             });
         });
     </script>
