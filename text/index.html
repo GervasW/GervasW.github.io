@@ -393,6 +393,113 @@
             font-weight: bold;
         }
         
+        /* 工作目标和个人优势样式 */
+        .goals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .goal-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 18px;
+            padding: 25px 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+            text-align: center;
+        }
+        
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--food-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+        
+        .goal-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.15);
+        }
+        
+        .goal-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--food-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--food-primary);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.2);
+        }
+        
+        .goal-card:hover .goal-icon {
+            transform: scale(1.1) rotate(8deg);
+            background: var(--food-gradient);
+            color: white;
+        }
+        
+        .goal-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .goal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--food-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .goal-title::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--food-secondary);
+            margin-right: 10px;
+        }
+        
+        .goal-desc {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .goal-highlight {
+            display: inline-block;
+            background: var(--food-light);
+            color: var(--food-primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
+        }
+        
         /* 下单流程样式 */
         .process-flow {
             margin-top: 30px;
@@ -918,6 +1025,10 @@
                 max-width: 250px;
             }
             
+            .goals-container {
+                grid-template-columns: 1fr;
+            }
+            
             .process-steps {
                 flex-direction: column;
             }
@@ -1048,18 +1159,71 @@
             
             <div class="intro-text">
                 <p>拥有多年食品行业包装采购经验，目前就职于北京同仁堂健康药业（青海）有限公司。专注于为食品及健康产品企业提供全方位的包装解决方案，熟悉各类食品包装材料、工艺及成本控制。</p>
-                
-                <div style="margin-top: 20px; text-align: center;">
-                    <p style="font-size: 16px; color: var(--secondary); margin-bottom: 15px;">
-                        了解更多关于我的信息：
-                    </p>
-                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <a href="#personal-goals" style="display: inline-flex; align-items: center; gap: 8px; background: var(--food-light); color: var(--food-primary); padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: var(--transition);">
-                            <i class="fas fa-bullseye"></i> 个人目标
-                        </a>
-                        <a href="#personal-skills" style="display: inline-flex; align-items: center; gap: 8px; background: var(--food-light); color: var(--food-primary); padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: var(--transition);">
-                            <i class="fas fa-star"></i> 个人擅长
-                        </a>
+            </div>
+            
+            <!-- 工作目标 -->
+            <div class="demand-item">
+                <div class="demand-header">▶️ 工作目标</div>
+                <div class="demand-list">
+                    <div class="goals-container">
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="goal-content">
+                                <h3 class="goal-title">质量保证</h3>
+                                <p class="goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。</p>
+                                <div class="goal-highlight">100%符合食品安全标准</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="goal-content">
+                                <h3 class="goal-title">成本控制</h3>
+                                <p class="goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。</p>
+                                <div class="goal-highlight">15-20%成本优化目标</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-card">
+                            <div class="goal-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="goal-content">
+                                <h3 class="goal-title">供应链稳定</h3>
+                                <p class="goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。</p>
+                                <div class="goal-highlight">99.5%供应链稳定性</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 个人优势 -->
+            <div class="demand-item">
+                <div class="demand-header">▶️ 个人优势</div>
+                <div class="demand-list">
+                    <div class="demand-item">
+                        <div class="demand-header">包装材料专业知识</div>
+                        <ul class="demand-list">
+                            <li>精通卡纸、瓦楞纸等纸质包装材料特性与应用</li>
+                            <li>熟悉各类精装盒结构设计与生产工艺</li>
+                            <li>深入了解玻璃容器、塑料制品性能与成本</li>
+                            <li>掌握复合材料制品的最新发展趋势</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="demand-item">
+                        <div class="demand-header">行业资源整合</div>
+                        <ul class="demand-list">
+                            <li>广泛的包装行业人脉与资源网络</li>
+                            <li>深入了解各地区包装产业特点与优势</li>
+                            <li>定期参加行业展会，掌握最新趋势</li>
+                            <li>与设计公司、印刷厂等产业链企业紧密合作</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1100,53 +1264,57 @@
             </div>
             
             <!-- 下单流程 -->
-            <div class="process-flow">
-                <h3 class="process-title">下单流程</h3>
-                <div class="process-steps">
-                    <div class="process-step">
-                        <div class="step-number">1</div>
-                        <h4 class="step-title">产品立项</h4>
-                        <p class="step-desc">明确产品需求与规格，确定包装方案初步构想</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">2</div>
-                        <h4 class="step-title">产品设计</h4>
-                        <p class="step-desc">设计包装外观与结构，完成包装设计方案</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">3</div>
-                        <h4 class="step-title">产品上会</h4>
-                        <p class="step-desc">提交设计方案审批，获得内部审批通过</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">4</div>
-                        <h4 class="step-title">产品备案</h4>
-                        <p class="step-desc">完成产品备案手续，确保合规性</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">5</div>
-                        <h4 class="step-title">产品打样</h4>
-                        <p class="step-desc">制作样品，确认包装效果与质量</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">6</div>
-                        <h4 class="step-title">产品下单</h4>
-                        <p class="step-desc">确认样品后正式下单，安排生产计划</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">7</div>
-                        <h4 class="step-title">监督生产</h4>
-                        <p class="step-desc">全程跟踪生产过程，确保质量与进度</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">8</div>
-                        <h4 class="step-title">发货到厂验收</h4>
-                        <p class="step-desc">产品发货到厂，进行质量验收</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">9</div>
-                        <h4 class="step-title">开票和结算</h4>
-                        <p class="step-desc">完成发票开具与结算流程</p>
+            <div class="demand-item">
+                <div class="demand-header">▶️ 下单流程</div>
+                <div class="demand-list">
+                    <div class="process-flow">
+                        <div class="process-steps">
+                            <div class="process-step">
+                                <div class="step-number">1</div>
+                                <h4 class="step-title">产品立项</h4>
+                                <p class="step-desc">明确产品需求与规格，确定包装方案初步构想</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">2</div>
+                                <h4 class="step-title">产品设计</h4>
+                                <p class="step-desc">设计包装外观与结构，完成包装设计方案</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">3</div>
+                                <h4 class="step-title">产品上会</h4>
+                                <p class="step-desc">提交设计方案审批，获得内部审批通过</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">4</div>
+                                <h4 class="step-title">产品备案</h4>
+                                <p class="step-desc">完成产品备案手续，确保合规性</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">5</div>
+                                <h4 class="step-title">产品打样</h4>
+                                <p class="step-desc">制作样品，确认包装效果与质量</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">6</div>
+                                <h4 class="step-title">产品下单</h4>
+                                <p class="step-desc">确认样品后正式下单，安排生产计划</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">7</div>
+                                <h4 class="step-title">监督生产</h4>
+                                <p class="step-desc">全程跟踪生产过程，确保质量与进度</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">8</div>
+                                <h4 class="step-title">发货到厂验收</h4>
+                                <p class="step-desc">产品发货到厂，进行质量验收</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">9</div>
+                                <h4 class="step-title">开票和结算</h4>
+                                <p class="step-desc">完成发票开具与结算流程</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
