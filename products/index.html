@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公司产品渠道</title>
+    <title>同仁堂健康 - 产品展示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #f8f6f2;
             color: #333;
             line-height: 1.6;
         }
@@ -24,9 +25,30 @@
             padding: 0 20px;
         }
         
-        /* 导航栏样式 */
+        /* 顶部标语 */
+        .banner {
+            background: linear-gradient(135deg, #8b0000, #a52a2a);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .banner h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .banner p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* 导航栏 */
         .navbar {
-            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+            background-color: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
@@ -35,101 +57,108 @@
         
         .nav-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            padding: 15px 0;
+            justify-content: center;
+            padding: 0;
         }
         
         .nav-links {
             display: flex;
             list-style: none;
+            width: 100%;
         }
         
         .nav-link {
-            color: white;
+            flex: 1;
+            text-align: center;
+            color: #8b0000;
             text-decoration: none;
-            padding: 20px 25px;
+            padding: 18px 0;
             font-weight: 600;
+            font-size: 16px;
             transition: all 0.3s ease;
-            position: relative;
+            border-bottom: 3px solid transparent;
         }
         
         .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(139, 0, 0, 0.05);
         }
         
         .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(139, 0, 0, 0.1);
+            border-bottom: 3px solid #8b0000;
         }
         
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: #ffcc00;
+        /* 产品分类筛选 */
+        .category-section {
+            background: white;
+            padding: 25px 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
         }
         
-        /* 页面内容 */
-        .page-content {
-            padding: 40px 0;
-            min-height: 70vh;
+        .category-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #8b0000;
+            display: flex;
+            align-items: center;
         }
         
-        .page-title {
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: #1e5799;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
+        .category-title i {
+            margin-right: 10px;
+            font-size: 22px;
         }
         
-        .page-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #1e5799, #207cca);
-            border-radius: 2px;
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         
-        .channel-description {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-size: 18px;
-            color: #555;
-            line-height: 1.8;
+        .category-tag {
+            background: #f8f6f2;
+            color: #8b0000;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .category-tag:hover {
+            background: #8b0000;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
+        }
+        
+        .category-tag.active {
+            background: #8b0000;
+            color: white;
+            border-color: #8b0000;
         }
         
         /* 产品展示区域 */
-        .products-container {
+        .products-section {
+            margin: 40px 0;
+        }
+        
+        .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            gap: 25px;
         }
         
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .product-card:hover {
@@ -149,45 +178,49 @@
         }
         
         .product-name {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 10px;
-            color: #1e5799;
+            color: #8b0000;
+            line-height: 1.4;
         }
         
         .product-description {
             color: #666;
+            font-size: 14px;
             margin-bottom: 15px;
-            font-size: 15px;
+            line-height: 1.5;
         }
         
         .product-price {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: #e74c3c;
+            color: #d35400;
             margin-bottom: 15px;
         }
         
         .product-btn {
             display: inline-block;
-            background: linear-gradient(135deg, #1e5799, #207cca);
+            background: linear-gradient(135deg, #8b0000, #a52a2a);
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
         }
         
         .product-btn:hover {
-            background: linear-gradient(135deg, #207cca, #1e5799);
+            background: linear-gradient(135deg, #a52a2a, #8b0000);
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(30, 87, 153, 0.3);
+            box-shadow: 0 5px 10px rgba(139, 0, 0, 0.3);
         }
         
         /* 页脚 */
         .footer {
-            background: #2c3e50;
+            background: #2c1810;
             color: white;
             padding: 40px 0;
             text-align: center;
@@ -199,6 +232,7 @@
             justify-content: center;
             list-style: none;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
         .footer-link {
@@ -209,51 +243,12 @@
         }
         
         .footer-link:hover {
-            color: #ffcc00;
+            color: #e67e22;
         }
         
         .copyright {
             font-size: 14px;
             opacity: 0.8;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                padding: 10px 0;
-            }
-            
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            .nav-link {
-                padding: 15px;
-                font-size: 14px;
-            }
-            
-            .page-title {
-                font-size: 28px;
-            }
-            
-            .products-container {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .products-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-link {
-                padding: 12px 10px;
-                font-size: 13px;
-            }
         }
         
         /* 渠道页面样式 */
@@ -264,183 +259,290 @@
         .channel-page.active {
             display: block;
         }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+            }
+            
+            .nav-link {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                border-left: 3px solid transparent;
+            }
+            
+            .nav-link.active {
+                border-left: 3px solid #8b0000;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .category-tags {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .banner h1 {
+                font-size: 26px;
+            }
+            
+            .banner p {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 顶部标语 -->
+    <div class="banner">
+        <div class="container">
+            <h1>集百草而香天下</h1>
+            <p>普健康而惠众生</p>
+        </div>
+    </div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">公司产品渠道</a>
-            <ul class="nav-links">
-                <li><a href="#" class="nav-link active" data-channel="home">首页</a></li>
-                <li><a href="#" class="nav-link" data-channel="traditional">传统渠道</a></li>
-                <li><a href="#" class="nav-link" data-channel="ecommerce">电商渠道</a></li>
-                <li><a href="#" class="nav-link" data-channel="third">3渠和其他</a></li>
-            </ul>
+        <div class="container">
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-channel="home">首页</a></li>
+                    <li><a href="#" class="nav-link" data-channel="traditional">传统渠道</a></li>
+                    <li><a href="#" class="nav-link" data-channel="ecommerce">电商渠道</a></li>
+                    <li><a href="#" class="nav-link" data-channel="third">3渠和其他</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- 页面内容 -->
     <div class="container">
-        <div class="page-content">
-            <!-- 首页 -->
-            <div class="channel-page active" id="home-page">
-                <h1 class="page-title">欢迎来到公司产品渠道平台</h1>
-                <p class="channel-description">
-                    我们提供多种渠道的产品销售服务，包括传统渠道、电商渠道以及3渠和其他渠道。
-                    请点击上方导航栏查看各渠道的详细信息及相关产品。
-                </p>
-                
-                <div class="products-container">
+        <!-- 首页 -->
+        <div class="channel-page active" id="home-page">
+            <!-- 产品分类筛选 -->
+            <div class="category-section">
+                <h2 class="category-title"><i class="fas fa-filter"></i> 滋补养生 天然草本 营养保健 茶系列</h2>
+                <h3 class="category-title" style="font-size: 18px; margin-top: 15px;"><i class="fas fa-tags"></i> 按系列筛选</h3>
+                <div class="category-tags">
+                    <div class="category-tag active">全部</div>
+                    <div class="category-tag">燕窝</div>
+                    <div class="category-tag">海参</div>
+                    <div class="category-tag">石斛</div>
+                    <div class="category-tag">冬虫夏草</div>
+                    <div class="category-tag">西洋参</div>
+                    <div class="category-tag">参系列</div>
+                    <div class="category-tag">鹿制品</div>
+                    <div class="category-tag">其他</div>
+                </div>
+            </div>
+            
+            <!-- 产品展示区域 -->
+            <div class="products-section">
+                <div class="products-grid">
                     <div class="product-card">
-                        <img src="https://www.tongrentang.com/file/upload/2024/08/20/1724134960196.png" alt="特色产品" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B4513/FFFFFF?text=制鲜石斛" alt="制鲜石斛" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">公司旗舰产品</h3>
-                            <p class="product-description">这是我们最受欢迎的产品，采用先进技术制造，质量保证。</p>
-                            <div class="product-price">¥2680.00</div>
+                            <h3 class="product-name">制鲜石斛</h3>
+                            <p class="product-description">精选优质石斛，传统工艺制作，保留天然营养成分。</p>
+                            <div class="product-price">¥388.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=新品上市" alt="新品上市" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B0000/FFFFFF?text=怡口燕洞燕窝" alt="怡口燕洞燕窝" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">2023新品</h3>
-                            <p class="product-description">最新研发的产品，结合市场需求和用户反馈精心打造。</p>
-                            <div class="product-price">¥199.00</div>
+                            <h3 class="product-name">怡口燕洞燕窝</h3>
+                            <p class="product-description">源自天然燕洞，纯净无污染，滋养肌肤，增强免疫力。</p>
+                            <div class="product-price">¥1280.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=热销产品" alt="热销产品" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/228B22/FFFFFF?text=野山参粉" alt="野山参粉" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">热销产品</h3>
-                            <p class="product-description">长期热销的产品，深受消费者喜爱，性价比极高。</p>
-                            <div class="product-price">¥159.00</div>
+                            <h3 class="product-name">野山参粉</h3>
+                            <p class="product-description">长白山野生人参研磨而成，补气养血，增强体质。</p>
+                            <div class="product-price">¥680.00</div>
+                            <a href="#" class="product-btn">查看详情</a>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x200/8B4513/FFFFFF?text=燕窝礼盒" alt="燕窝礼盒" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-name">燕窝礼盒</h3>
+                            <p class="product-description">精制燕窝礼盒，送礼佳品，彰显尊贵与健康。</p>
+                            <div class="product-price">¥1580.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- 传统渠道页面 -->
+        <div class="channel-page" id="traditional-page">
+            <div class="category-section">
+                <h2 class="category-title"><i class="fas fa-store"></i> 传统渠道产品</h2>
+                <h3 class="category-title" style="font-size: 18px; margin-top: 15px;"><i class="fas fa-tags"></i> 按系列筛选</h3>
+                <div class="category-tags">
+                    <div class="category-tag active">全部</div>
+                    <div class="category-tag">燕窝</div>
+                    <div class="category-tag">海参</div>
+                    <div class="category-tag">石斛</div>
+                    <div class="category-tag">冬虫夏草</div>
+                    <div class="category-tag">西洋参</div>
+                    <div class="category-tag">参系列</div>
+                    <div class="category-tag">鹿制品</div>
+                    <div class="category-tag">其他</div>
+                </div>
+            </div>
             
-            <!-- 传统渠道页面 -->
-            <div class="channel-page" id="traditional-page">
-                <h1 class="page-title">传统渠道产品</h1>
-                <p class="channel-description">
-                    传统渠道包括实体店、经销商、批发市场等。这些产品主要面向线下销售网络，
-                    提供稳定的供应和优质的售后服务。
-                </p>
-                
-                <div class="products-container">
+            <div class="products-section">
+                <div class="products-grid">
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=传统渠道产品1" alt="传统渠道产品1" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B4513/FFFFFF?text=传统渠道石斛" alt="传统渠道石斛" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 A</h3>
-                            <p class="product-description">专为传统渠道设计的产品，适合实体店销售。</p>
-                            <div class="product-price">¥189.00</div>
+                            <h3 class="product-name">传统渠道石斛</h3>
+                            <p class="product-description">专供传统渠道，品质保证，适合实体店销售。</p>
+                            <div class="product-price">¥358.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=传统渠道产品2" alt="传统渠道产品2" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B0000/FFFFFF?text=传统渠道燕窝" alt="传统渠道燕窝" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 B</h3>
-                            <p class="product-description">经典款产品，在传统渠道中表现优异。</p>
-                            <div class="product-price">¥249.00</div>
+                            <h3 class="product-name">传统渠道燕窝</h3>
+                            <p class="product-description">传统渠道专供燕窝，经典包装，适合礼品市场。</p>
+                            <div class="product-price">¥1180.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=传统渠道产品3" alt="传统渠道产品3" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/228B22/FFFFFF?text=传统渠道人参" alt="传统渠道人参" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 C</h3>
-                            <p class="product-description">高端产品线，适合专卖店和高端商场销售。</p>
-                            <div class="product-price">¥399.00</div>
+                            <h3 class="product-name">传统渠道人参</h3>
+                            <p class="product-description">精选人参，传统工艺加工，适合中老年消费者。</p>
+                            <div class="product-price">¥580.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- 电商渠道页面 -->
+        <div class="channel-page" id="ecommerce-page">
+            <div class="category-section">
+                <h2 class="category-title"><i class="fas fa-shopping-cart"></i> 电商渠道产品</h2>
+                <h3 class="category-title" style="font-size: 18px; margin-top: 15px;"><i class="fas fa-tags"></i> 按系列筛选</h3>
+                <div class="category-tags">
+                    <div class="category-tag active">全部</div>
+                    <div class="category-tag">燕窝</div>
+                    <div class="category-tag">海参</div>
+                    <div class="category-tag">石斛</div>
+                    <div class="category-tag">冬虫夏草</div>
+                    <div class="category-tag">西洋参</div>
+                    <div class="category-tag">参系列</div>
+                    <div class="category-tag">鹿制品</div>
+                    <div class="category-tag">其他</div>
+                </div>
+            </div>
             
-            <!-- 电商渠道页面 -->
-            <div class="channel-page" id="ecommerce-page">
-                <h1 class="page-title">电商渠道产品</h1>
-                <p class="channel-description">
-                    电商渠道包括各大电商平台、官方网站等。这些产品针对线上销售特点设计，
-                    包装轻便，配送便捷。
-                </p>
-                
-                <div class="products-container">
+            <div class="products-section">
+                <div class="products-grid">
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=电商渠道产品1" alt="电商渠道产品1" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B4513/FFFFFF?text=电商石斛" alt="电商石斛" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 A</h3>
-                            <p class="product-description">专为电商渠道设计，包装轻便，适合快递运输。</p>
-                            <div class="product-price">¥159.00</div>
+                            <h3 class="product-name">电商石斛</h3>
+                            <p class="product-description">电商专供石斛，轻便包装，适合快递运输。</p>
+                            <div class="product-price">¥328.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=电商渠道产品2" alt="电商渠道产品2" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B0000/FFFFFF?text=电商燕窝" alt="电商燕窝" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 B</h3>
-                            <p class="product-description">线上热销产品，适合电商平台推广。</p>
-                            <div class="product-price">¥219.00</div>
+                            <h3 class="product-name">电商燕窝</h3>
+                            <p class="product-description">电商专供燕窝，适合线上促销活动。</p>
+                            <div class="product-price">¥980.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=电商渠道产品3" alt="电商渠道产品3" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/228B22/FFFFFF?text=电商人参" alt="电商人参" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 C</h3>
-                            <p class="product-description">电商专供产品，性价比高，适合线上促销。</p>
-                            <div class="product-price">¥129.00</div>
+                            <h3 class="product-name">电商人参</h3>
+                            <p class="product-description">电商专供人参，性价比高，适合年轻消费者。</p>
+                            <div class="product-price">¥480.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- 3渠和其他页面 -->
+        <div class="channel-page" id="third-page">
+            <div class="category-section">
+                <h2 class="category-title"><i class="fas fa-network-wired"></i> 3渠和其他渠道产品</h2>
+                <h3 class="category-title" style="font-size: 18px; margin-top: 15px;"><i class="fas fa-tags"></i> 按系列筛选</h3>
+                <div class="category-tags">
+                    <div class="category-tag active">全部</div>
+                    <div class="category-tag">燕窝</div>
+                    <div class="category-tag">海参</div>
+                    <div class="category-tag">石斛</div>
+                    <div class="category-tag">冬虫夏草</div>
+                    <div class="category-tag">西洋参</div>
+                    <div class="category-tag">参系列</div>
+                    <div class="category-tag">鹿制品</div>
+                    <div class="category-tag">其他</div>
+                </div>
+            </div>
             
-            <!-- 3渠和其他页面 -->
-            <div class="channel-page" id="third-page">
-                <h1 class="page-title">3渠和其他渠道产品</h1>
-                <p class="channel-description">
-                    3渠和其他渠道包括特殊渠道、定制渠道等。这些产品针对特定市场或客户需求设计，
-                    提供个性化的解决方案。
-                </p>
-                
-                <div class="products-container">
+            <div class="products-section">
+                <div class="products-grid">
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=3渠产品1" alt="3渠产品1" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B4513/FFFFFF?text=3渠石斛" alt="3渠石斛" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">3渠产品 A</h3>
-                            <p class="product-description">针对特定渠道设计的产品，满足特殊市场需求。</p>
-                            <div class="product-price">¥279.00</div>
+                            <h3 class="product-name">3渠石斛</h3>
+                            <p class="product-description">3渠专供石斛，特殊包装，适合特定渠道销售。</p>
+                            <div class="product-price">¥398.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=3渠产品2" alt="3渠产品2" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/8B0000/FFFFFF?text=3渠燕窝" alt="3渠燕窝" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">3渠产品 B</h3>
-                            <p class="product-description">定制化产品，可根据客户需求进行调整。</p>
-                            <div class="product-price">¥349.00</div>
+                            <h3 class="product-name">3渠燕窝</h3>
+                            <p class="product-description">3渠专供燕窝，定制规格，满足特殊需求。</p>
+                            <div class="product-price">¥1380.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
                     
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=3渠产品3" alt="3渠产品3" class="product-image">
+                        <img src="https://via.placeholder.com/300x200/228B22/FFFFFF?text=3渠人参" alt="3渠人参" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-name">3渠产品 C</h3>
-                            <p class="product-description">特殊渠道专供产品，提供独特的价值主张。</p>
-                            <div class="product-price">¥199.00</div>
+                            <h3 class="product-name">3渠人参</h3>
+                            <p class="product-description">3渠专供人参，特殊加工工艺，满足特定市场需求。</p>
+                            <div class="product-price">¥680.00</div>
                             <a href="#" class="product-btn">查看详情</a>
                         </div>
                     </div>
@@ -454,464 +556,11 @@
         <div class="container">
             <ul class="footer-links">
                 <li><a href="#" class="footer-link">关于我们</a></li>
-                <li><a href="#" class="footer-link">联系我们</a<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公司产品渠道</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 导航栏样式 */
-        .navbar {
-            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            padding: 15px 0;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            padding: 20px 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: #ffcc00;
-        }
-        
-        /* 页面内容 */
-        .page-content {
-            padding: 40px 0;
-            min-height: 70vh;
-        }
-        
-        .page-title {
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: #1e5799;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .page-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #1e5799, #207cca);
-            border-radius: 2px;
-        }
-        
-        .channel-description {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-size: 18px;
-            color: #555;
-            line-height: 1.8;
-        }
-        
-        /* 产品展示区域 */
-        .products-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .product-info {
-            padding: 20px;
-        }
-        
-        .product-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #1e5799;
-        }
-        
-        .product-description {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 15px;
-        }
-        
-        .product-price {
-            font-size: 18px;
-            font-weight: 700;
-            color: #e74c3c;
-            margin-bottom: 15px;
-        }
-        
-        .product-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #1e5799, #207cca);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .product-btn:hover {
-            background: linear-gradient(135deg, #207cca, #1e5799);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(30, 87, 153, 0.3);
-        }
-        
-        /* 页脚 */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-            margin-top: 60px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin-bottom: 20px;
-        }
-        
-        .footer-link {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-link:hover {
-            color: #ffcc00;
-        }
-        
-        .copyright {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                padding: 10px 0;
-            }
-            
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            .nav-link {
-                padding: 15px;
-                font-size: 14px;
-            }
-            
-            .page-title {
-                font-size: 28px;
-            }
-            
-            .products-container {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .products-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-link {
-                padding: 12px 10px;
-                font-size: 13px;
-            }
-        }
-        
-        /* 渠道页面样式 */
-        .channel-page {
-            display: none;
-        }
-        
-        .channel-page.active {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">公司产品渠道</a>
-            <ul class="nav-links">
-                <li><a href="#" class="nav-link active" data-channel="home">首页</a></li>
-                <li><a href="#" class="nav-link" data-channel="traditional">传统渠道</a></li>
-                <li><a href="#" class="nav-link" data-channel="ecommerce">电商渠道</a></li>
-                <li><a href="#" class="nav-link" data-channel="third">3渠和其他</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- 页面内容 -->
-    <div class="container">
-        <div class="page-content">
-            <!-- 首页 -->
-            <div class="channel-page active" id="home-page">
-                <h1 class="page-title">欢迎来到公司产品渠道平台</h1>
-                <p class="channel-description">
-                    我们提供多种渠道的产品销售服务，包括传统渠道、电商渠道以及3渠和其他渠道。
-                    请点击上方导航栏查看各渠道的详细信息及相关产品。
-                </p>
-                
-                <div class="products-container">
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=特色产品" alt="特色产品" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">公司旗舰产品</h3>
-                            <p class="product-description">这是我们最受欢迎的产品，采用先进技术制造，质量保证。</p>
-                            <div class="product-price">¥299.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=新品上市" alt="新品上市" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">2023新品</h3>
-                            <p class="product-description">最新研发的产品，结合市场需求和用户反馈精心打造。</p>
-                            <div class="product-price">¥199.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=热销产品" alt="热销产品" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">热销产品</h3>
-                            <p class="product-description">长期热销的产品，深受消费者喜爱，性价比极高。</p>
-                            <div class="product-price">¥159.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 传统渠道页面 -->
-            <div class="channel-page" id="traditional-page">
-                <h1 class="page-title">传统渠道产品</h1>
-                <p class="channel-description">
-                    传统渠道包括实体店、经销商、批发市场等。这些产品主要面向线下销售网络，
-                    提供稳定的供应和优质的售后服务。
-                </p>
-                
-                <div class="products-container">
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=传统渠道产品1" alt="传统渠道产品1" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 A</h3>
-                            <p class="product-description">专为传统渠道设计的产品，适合实体店销售。</p>
-                            <div class="product-price">¥189.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=传统渠道产品2" alt="传统渠道产品2" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 B</h3>
-                            <p class="product-description">经典款产品，在传统渠道中表现优异。</p>
-                            <div class="product-price">¥249.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=传统渠道产品3" alt="传统渠道产品3" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">传统渠道产品 C</h3>
-                            <p class="product-description">高端产品线，适合专卖店和高端商场销售。</p>
-                            <div class="product-price">¥399.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 电商渠道页面 -->
-            <div class="channel-page" id="ecommerce-page">
-                <h1 class="page-title">电商渠道产品</h1>
-                <p class="channel-description">
-                    电商渠道包括各大电商平台、官方网站等。这些产品针对线上销售特点设计，
-                    包装轻便，配送便捷。
-                </p>
-                
-                <div class="products-container">
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=电商渠道产品1" alt="电商渠道产品1" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 A</h3>
-                            <p class="product-description">专为电商渠道设计，包装轻便，适合快递运输。</p>
-                            <div class="product-price">¥159.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=电商渠道产品2" alt="电商渠道产品2" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 B</h3>
-                            <p class="product-description">线上热销产品，适合电商平台推广。</p>
-                            <div class="product-price">¥219.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=电商渠道产品3" alt="电商渠道产品3" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">电商渠道产品 C</h3>
-                            <p class="product-description">电商专供产品，性价比高，适合线上促销。</p>
-                            <div class="product-price">¥129.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 3渠和其他页面 -->
-            <div class="channel-page" id="third-page">
-                <h1 class="page-title">3渠和其他渠道产品</h1>
-                <p class="channel-description">
-                    3渠和其他渠道包括特殊渠道、定制渠道等。这些产品针对特定市场或客户需求设计，
-                    提供个性化的解决方案。
-                </p>
-                
-                <div class="products-container">
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=3渠产品1" alt="3渠产品1" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">3渠产品 A</h3>
-                            <p class="product-description">针对特定渠道设计的产品，满足特殊市场需求。</p>
-                            <div class="product-price">¥279.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/50C878/FFFFFF?text=3渠产品2" alt="3渠产品2" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">3渠产品 B</h3>
-                            <p class="product-description">定制化产品，可根据客户需求进行调整。</p>
-                            <div class="product-price">¥349.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=3渠产品3" alt="3渠产品3" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-name">3渠产品 C</h3>
-                            <p class="product-description">特殊渠道专供产品，提供独特的价值主张。</p>
-                            <div class="product-price">¥199.00</div>
-                            <a href="#" class="product-btn">查看详情</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <ul class="footer-links">
                 <li><a href="#" class="footer-link">联系我们</a></li>
+                <li><a href="#" class="footer-link">隐私政策</a></li>
+                <li><a href="#" class="footer-link">服务条款</a></li>
             </ul>
-            <p class="copyright">© 2025 王维 版权所有</p>
+            <p class="copyright">© 2023 北京同仁堂健康药业 版权所有</p>
         </div>
     </footer>
 
@@ -942,40 +591,14 @@
                     document.getElementById(`${channel}-page`).classList.add('active');
                 });
             });
-        });
-    </script>
-</body>
-</html>></li>
-            </ul>
-            <p class="copyright">© 2025 王维 版权所有</p>
-        </div>
-    </footer>
-
-    <script>
-        // 渠道导航功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const channelPages = document.querySelectorAll('.channel-page');
             
-            // 为每个导航链接添加点击事件
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 移除所有导航链接的active类
-                    navLinks.forEach(nav => nav.classList.remove('active'));
-                    
-                    // 为当前点击的链接添加active类
+            // 分类标签点击事件
+            const categoryTags = document.querySelectorAll('.category-tag');
+            categoryTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    categoryTags.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // 获取渠道标识
-                    const channel = this.getAttribute('data-channel');
-                    
-                    // 隐藏所有渠道页面
-                    channelPages.forEach(page => page.classList.remove('active'));
-                    
-                    // 显示对应的渠道页面
-                    document.getElementById(`${channel}-page`).classList.add('active');
+                    // 这里可以添加筛选产品的逻辑
                 });
             });
         });
