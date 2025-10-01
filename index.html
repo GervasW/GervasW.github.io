@@ -405,6 +405,45 @@
             font-size: 12px;
             opacity: 0.7;
         }
+
+        /* 新增：访问统计样式 */
+        .visit-stats {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+            margin: 10px;
+            padding: 15px;
+            background: var(--food-light);
+            border-radius: 10px;
+            border-left: 4px solid var(--food-primary);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--food-primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--secondary);
+        }
         
         /* 响应式调整 */
         @media (min-width: 768px) {
@@ -433,7 +472,7 @@
     <section class="profile">
         <div class="avatar">
             <!-- 方法1: 使用在线图片URL -->
-            <img src="https://cdn4.winhlb.com/2025/10/01/68dc7c93466ea.jpg" alt="王维">
+            <img src="https://cdn4.winhlb.com/2025/10/01/68dc80e94e839.jpg" alt="王维">
         </div>
         <h1>王维</h1>
         <p>北京同仁堂健康药业（青海）有限公司 | 包装采购</p>
@@ -447,6 +486,21 @@
     </section>
 
     <div class="container">
+        <!-- 访问统计 -->
+        <section class="visit-stats">
+            <h2 class="card-title">📊 访问统计</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="busuanzi_value_site_pv">--</div>
+                    <div class="stat-label">总访问量</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="busuanzi_value_site_uv">--</div>
+                    <div class="stat-label">总访客数</div>
+                </div>
+            </div>
+        </section>
+
         <!-- 个人简介 -->
         <section class="card">
             <h2 class="card-title">👤 个人简介</h2>
@@ -592,8 +646,20 @@
             <div class="contact-icon">📱</div>
             <div class="contact-icon">🌐</div>
         </div>
-        <div class="copyright">© 2025 王维 - 北京同仁堂健康药业（青海）有限公司 | 保留所有权利</div>
+        <!-- 页脚访问统计 -->
+        <div style="margin-top: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">
+            <span id="busuanzi_container_site_pv" style="margin-right: 15px;">
+                👁️ 本站总访问量：<span id="busuanzi_value_site_pv_footer"></span> 次
+            </span>
+            <span id="busuanzi_container_site_uv">
+                👥 本站总访客数：<span id="busuanzi_value_site_uv_footer"></span> 人
+            </span>
+        </div>
+        <div class="copyright">© 2025 王维  | 保留所有权利</div>
     </footer>
+
+    <!-- 不蒜子计数脚本 -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <script>
         // 微信弹窗功能
@@ -652,6 +718,31 @@
                     alert(`您查看了: ${title} 的详细信息`);
                 });
             });
+
+            // 不蒜子统计数据显示
+            // 由于不蒜子会自动填充数据，我们只需要确保元素存在即可
+            // 设置一个定时器检查不蒜子数据是否已加载
+            const checkBusuanzi = setInterval(function() {
+                const sitePv = document.getElementById('busuanzi_value_site_pv');
+                const siteUv = document.getElementById('busuanzi_value_site_uv');
+                const sitePvFooter = document.getElementById('busuanzi_value_site_pv_footer');
+                const siteUvFooter = document.getElementById('busuanzi_value_site_uv_footer');
+                
+                // 如果元素内容已更新，则清除定时器
+                if (sitePv && sitePv.textContent !== '--' && 
+                    siteUv && siteUv.textContent !== '--') {
+                    clearInterval(checkBusuanzi);
+                    
+                    // 同步页脚数据
+                    if (sitePvFooter) sitePvFooter.textContent = sitePv.textContent;
+                    if (siteUvFooter) siteUvFooter.textContent = siteUv.textContent;
+                }
+            }, 500);
+            
+            // 10秒后停止检查
+            setTimeout(function() {
+                clearInterval(checkBusuanzi);
+            }, 10000);
         });
     </script>
 </body>
