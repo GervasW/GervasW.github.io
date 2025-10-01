@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王维 - 食品包装采购 | 动态个人主页</title>
+    <title>王维 - 食品包装采购 | 同仁堂健康</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* 基础样式 */
@@ -69,7 +69,7 @@
         .profile {
             background: var(--food-gradient);
             color: white;
-            padding: 50px 20px;
+            padding: 50px 20px 30px;
             border-radius: 0 0 30px 30px;
             text-align: center;
             margin-bottom: 30px;
@@ -163,6 +163,7 @@
             position: relative;
             z-index: 2;
             flex-wrap: wrap;
+            margin-bottom: 30px;
         }
         
         .contact-btn {
@@ -207,6 +208,68 @@
         .wechat-btn {
             background: rgba(7, 193, 96, 0.95);
             color: white;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 18px 20px;
+            color: var(--food-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--food-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+        
+        .nav-link:hover {
+            background: var(--food-light);
         }
         
         /* 内容卡片 */
@@ -263,225 +326,6 @@
             font-size: 28px;
         }
         
-        /* 知识库卡片 */
-        .knowledge-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-        
-        .knowledge-item {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 16px;
-            transition: var(--transition);
-            text-decoration: none;
-            color: inherit;
-            border: 1px solid rgba(231, 76, 60, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .knowledge-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--food-gradient);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        
-        .knowledge-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.15);
-            color: white;
-        }
-        
-        .knowledge-item:hover::before {
-            opacity: 1;
-        }
-        
-        .knowledge-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--food-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-size: 24px;
-            transition: var(--transition);
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
-        }
-        
-        .knowledge-item:hover .knowledge-icon {
-            transform: scale(1.1) rotate(10deg);
-            background: white;
-            color: var(--food-primary);
-        }
-        
-        .knowledge-content {
-            flex: 1;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .knowledge-title {
-            font-weight: 700;
-            margin-bottom: 8px;
-            font-size: 18px;
-            transition: var(--transition);
-        }
-        
-        .knowledge-item:hover .knowledge-title {
-            color: white;
-        }
-        
-        .knowledge-desc {
-            font-size: 14px;
-            color: var(--secondary);
-            transition: var(--transition);
-        }
-        
-        .knowledge-item:hover .knowledge-desc {
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        /* 个人简介 */
-        .intro-section {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intro-text {
-            margin-bottom: 30px;
-            line-height: 1.8;
-            font-size: 17px;
-            position: relative;
-            padding: 30px;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 20px;
-            border-left: 6px solid var(--food-primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intro-text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.03), rgba(243, 156, 18, 0.03));
-            z-index: 1;
-        }
-        
-        .intro-text::after {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 25px;
-            font-size: 100px;
-            color: var(--food-primary);
-            opacity: 0.1;
-            font-family: Georgia, serif;
-            line-height: 1;
-            z-index: 1;
-        }
-        
-        .intro-text p {
-            position: relative;
-            z-index: 2;
-            margin: 0;
-            font-size: 17px;
-            color: #555;
-        }
-        
-        .skills-highlight {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .skill-highlight-item {
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-            padding: 25px 20px;
-            border-radius: 20px;
-            text-align: center;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(231, 76, 60, 0.1);
-        }
-        
-        .skill-highlight-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--food-gradient);
-            transform: scaleX(0);
-            transition: transform 0.6s ease;
-        }
-        
-        .skill-highlight-item:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .skill-highlight-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.15);
-        }
-        
-        .skill-highlight-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: var(--food-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            color: white;
-            font-size: 28px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
-        }
-        
-        .skill-highlight-item:hover .skill-highlight-icon {
-            transform: scale(1.15) rotate(8deg);
-        }
-        
-        .skill-highlight-title {
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--food-primary);
-            font-size: 18px;
-        }
-        
-        .skill-highlight-desc {
-            font-size: 14px;
-            color: var(--secondary);
-            line-height: 1.6;
-        }
-        
         /* 折叠内容 */
         .demand-item {
             margin-bottom: 25px;
@@ -523,7 +367,7 @@
         }
         
         .demand-list.active {
-            max-height: 500px;
+            max-height: 2000px; /* 增加最大高度确保内容完整显示 */
         }
         
         .demand-list li {
@@ -547,6 +391,240 @@
             margin-right: 15px;
             font-size: 18px;
             font-weight: bold;
+        }
+        
+        /* 工作目标样式 */
+        .goals-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .goal-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        .goal-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--food-gradient);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+        }
+        
+        .goal-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .goal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .goal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--food-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .goal-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--food-secondary);
+            margin-right: 10px;
+        }
+        
+        .goal-desc {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .goal-highlight {
+            display: inline-block;
+            background: var(--food-light);
+            color: var(--food-primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.1);
+        }
+        
+        /* 个人优势样式 */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .skill-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--food-gradient);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+        }
+        
+        .skill-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .skill-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--food-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--food-secondary);
+            margin-right: 10px;
+        }
+        
+        .skill-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .skill-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            transition: var(--transition);
+            font-size: 15px;
+        }
+        
+        .skill-list li:before {
+            content: "•";
+            color: var(--food-secondary);
+            margin-right: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        /* 下单流程样式 */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .process-step {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--food-gradient);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+        }
+        
+        .process-step:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--food-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--food-primary);
+        }
+        
+        .step-desc {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-size: 14px;
+            padding-left: 45px;
         }
         
         /* 供应商表单按钮 */
@@ -594,147 +672,6 @@
         .supplier-form-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
-        }
-        
-        /* 工作目标区域 */
-        .goals-section {
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--border-radius);
-            margin-bottom: 30px;
-        }
-        
-        .goals-header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .goals-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--food-primary);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-            background: var(--food-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
-        }
-        
-        .goals-subtitle {
-            color: var(--secondary);
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        .goals-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        
-        .goal-card {
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-            border-radius: 18px;
-            padding: 25px 20px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(231, 76, 60, 0.1);
-            text-align: center;
-        }
-        
-        .goal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--food-gradient);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.6s ease;
-        }
-        
-        .goal-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .goal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.15);
-        }
-        
-        .goal-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: var(--food-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-            color: var(--food-primary);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.2);
-        }
-        
-        .goal-card:hover .goal-icon {
-            transform: scale(1.1) rotate(8deg);
-            background: var(--food-gradient);
-            color: white;
-        }
-        
-        .goal-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .goal-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--food-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .goal-title::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--food-secondary);
-            margin-right: 10px;
-        }
-        
-        .goal-desc {
-            color: var(--secondary);
-            line-height: 1.6;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .goal-highlight {
-            display: inline-block;
-            background: var(--food-light);
-            color: var(--food-primary);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
         }
         
         /* 微信弹窗 */
@@ -1084,8 +1021,24 @@
                 padding: 0 15px;
             }
             
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            .nav-link {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
             .profile {
-                padding: 40px 15px;
+                padding: 40px 15px 20px;
             }
             
             .avatar {
@@ -1105,20 +1058,6 @@
             .contact-btn {
                 width: 100%;
                 max-width: 250px;
-            }
-            
-            .knowledge-links {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .skills-highlight {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-            }
-            
-            .goals-container {
-                grid-template-columns: 1fr;
             }
             
             .stats-container {
@@ -1152,6 +1091,19 @@
                 width: 50px;
                 height: 50px;
             }
+            
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .step-number {
+                margin-bottom: 10px;
+            }
+            
+            .step-desc {
+                padding-left: 0;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1161,22 +1113,6 @@
             
             .card-title {
                 font-size: 22px;
-            }
-            
-            .goals-title {
-                font-size: 28px;
-            }
-            
-            .goal-card {
-                padding: 20px 15px;
-            }
-            
-            .knowledge-links {
-                grid-template-columns: 1fr;
-            }
-            
-            .skills-highlight {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1224,119 +1160,116 @@
                  添加微信
             </a>
         </div>
+        
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#personal-intro" class="nav-link">个人简介</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#procurement-demand" class="nav-link">采购需求</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.trthealth.com/" class="nav-link" target="_blank">集团介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://gervas.wang/health/" class="nav-link" target="_blank">青海基地</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://gervas.wang/products/" class="nav-link" target="_blank">青海产品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://gervas.wang/printing/" class="nav-link" target="_blank">印刷学</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </section>
 
     <div class="container">
-        <!-- 知识库卡片 -->
-        <section class="card">
-            <h2 class="card-title"><i class="fas fa-book"></i> 知识库与产品</h2>
-            <div class="knowledge-links">
-                <a href="https://gervas.wang/printing/" class="knowledge-item" target="_blank">
-                    <div class="knowledge-icon">
-                        <i class="fas fa-print"></i>
-                    </div>
-                    <div class="knowledge-content">
-                        <div class="knowledge-title">印刷知识库</div>
-                        <div class="knowledge-desc">了解各类印刷工艺、材料特性及成本分析</div>
-                    </div>
-                </a>
-                
-                <a href="https://gervas.wang/health/" class="knowledge-item" target="_blank">
-                    <div class="knowledge-icon">
-                        <i class="fas fa-apple-alt"></i>
-                    </div>
-                    <div class="knowledge-content">
-                        <div class="knowledge-title">青海基地</div>
-                        <div class="knowledge-desc">了解柴达木深处的工厂</div>
-                    </div>
-                </a>
-                
-                <a href="http://gervas.wang/products/" class="knowledge-item" target="_blank">
-                    <div class="knowledge-icon">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <div class="knowledge-content">
-                        <div class="knowledge-title">公司产品</div>
-                        <div class="knowledge-desc">浏览同仁堂健康青海基地的各类产品</div>
-                    </div>
-                </a>
-                
-                <!-- 新增的同仁堂健康入口 -->
-                <a href="https://www.trthealth.com/" class="knowledge-item" target="_blank">
-                    <div class="knowledge-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div class="knowledge-content">
-                        <div class="knowledge-title">同仁堂健康</div>
-                        <div class="knowledge-desc">了解北京同仁堂健康药业品牌与文化</div>
-                    </div>
-                </a>
-            </div>
-        </section>
-
         <!-- 个人简介 -->
-        <section class="card intro-section">
+        <section id="personal-intro" class="card">
             <h2 class="card-title"><i class="fas fa-user"></i> 个人简介</h2>
             
             <div class="intro-text">
                 <p>拥有多年食品行业包装采购经验，目前就职于北京同仁堂健康药业（青海）有限公司。专注于为食品及健康产品企业提供全方位的包装解决方案，熟悉各类食品包装材料、工艺及成本控制。</p>
             </div>
             
-            <div class="skills-highlight">
-                <div class="skill-highlight-item">
-                    <div class="skill-highlight-icon">
-                        <i class="fas fa-chart-line"></i>
+            <!-- 工作目标 -->
+            <div class="demand-item">
+                <div class="demand-header">▶️ 工作目标</div>
+                <div class="demand-list">
+                    <div class="goals-container">
+                        <div class="goal-item">
+                            <h3 class="goal-title">质量保证</h3>
+                            <p class="goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。通过定期质量审核和供应商评估，持续提升包装质量水平。</p>
+                            <div class="goal-highlight">100%符合食品安全标准</div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <h3 class="goal-title">成本控制</h3>
+                            <p class="goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。建立成本分析模型，持续监控和优化包装采购成本结构。</p>
+                            <div class="goal-highlight">15-20%成本优化目标</div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <h3 class="goal-title">供应链稳定</h3>
+                            <p class="goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。通过供应商关系管理和风险预警系统，保障供应链的稳定性和韧性。</p>
+                            <div class="goal-highlight">99.5%供应链稳定性</div>
+                        </div>
                     </div>
-                    <div class="skill-highlight-title">成本优化</div>
-                    <div class="skill-highlight-desc">平均为企业节省15-20%包装采购成本</div>
                 </div>
-                
-                <div class="skill-highlight-item">
-                    <div class="skill-highlight-icon">
-                        <i class="fas fa-handshake"></i>
+            </div>
+            
+            <!-- 个人优势 -->
+            <div class="demand-item">
+                <div class="demand-header">▶️ 个人优势</div>
+                <div class="demand-list">
+                    <div class="skills-container">
+                        <div class="skill-item">
+                            <h3 class="skill-title">包装材料专业知识</h3>
+                            <ul class="skill-list">
+                                <li>精通卡纸、瓦楞纸等纸质包装材料特性与应用</li>
+                                <li>熟悉各类精装盒结构设计与生产工艺</li>
+                                <li>深入了解玻璃容器、塑料制品性能与成本</li>
+                                <li>掌握复合材料制品的最新发展趋势</li>
+                                <li>了解食品接触材料的安全标准与法规要求</li>
+                                <li>熟悉包装材料的环保性能与可持续发展趋势</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <h3 class="skill-title">行业资源整合</h3>
+                            <ul class="skill-list">
+                                <li>广泛的包装行业人脉与资源网络</li>
+                                <li>深入了解各地区包装产业特点与优势</li>
+                                <li>定期参加行业展会，掌握最新趋势</li>
+                                <li>与设计公司、印刷厂等产业链企业紧密合作</li>
+                                <li>建立供应商评估与分级管理体系</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <h3 class="skill-title">采购管理能力</h3>
+                            <ul class="skill-list">
+                                <li>精通采购谈判技巧与合同管理</li>
+                                <li>熟悉采购流程优化与成本控制方法</li>
+                                <li>具备供应商开发与管理能力</li>
+                                <li>擅长采购数据分析与决策支持</li>
+                                <li>熟悉ERP系统与采购信息化管理</li>
+                                <li>具备跨部门协调与项目管理能力</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="skill-highlight-title">供应商资源</div>
-                    <div class="skill-highlight-desc">与全国50+优质包装供应商保持长期合作</div>
-                </div>
-                
-                <div class="skill-highlight-item">
-                    <div class="skill-highlight-icon">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-                    <div class="skill-highlight-title">质量管控</div>
-                    <div class="skill-highlight-desc">严格执行食品包装安全标准与质检流程</div>
                 </div>
             </div>
         </section>
 
-        <!-- 个人擅长 -->
-        <section class="card">
-            <h2 class="card-title"><i class="fas fa-bullseye"></i> 个人擅长</h2>
-            
-            <div class="demand-item">
-                <div class="demand-header">▶️ 包装材料专业知识</div>
-                <ul class="demand-list">
-                    <li>精通卡纸、瓦楞纸等纸质包装材料特性与应用</li>
-                    <li>熟悉各类精装盒结构设计与生产工艺</li>
-                    <li>深入了解玻璃容器、塑料制品性能与成本</li>
-                    <li>掌握复合材料制品的最新发展趋势</li>
-                </ul>
-            </div>
-            
-            <div class="demand-item">
-                <div class="demand-header">▶️ 行业资源整合</div>
-                <ul class="demand-list">
-                    <li>广泛的包装行业人脉与资源网络</li>
-                    <li>深入了解各地区包装产业特点与优势</li>
-                    <li>定期参加行业展会，掌握最新趋势</li>
-                    <li>与设计公司、印刷厂等产业链企业紧密合作</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 主要采购品类 -->
-        <section class="card">
-            <h2 class="card-title"><i class="fas fa-clipboard-list"></i> 主要采购品类</h2>
+        <!-- 采购需求 -->
+        <section id="procurement-demand" class="card">
+            <h2 class="card-title"><i class="fas fa-clipboard-list"></i> 采购需求</h2>
             
             <div class="demand-item">
                 <div class="demand-header">▶️ 包装制品</div>
@@ -1345,6 +1278,8 @@
                     <li>食品标签与说明书</li>
                     <li>运输包装与外箱</li>
                     <li>保鲜包装与功能性包装</li>
+                    <li>展示架与促销包装</li>
+                    <li>定制化包装解决方案</li>
                 </ul>
             </div>
             
@@ -1355,6 +1290,8 @@
                     <li>真空包装袋与复合膜</li>
                     <li>吸塑包装与泡罩包装</li>
                     <li>食品级塑料托盘与内衬</li>
+                    <li>缓冲包装材料</li>
+                    <li>干燥剂与保鲜剂</li>
                 </ul>
             </div>
             
@@ -1365,7 +1302,81 @@
                     <li>纸质包装（卡纸、瓦楞纸、食品级纸板）</li>
                     <li>玻璃容器（食品瓶、罐）</li>
                     <li>复合材料制品（铝塑复合、纸塑复合）</li>
+                    <li>金属包装（罐、盖、箔）</li>
+                    <li>生物降解包装材料</li>
                 </ul>
+            </div>
+            
+            <!-- 下单流程 -->
+            <div class="demand-item">
+                <div class="demand-header">▶️ 下单流程</div>
+                <div class="demand-list">
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h4 class="step-title">产品立项</h4>
+                            </div>
+                            <p class="step-desc">明确产品需求与规格，确定包装方案初步构想，进行初步成本评估，制定项目时间表。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h4 class="step-title">产品设计</h4>
+                            </div>
+                            <p class="step-desc">设计包装外观与结构，完成包装设计方案，包括材料选择、结构设计和视觉设计，确保符合品牌形象和功能需求。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h4 class="step-title">产品上会</h4>
+                            </div>
+                            <p class="step-desc">提交设计方案审批，获得内部审批通过，包括设计部门、市场部门和采购部门审核，确保方案可行性和合规性。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h4 class="step-title">产品备案</h4>
+                            </div>
+                            <p class="step-desc">完成产品备案手续，确保合规性，包括食品安全备案和包装材料合规性审查，获取相关认证和许可。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h4 class="step-title">产品打样</h4>
+                            </div>
+                            <p class="step-desc">制作样品，确认包装效果与质量，进行样品测试和用户反馈收集，评估包装的实用性和美观性。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">6</div>
+                                <h4 class="step-title">产品下单</h4>
+                            </div>
+                            <p class="step-desc">确认样品后正式下单，安排生产计划，确定交付时间和物流安排，签订采购合同。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">7</div>
+                                <h4 class="step-title">监督生产</h4>
+                            </div>
+                            <p class="step-desc">全程跟踪生产过程，确保质量与进度，定期进行生产现场检查和进度确认，解决生产过程中的问题。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">8</div>
+                                <h4 class="step-title">发货到厂验收</h4>
+                            </div>
+                            <p class="step-desc">产品发货到厂，进行质量验收，包括数量核对、质量检查和文件确认，确保产品符合质量标准。</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-header">
+                                <div class="step-number">9</div>
+                                <h4 class="step-title">开票和结算</h4>
+                            </div>
+                            <p class="step-desc">完成发票开具与结算流程，确保财务流程合规，完成采购闭环，归档采购文件和记录。</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="supplier-form-section">
@@ -1376,49 +1387,6 @@
                 <p style="margin-top: 15px; font-size: 15px; color: var(--secondary);">
                     点击上方按钮填写供应商基本信息，我将尽快与您联系
                 </p>
-            </div>
-        </section>
-        
-        <!-- 工作三大目标 -->
-        <section class="card goals-section">
-            <div class="goals-header">
-                <h2 class="goals-title">工作三大目标</h2>
-                <p class="goals-subtitle">专注于实现卓越的包装采购绩效，为企业创造持续价值</p>
-            </div>
-            
-            <div class="goals-container">
-                <div class="goal-card">
-                    <div class="goal-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="goal-content">
-                        <h3 class="goal-title">质量保证</h3>
-                        <p class="goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。</p>
-                        <div class="goal-highlight">100%符合食品安全标准</div>
-                    </div>
-                </div>
-                
-                <div class="goal-card">
-                    <div class="goal-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="goal-content">
-                        <h3 class="goal-title">成本控制</h3>
-                        <p class="goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。</p>
-                        <div class="goal-highlight">15-20%成本优化目标</div>
-                    </div>
-                </div>
-                
-                <div class="goal-card">
-                    <div class="goal-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="goal-content">
-                        <h3 class="goal-title">供应链稳定</h3>
-                        <p class="goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。</p>
-                        <div class="goal-highlight">99.5%供应链稳定性</div>
-                    </div>
-                </div>
             </div>
         </section>
     </div>
@@ -1664,6 +1632,28 @@
             
             // 初始化访问统计
             initStatistics();
+            
+            // 导航栏平滑滚动
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 只处理内部锚点链接
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    // 外部链接不做处理，直接跳转
+                });
+            });
         });
     </script>
 </body>
