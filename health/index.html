@@ -3,1022 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>药食同源类食品 | 王维 - 食品包装采购</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>简约视频播放器</title>
     <style>
-        /* 基础样式 - 与主页保持一致 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-        :root {
-            --primary: #2c7be5;
-            --secondary: #6c757d;
-            --success: #00b894;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --food-primary: #e74c3c;
-            --food-secondary: #f39c12;
-            --food-light: #fff5f5;
-            --food-gradient: linear-gradient(135deg, #e74c3c, #f39c12);
-            --border-radius: 16px;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
-            color: #333;
-            line-height: 1.7;
-            overflow-x: hidden;
-            min-height: 100vh;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 动态背景 */
-        .dynamic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .video-container {
+            position: relative;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            opacity: 0.4;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(243, 156, 18, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(52, 152, 219, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
-        
-        /* 导航栏 */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-height: 800px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 20px;
-            color: var(--food-primary);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-link {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            position: relative;
-            padding: 5px 0;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--food-gradient);
-            transition: var(--transition);
-            border-radius: 2px;
-        }
-        
-        .nav-link:hover {
-            color: var(--food-primary);
-        }
-        
-        .nav-link:hover::after {
+        video {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
-        .nav-link.active {
-            color: var(--food-primary);
-        }
-        
-        .nav-link.active::after {
-            width: 100%;
-        }
-        
-        /* 页面标题区域 */
-        .page-header {
-            background: var(--food-gradient);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .page-header::before {
-            content: "";
+        /* 加载动画 */
+        .loader {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>');
-            background-size: 200px;
-        }
-        
-        .page-title {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .page-subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* 搜索和筛选区域 */
-        .search-filter-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .search-box {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 50px 0 0 50px;
-            font-size: 16px;
-            transition: var(--transition);
-            outline: none;
-        }
-        
-        .search-input:focus {
-            border-color: var(--food-primary);
-        }
-        
-        .search-btn {
-            background: var(--food-gradient);
-            color: white;
-            border: none;
-            padding: 0 30px;
-            border-radius: 0 50px 50px 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .search-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-        }
-        
-        .filter-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .filter-tag {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .filter-tag:hover, .filter-tag.active {
-            background: var(--food-primary);
-            color: white;
-            border-color: var(--food-primary);
-        }
-        
-        /* 药食同源介绍 */
-        .intro-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .intro-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--food-primary);
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .intro-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--food-gradient);
-            border-radius: 2px;
-        }
-        
-        .intro-content {
-            line-height: 1.8;
-            font-size: 16px;
-        }
-        
-        .intro-content p {
-            margin-bottom: 20px;
-        }
-        
-        /* 分类网格 */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .category-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .category-header {
-            background: var(--food-gradient);
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .category-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        .category-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .category-desc {
-            opacity: 0.9;
-            font-size: 15px;
-        }
-        
-        .category-content {
-            padding: 25px;
-        }
-        
-        .food-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #f1f1f1;
-            transition: var(--transition);
-        }
-        
-        .food-item:last-child {
-            border-bottom: none;
-        }
-        
-        .food-item:hover {
-            transform: translateX(10px);
-        }
-        
-        .food-item-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--food-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .food-item-desc {
-            font-size: 14px;
-            color: var(--secondary);
-            margin-bottom: 10px;
-        }
-        
-        .read-more {
-            color: var(--food-primary);
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-        
-        .read-more:hover {
-            gap: 8px;
-        }
-        
-        /* 特色产品展示 */
-        .featured-section {
-            margin-bottom: 50px;
-        }
-        
-        .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--food-primary);
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--food-gradient);
-            border-radius: 2px;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 10;
         }
         
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
         
-        .product-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-        
-        .product-image {
-            height: 200px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--food-primary);
-            font-size: 60px;
-        }
-        
-        .product-content {
-            padding: 20px;
-        }
-        
-        .product-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--food-primary);
-        }
-        
-        .product-desc {
-            font-size: 14px;
-            color: var(--secondary);
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .product-benefits {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-tag {
-            background: var(--food-light);
-            color: var(--food-primary);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        /* 详细内容区域 */
-        .detail-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .detail-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--food-primary);
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .detail-title::after {
-            content: '';
+        /* 视频控制栏 */
+        .controls {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--food-gradient);
-            border-radius: 2px;
-        }
-        
-        .detail-content {
-            line-height: 1.8;
-        }
-        
-        .detail-content p {
-            margin-bottom: 20px;
-        }
-        
-        .detail-content ul, .detail-content ol {
-            margin-bottom: 20px;
-            padding-left: 20px;
-        }
-        
-        .detail-content li {
-            margin-bottom: 10px;
-        }
-        
-        .comparison-table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .comparison-table th {
-            background: var(--food-gradient);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .comparison-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        .comparison-table tr:hover {
-            background: var(--food-light);
-        }
-        
-        /* 页脚 */
-        .footer {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>');
-            background-size: 150px;
-        }
-        
-        .footer-links {
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 20px;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .footer-link {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
+        .video-container:hover .controls {
+            opacity: 1;
         }
         
-        .footer-link:hover {
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
             color: white;
-            transform: translateY(-3px);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
         }
         
-        .copyright {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-top: 20px;
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
         
         /* 响应式调整 */
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
+            .video-container {
+                max-height: none;
+                height: 100vh;
             }
             
-            .nav-links {
-                gap: 15px;
-            }
-            
-            .page-title {
-                font-size: 32px;
-            }
-            
-            .category-grid, .featured-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .search-box {
-                flex-direction: column;
-            }
-            
-            .search-input {
-                border-radius: 50px;
-                margin-bottom: 10px;
-            }
-            
-            .search-btn {
-                border-radius: 50px;
-                padding: 15px;
-            }
-            
-            .intro-section, .detail-section {
-                padding: 25px 20px;
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 动态背景 -->
-    <div class="dynamic-bg"></div>
-    
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-arrow-left"></i>
-                返回主页
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">首页</a>
-                <a href="printing-knowledge.html" class="nav-link">印刷知识库</a>
-                <a href="health-food-knowledge.html" class="nav-link active">药食同源食品</a>
-                <a href="company-products.html" class="nav-link">公司产品</a>
-            </div>
+    <div class="video-container">
+        <div class="loader"></div>
+        <video id="myVideo" controls>
+            <source src="https://www.tongrentang.com/file/upload/jkqinghai.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 视频播放。
+        </video>
+        <div class="controls">
+            <button class="control-btn" id="playPauseBtn">▶️</button>
+            <button class="control-btn" id="muteBtn">🔊</button>
+            <button class="control-btn" id="fullscreenBtn">⛶</button>
         </div>
-    </nav>
-
-    <!-- 页面标题区域 -->
-    <header class="page-header">
-        <h1 class="page-title">药食同源类食品</h1>
-        <p class="page-subtitle">探索中医药理论与现代营养学结合的养生食品，了解兼具药用价值与美味口感的健康选择</p>
-    </header>
-
-    <div class="container">
-        <!-- 搜索和筛选区域 -->
-        <section class="search-filter-section">
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="搜索药食同源食材、功效或产品...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i> 搜索
-                </button>
-            </div>
-            <div class="filter-tags">
-                <div class="filter-tag active">全部</div>
-                <div class="filter-tag">补气养血</div>
-                <div class="filter-tag">健脾养胃</div>
-                <div class="filter-tag">滋阴润肺</div>
-                <div class="filter-tag">清热解毒</div>
-                <div class="filter-tag">安神助眠</div>
-                <div class="filter-tag">调理三高</div>
-            </div>
-        </section>
-
-        <!-- 药食同源介绍 -->
-        <section class="intro-section">
-            <h2 class="intro-title">什么是药食同源？</h2>
-            <div class="intro-content">
-                <p>药食同源是指许多食物具有药用价值，而许多药物也可以作为食物食用。这一概念源自中医理论，认为食物与药物之间没有绝对的分界线，许多食材既可以作为日常饮食，又具有一定的预防和治疗疾病的作用。</p>
-                <p>在中国传统医学中，药食同源的理念已有数千年历史。《黄帝内经》中提出"五谷为养，五果为助，五畜为益，五菜为充"的饮食原则，强调食物对人体的滋养作用。现代科学研究也证实了许多传统食材的药用价值，如枸杞、红枣、山药等。</p>
-                <p>同仁堂健康药业秉承传统中医药智慧，结合现代科技，研发了一系列药食同源健康食品，让您在享受美味的同时，获得健康益处。</p>
-            </div>
-        </section>
-
-        <!-- 分类网格 -->
-        <section class="category-grid">
-            <!-- 补气养血类 -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h2 class="category-title">补气养血类</h2>
-                    <p class="category-desc">改善气血不足，增强体质</p>
-                </div>
-                <div class="category-content">
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            红枣
-                        </h3>
-                        <p class="food-item-desc">补中益气，养血安神，富含维生素C和铁质</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            枸杞
-                        </h3>
-                        <p class="food-item-desc">滋补肝肾，益精明目，含丰富枸杞多糖</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            桂圆
-                        </h3>
-                        <p class="food-item-desc">补心脾，益气血，安心神，改善失眠健忘</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            黑芝麻
-                        </h3>
-                        <p class="food-item-desc">补肝肾，益精血，润肠燥，乌发养颜</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 健脾养胃类 -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-stomach"></i>
-                    </div>
-                    <h2 class="category-title">健脾养胃类</h2>
-                    <p class="category-desc">调理脾胃功能，促进消化吸收</p>
-                </div>
-                <div class="category-content">
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            山药
-                        </h3>
-                        <p class="food-item-desc">补脾养胃，生津益肺，补肾涩精</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            薏米
-                        </h3>
-                        <p class="food-item-desc">利水渗湿，健脾止泻，清热排脓</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            茯苓
-                        </h3>
-                        <p class="food-item-desc">利水渗湿，健脾宁心，改善脾虚食少</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            陈皮
-                        </h3>
-                        <p class="food-item-desc">理气健脾，燥湿化痰，促进消化</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 滋阴润肺类 -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-lungs"></i>
-                    </div>
-                    <h2 class="category-title">滋阴润肺类</h2>
-                    <p class="category-desc">滋润肺脏，改善呼吸道健康</p>
-                </div>
-                <div class="category-content">
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            百合
-                        </h3>
-                        <p class="food-item-desc">养阴润肺，清心安神，改善干咳少痰</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            银耳
-                        </h3>
-                        <p class="food-item-desc">滋阴润肺，养胃生津，富含胶质蛋白</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            蜂蜜
-                        </h3>
-                        <p class="food-item-desc">补中润燥，止痛解毒，滋润肺与大肠</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="food-item">
-                        <h3 class="food-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            梨
-                        </h3>
-                        <p class="food-item-desc">生津润燥，清热化痰，改善肺热咳嗽</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 特色产品展示 -->
-        <section class="featured-section">
-            <h2 class="section-title">同仁堂特色药食同源产品</h2>
-            <div class="featured-grid">
-                <!-- 产品1 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <i class="fas fa-mortar-pestle"></i>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">枸杞红枣养生茶</h3>
-                        <p class="product-desc">精选宁夏枸杞与新疆红枣，科学配比，方便冲泡，补气养血，改善面色萎黄。</p>
-                        <div class="product-benefits">
-                            <span class="benefit-tag">补气养血</span>
-                            <span class="benefit-tag">改善睡眠</span>
-                            <span class="benefit-tag">增强免疫</span>
-                        </div>
-                        <a href="#" class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- 产品2 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <i class="fas fa-capsules"></i>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">山药茯苓营养粉</h3>
-                        <p class="product-desc">采用道地山药与茯苓，低温破壁技术，保留营养成分，健脾养胃，改善消化。</p>
-                        <div class="product-benefits">
-                            <span class="benefit-tag">健脾养胃</span>
-                            <span class="benefit-tag">促进消化</span>
-                            <span class="benefit-tag">增强体质</span>
-                        </div>
-                        <a href="#" class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- 产品3 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <i class="fas fa-wine-bottle"></i>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">百合银耳滋润膏</h3>
-                        <p class="product-desc">传统工艺熬制，不含防腐剂，滋阴润肺，改善秋冬干燥引起的咽喉不适。</p>
-                        <div class="product-benefits">
-                            <span class="benefit-tag">滋阴润肺</span>
-                            <span class="benefit-tag">缓解干燥</span>
-                            <span class="benefit-tag">美容养颜</span>
-                        </div>
-                        <a href="#" class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 详细内容区域 -->
-        <section class="detail-section">
-            <h2 class="detail-title">枸杞的药用价值与食用方法</h2>
-            <div class="detail-content">
-                <p>枸杞是药食同源的典型代表，在中医理论中具有滋补肝肾、益精明目的功效。现代研究发现，枸杞富含枸杞多糖、甜菜碱、枸杞色素等活性成分，具有增强免疫力、抗衰老、保护视力等多种生理功能。</p>
-                
-                <h3>枸杞的主要功效：</h3>
-                <ul>
-                    <li><strong>增强免疫力</strong>：枸杞多糖能促进巨噬细胞吞噬功能，增强机体抗病能力</li>
-                    <li><strong>保护视力</strong>：富含的玉米黄质能在视网膜积累，过滤有害蓝光</li>
-                    <li><strong>抗衰老</strong>：枸杞多糖具有抗氧化作用，延缓细胞衰老</li>
-                    <li><strong>保护肝脏</strong>：甜菜碱能促进肝细胞再生，预防脂肪肝</li>
-                    <li><strong>改善睡眠</strong>：对神经衰弱、失眠多梦有一定改善作用</li>
-                </ul>
-                
-                <h3>不同产地枸杞特点对比：</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>产地</th>
-                            <th>特点</th>
-                            <th>营养成分</th>
-                            <th>适宜人群</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>宁夏枸杞</td>
-                            <td>粒大肉厚，味道甘甜</td>
-                            <td>枸杞多糖含量高</td>
-                            <td>免疫力低下者</td>
-                        </tr>
-                        <tr>
-                            <td>青海枸杞</td>
-                            <td>色泽鲜红，含糖量低</td>
-                            <td>甜菜碱含量丰富</td>
-                            <td>糖尿病患者</td>
-                        </tr>
-                        <tr>
-                            <td>新疆枸杞</td>
-                            <td>果实饱满，日照充足</td>
-                            <td>维生素C含量高</td>
-                            <td>需要抗氧化者</td>
-                        </tr>
-                        <tr>
-                            <td>甘肃枸杞</td>
-                            <td>药味浓郁，药用价值高</td>
-                            <td>总黄酮含量较高</td>
-                            <td>肝肾功能不佳者</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>枸杞的食用方法：</h3>
-                <ol>
-                    <li><strong>直接食用</strong>：每日10-15粒，细嚼慢咽，吸收更充分</li>
-                    <li><strong>泡水饮用</strong>：用温水冲泡，可反复冲泡至无色无味</li>
-                    <li><strong>煮粥煲汤</strong>：与大米、红枣等同煮，增强滋补效果</li>
-                    <li><strong>泡酒</strong>：用白酒浸泡2周后饮用，注意适量</li>
-                    <li><strong>制作药膳</strong>：与鸡肉、猪肉等搭配，增强滋补功效</li>
-                </ol>
-                
-                <p>需要注意的是，枸杞性温，体质湿热、感冒发热或有炎症的人群应适量食用。日常保健建议每日食用量不超过20克。</p>
-            </div>
-        </section>
     </div>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="index.html" class="footer-link">返回主页</a>
-            <a href="printing-knowledge.html" class="footer-link">印刷知识库</a>
-            <a href="health-food-knowledge.html" class="footer-link">药食同源食品</a>
-            <a href="company-products.html" class="footer-link">公司产品</a>
-            <a href="#" class="footer-link">联系我们</a>
-        </div>
-        <div class="copyright">© 2025 王维 - 北京同仁堂健康药业（青海）有限公司 | 保留所有权利</div>
-    </footer>
-
     <script>
-        // 页面交互功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 筛选标签点击事件
-            const filterTags = document.querySelectorAll('.filter-tag');
-            filterTags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    // 移除其他标签的active类
-                    filterTags.forEach(t => t.classList.remove('active'));
-                    // 为当前点击的标签添加active类
-                    this.classList.add('active');
-                    
-                    // 这里可以添加筛选逻辑
-                    // 根据标签内容筛选知识项目
-                });
+            const video = document.getElementById('myVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const loader = document.querySelector('.loader');
+            
+            // 隐藏加载动画
+            video.addEventListener('loadeddata', function() {
+                loader.style.display = 'none';
             });
             
-            // 搜索功能
-            const searchBtn = document.querySelector('.search-btn');
-            const searchInput = document.querySelector('.search-input');
-            
-            searchBtn.addEventListener('click', function() {
-                performSearch();
-            });
-            
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
+            // 播放/暂停按钮
+            playPauseBtn.addEventListener('click', function() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.innerHTML = '⏸️';
+                } else {
+                    video.pause();
+                    playPauseBtn.innerHTML = '▶️';
                 }
             });
             
-            function performSearch() {
-                const searchTerm = searchInput.value.trim();
-                if (searchTerm) {
-                    // 这里可以添加搜索逻辑
-                    alert(`搜索: ${searchTerm}`);
-                    // 实际应用中应该根据搜索词筛选内容
+            // 静音按钮
+            muteBtn.addEventListener('click', function() {
+                if (video.muted) {
+                    video.muted = false;
+                    muteBtn.innerHTML = '🔊';
+                } else {
+                    video.muted = true;
+                    muteBtn.innerHTML = '🔇';
                 }
-            }
-            
-            // 食品项点击展开详情
-            const foodItems = document.querySelectorAll('.food-item');
-            foodItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // 这里可以添加展开详细内容的逻辑
-                    // 例如跳转到详细页面或展开折叠内容
-                    const title = this.querySelector('.food-item-title').textContent;
-                    console.log(`展开内容: ${title}`);
-                });
             });
             
-            // 产品卡片点击事件
-            const productCards = document.querySelectorAll('.product-card');
-            productCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const title = this.querySelector('.product-title').textContent;
-                    // 这里可以添加跳转到产品详情页的逻辑
-                    console.log(`查看产品: ${title}`);
-                });
+            // 全屏按钮
+            fullscreenBtn.addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    document.querySelector('.video-container').requestFullscreen().catch(err => {
+                        console.log(`全屏请求错误: ${err.message}`);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+            
+            // 视频播放状态变化时更新按钮
+            video.addEventListener('play', function() {
+                playPauseBtn.innerHTML = '⏸️';
+            });
+            
+            video.addEventListener('pause', function() {
+                playPauseBtn.innerHTML = '▶️';
+            });
+            
+            // 全屏状态变化
+            document.addEventListener('fullscreenchange', function() {
+                if (document.fullscreenElement) {
+                    fullscreenBtn.innerHTML = '⛶';
+                } else {
+                    fullscreenBtn.innerHTML = '⛶';
+                }
             });
         });
     </script>
