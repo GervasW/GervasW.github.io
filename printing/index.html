@@ -3,807 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>印刷知识库 | 王维 - 食品包装采购</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>包装印刷知识库</title>
     <style>
-        /* 基础样式 - 与主页保持一致 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-        :root {
-            --primary: #2c7be5;
-            --secondary: #6c757d;
-            --success: #00b894;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --food-primary: #e74c3c;
-            --food-secondary: #f39c12;
-            --food-light: #fff5f5;
-            --food-gradient: linear-gradient(135deg, #e74c3c, #f39c12);
-            --border-radius: 16px;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-family: "Microsoft YaHei", Arial, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
-            color: #333;
-            line-height: 1.7;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 动态背景 */
-        .dynamic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.4;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(243, 156, 18, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(52, 152, 219, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
-        
-        /* 导航栏 */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        /* 左侧导航栏样式 */
+        .sidebar {
+            width: 280px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
         
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 20px;
-            color: var(--food-primary);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-link {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            position: relative;
-            padding: 5px 0;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--food-gradient);
-            transition: var(--transition);
-            border-radius: 2px;
-        }
-        
-        .nav-link:hover {
-            color: var(--food-primary);
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .nav-link.active {
-            color: var(--food-primary);
-        }
-        
-        .nav-link.active::after {
-            width: 100%;
-        }
-        
-        /* 页面标题区域 */
-        .page-header {
-            background: var(--food-gradient);
-            color: white;
-            padding: 60px 20px;
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .page-header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>');
-            background-size: 200px;
-        }
-        
-        .page-title {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .page-subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* 搜索和筛选区域 */
-        .search-filter-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .search-box {
-            display: flex;
+            padding: 20px 0;
+            border-bottom: 1px solid #34495e;
             margin-bottom: 20px;
         }
         
-        .search-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 50px 0 0 50px;
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e67e22; /* 橙色标题 */
+        }
+        
+        .nav-item {
+            padding: 15px 25px;
+            border-bottom: 1px solid #34495e;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: #34495e;
+            padding-left: 30px;
+        }
+        
+        .nav-item.active {
+            background-color: #e67e22; /* 橙色激活状态 */
+            border-left: 4px solid #d35400;
+        }
+        
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            display: block;
             font-size: 16px;
-            transition: var(--transition);
-            outline: none;
         }
         
-        .search-input:focus {
-            border-color: var(--food-primary);
+        /* 右侧内容区域样式 */
+        .content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+            background-color: white;
+            min-height: 100vh;
         }
         
-        .search-btn {
-            background: var(--food-gradient);
-            color: white;
-            border: none;
-            padding: 0 30px;
-            border-radius: 0 50px 50px 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
         
-        .search-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        .section.active {
+            display: block;
         }
         
-        .filter-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .filter-tag {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .filter-tag:hover, .filter-tag.active {
-            background: var(--food-primary);
-            color: white;
-            border-color: var(--food-primary);
-        }
-        
-        /* 知识分类网格 */
-        .knowledge-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .knowledge-category {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-        
-        .knowledge-category:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .category-header {
-            background: var(--food-gradient);
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .category-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        .category-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .category-desc {
-            opacity: 0.9;
-            font-size: 15px;
-        }
-        
-        .category-content {
-            padding: 25px;
-        }
-        
-        .knowledge-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #f1f1f1;
-            transition: var(--transition);
-        }
-        
-        .knowledge-item:last-child {
-            border-bottom: none;
-        }
-        
-        .knowledge-item:hover {
-            transform: translateX(10px);
-        }
-        
-        .knowledge-item-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--food-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .knowledge-item-desc {
-            font-size: 14px;
-            color: var(--secondary);
-            margin-bottom: 10px;
-        }
-        
-        .read-more {
-            color: var(--food-primary);
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-        
-        .read-more:hover {
-            gap: 8px;
-        }
-        
-        /* 详细内容区域 */
-        .detail-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .detail-title {
+        .section-title {
             font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--food-primary);
-            position: relative;
+            color: #2c3e50;
+            margin-bottom: 25px;
             padding-bottom: 15px;
+            border-bottom: 2px solid #e67e22; /* 橙色边框 */
         }
         
-        .detail-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--food-gradient);
-            border-radius: 2px;
+        .subsection {
+            margin-bottom: 30px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #e67e22; /* 橙色侧边 */
         }
         
-        .detail-content {
-            line-height: 1.8;
+        .subsection h3 {
+            color: #e67e22; /* 橙色标题 */
+            margin-bottom: 15px;
+            font-size: 20px;
         }
         
-        .detail-content p {
-            margin-bottom: 20px;
-        }
-        
-        .detail-content ul, .detail-content ol {
-            margin-bottom: 20px;
+        .subsection ul {
+            list-style-type: none;
             padding-left: 20px;
         }
         
-        .detail-content li {
+        .subsection li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .subsection li:before {
+            content: "•";
+            color: #e67e22; /* 橙色点 */
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        /* 下单流程样式 */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .process-step {
+            background-color: #fff9f2; /* 浅橙色背景 */
+            border: 1px solid #fad7b0;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: #e67e22;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            color: #e67e22;
             margin-bottom: 10px;
         }
         
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
+        .step-content {
+            color: #555;
+            line-height: 1.6;
         }
         
-        .comparison-table th {
-            background: var(--food-gradient);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .comparison-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        .comparison-table tr:hover {
-            background: var(--food-light);
-        }
-        
-        /* 页脚 */
-        .footer {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>');
-            background-size: 150px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        
-        .footer-link {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .footer-link:hover {
-            color: white;
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-top: 20px;
-        }
-        
-        /* 响应式调整 */
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-links {
-                gap: 15px;
-            }
-            
-            .page-title {
-                font-size: 32px;
-            }
-            
-            .knowledge-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .search-box {
+            body {
                 flex-direction: column;
             }
             
-            .search-input {
-                border-radius: 50px;
-                margin-bottom: 10px;
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
             }
             
-            .search-btn {
-                border-radius: 50px;
-                padding: 15px;
-            }
-            
-            .detail-section {
-                padding: 25px 20px;
+            .content {
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 动态背景 -->
-    <div class="dynamic-bg"></div>
-    
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-arrow-left"></i>
-                返回主页
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">首页</a>
-                <a href="printing-knowledge.html" class="nav-link active">印刷知识库</a>
-                <a href="health-food-knowledge.html" class="nav-link">健康食品知识库</a>
-                <a href="company-products.html" class="nav-link">公司产品</a>
-            </div>
+    <!-- 左侧导航栏 -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1>包装印刷知识库</h1>
         </div>
-    </nav>
-
-    <!-- 页面标题区域 -->
-    <header class="page-header">
-        <h1 class="page-title">印刷知识库</h1>
-        <p class="page-subtitle">全面了解食品包装印刷工艺、材料特性及成本分析，为您的包装采购决策提供专业参考</p>
-    </header>
-
-    <div class="container">
-        <!-- 搜索和筛选区域 -->
-        <section class="search-filter-section">
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="搜索印刷工艺、材料或技术...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i> 搜索
-                </button>
-            </div>
-            <div class="filter-tags">
-                <div class="filter-tag active">全部</div>
-                <div class="filter-tag">印刷工艺</div>
-                <div class="filter-tag">包装材料</div>
-                <div class="filter-tag">成本分析</div>
-                <div class="filter-tag">设计规范</div>
-                <div class="filter-tag">质量控制</div>
-                <div class="filter-tag">环保标准</div>
-            </div>
-        </section>
-
-        <!-- 知识分类网格 -->
-        <section class="knowledge-grid">
-            <!-- 印刷工艺分类 -->
-            <div class="knowledge-category">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-print"></i>
-                    </div>
-                    <h2 class="category-title">印刷工艺</h2>
-                    <p class="category-desc">各类印刷技术的特点与应用</p>
-                </div>
-                <div class="category-content">
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            胶版印刷
-                        </h3>
-                        <p class="knowledge-item-desc">适用于大批量纸类包装印刷，色彩还原度高，成本效益好</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            凹版印刷
-                        </h3>
-                        <p class="knowledge-item-desc">适用于塑料薄膜印刷，墨层厚实，色彩鲜艳持久</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            柔版印刷
-                        </h3>
-                        <p class="knowledge-item-desc">环保型印刷方式，适用于多种包装材料</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            数码印刷
-                        </h3>
-                        <p class="knowledge-item-desc">小批量、个性化印刷的理想选择，无需制版</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 包装材料分类 -->
-            <div class="knowledge-category">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <h2 class="category-title">包装材料</h2>
-                    <p class="category-desc">各类包装材料的特性与适用场景</p>
-                </div>
-                <div class="category-content">
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            纸质包装材料
-                        </h3>
-                        <p class="knowledge-item-desc">卡纸、瓦楞纸、食品级纸板等材料的特性与应用</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            塑料包装材料
-                        </h3>
-                        <p class="knowledge-item-desc">PET、PP、PE等塑料材料的性能与印刷适应性</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            复合材料
-                        </h3>
-                        <p class="knowledge-item-desc">铝塑复合、纸塑复合等材料的优势与印刷要点</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            环保材料
-                        </h3>
-                        <p class="knowledge-item-desc">可降解、可再生材料的特性与印刷工艺</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 成本分析分类 -->
-            <div class="knowledge-category">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h2 class="category-title">成本分析</h2>
-                    <p class="category-desc">印刷成本构成与优化策略</p>
-                </div>
-                <div class="category-content">
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            印刷成本构成
-                        </h3>
-                        <p class="knowledge-item-desc">分析印刷各环节成本，找出优化空间</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            批量与成本关系
-                        </h3>
-                        <p class="knowledge-item-desc">不同印刷数量对单位成本的影响分析</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            材料成本优化
-                        </h3>
-                        <p class="knowledge-item-desc">合理选择材料，平衡成本与质量</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="knowledge-item">
-                        <h3 class="knowledge-item-title">
-                            <i class="fas fa-caret-right"></i>
-                            工艺成本对比
-                        </h3>
-                        <p class="knowledge-item-desc">不同印刷工艺的成本效益分析</p>
-                        <a href="#" class="read-more">了解更多 <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 详细内容区域 - 示例 -->
-        <section class="detail-section">
-            <h2 class="detail-title">胶版印刷详细解析</h2>
-            <div class="detail-content">
-                <p>胶版印刷是目前应用最广泛的印刷技术之一，特别适用于食品包装的大批量生产。它利用油水不相容的原理，通过印版将图文部分转移到橡皮布上，再由橡皮布转移到承印物上。</p>
-                
-                <h3>胶版印刷的优势：</h3>
-                <ul>
-                    <li><strong>印刷质量高</strong>：网点还原精准，色彩层次丰富</li>
-                    <li><strong>生产效率高</strong>：适合大批量生产，成本效益好</li>
-                    <li><strong>适用范围广</strong>：可用于各种纸张、纸板等材料</li>
-                    <li><strong>技术成熟</strong>：工艺稳定，质量控制容易</li>
-                </ul>
-                
-                <h3>胶版印刷在食品包装中的应用：</h3>
-                <p>胶版印刷广泛应用于食品纸盒、标签、说明书等包装材料的印刷。其高质量的色彩表现能够有效提升产品包装的视觉吸引力，增强品牌形象。</p>
-                
-                <h3>不同纸张的胶版印刷效果对比：</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>纸张类型</th>
-                            <th>印刷效果</th>
-                            <th>适用场景</th>
-                            <th>成本水平</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>铜版纸</td>
-                            <td>色彩鲜艳，细节清晰</td>
-                            <td>高档礼盒、标签</td>
-                            <td>较高</td>
-                        </tr>
-                        <tr>
-                            <td>白卡纸</td>
-                            <td>色彩饱满，质感好</td>
-                            <td>食品包装盒</td>
-                            <td>中等</td>
-                        </tr>
-                        <tr>
-                            <td>胶版纸</td>
-                            <td>色彩还原一般</td>
-                            <td>说明书、内页</td>
-                            <td>较低</td>
-                        </tr>
-                        <tr>
-                            <td>特种纸</td>
-                            <td>效果独特，质感强</td>
-                            <td>高端礼品包装</td>
-                            <td>高</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <p>在选择胶版印刷时，需要综合考虑印刷数量、质量要求、材料成本和交货时间等因素，以达到最佳的性价比。</p>
-            </div>
-        </section>
+        <div class="nav-item active">
+            <a href="#home">回到首页</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section9">下单流程</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section1">印刷基础知识</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section2">包装材料科学</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section3">印刷工艺大全</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section4">印后加工与成型</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section5">成本核算与采购技巧</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section6">质量检测与常见问题</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section7">实战案例库</a>
+        </div>
+        <div class="nav-item">
+            <a href="#section8">资源与工具</a>
+        </div>
     </div>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="index.html" class="footer-link">返回主页</a>
-            <a href="printing-knowledge.html" class="footer-link">印刷知识库</a>
-            <a href="health-food-knowledge.html" class="footer-link">健康食品知识库</a>
-            <a href="company-products.html" class="footer-link">公司产品</a>
-            <a href="#" class="footer-link">联系我们</a>
+    <!-- 右侧内容区域 -->
+    <div class="content">
+        <!-- 首页内容 -->
+        <div id="home" class="section active">
+            <h2 class="section-title">包装印刷知识库首页</h2>
+            <div class="subsection">
+                <h3>欢迎使用包装印刷知识库</h3>
+                <p>本知识库专为包装采购人员设计，系统性地整理了从基础到专业的印刷知识，帮助您在日常工作中快速查找所需信息，提升采购效率和专业能力。</p>
+                <p>请从左侧导航栏选择您需要了解的知识分类。</p>
+            </div>
+            <div class="subsection">
+                <h3>知识库特色</h3>
+                <ul>
+                    <li>系统性的知识结构，从基础到专业</li>
+                    <li>理论与实践相结合，包含大量实战案例</li>
+                    <li>重点突出包装采购工作中的关键知识点</li>
+                    <li>提供成本核算与采购技巧等实用内容</li>
+                    <li>完整的产品下单流程指导</li>
+                </ul>
+            </div>
         </div>
-        <div class="copyright">© 2025 王维 - 北京同仁堂健康药业（青海）有限公司 | 保留所有权利</div>
-    </footer>
+
+        <!-- 下单流程页面 -->
+        <div id="section9" class="section">
+            <h2 class="section-title">下单流程</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">1</span>产品立项</div>
+                    <div class="step-content">
+                        确定产品需求，明确包装目标，包括预算、时间节点、质量标准等关键要素。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">2</span>产品设计</div>
+                    <div class="step-content">
+                        与设计团队沟通，确定包装结构、外观设计和品牌元素，创建初步设计稿。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">3</span>产品上会</div>
+                    <div class="step-content">
+                        将设计方案提交给相关部门评审，收集反馈意见，进行必要修改。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">4</span>产品备案</div>
+                    <div class="step-content">
+                        完成内部审批流程，将最终设计方案归档，准备进入生产阶段。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">5</span>产品打样</div>
+                    <div class="step-content">
+                        向供应商提供设计文件，要求制作样品，用于确认材质、工艺和最终效果。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">6</span>产品下单</div>
+                    <div class="step-content">
+                        样品确认后，向供应商下达正式生产订单，明确数量、交期和质量要求。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">7</span>监督生产</div>
+                    <div class="step-content">
+                        定期跟进生产进度，必要时进行中期检查，确保生产按计划进行。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">8</span>发货到厂验收</div>
+                    <div class="step-content">
+                        产品生产完成后，安排物流运输，到货后进行质量检验和数量核对。
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-title"><span class="step-number">9</span>开票和结算</div>
+                    <div class="step-content">
+                        验收合格后，处理发票事宜，按照合同约定完成付款结算。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第一部分：印刷基础知识 -->
+        <div id="section1" class="section">
+            <h2 class="section-title">印刷基础知识</h2>
+            <div class="subsection">
+                <h3>印刷概论</h3>
+                <ul>
+                    <li>什么是印刷？四大印刷方式（胶印、凹印、柔印、数码印）简介</li>
+                    <li>不同印刷方式的优缺点与应用场景（重点关联包装领域）</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>色彩学基础</h3>
+                <ul>
+                    <li>CMYK vs. RGB：为何印刷使用CMYK？</li>
+                    <li>潘通色卡（PANTONE）与专色印刷的重要性</li>
+                    <li>什么是色彩管理？如何保证颜色一致性？</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>图像与文件</h3>
+                <ul>
+                    <li>分辨率（DPI）的重要性：为何印刷需要300dpi？</li>
+                    <li>常用文件格式：AI, PDF, PSD, INDD 的用途与交付标准</li>
+                    <li>出血与裁切线：确保成品不会露白边</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第二部分：包装材料科学 -->
+        <div id="section2" class="section">
+            <h2 class="section-title">包装材料科学</h2>
+            <div class="subsection">
+                <h3>纸张核心知识</h3>
+                <ul>
+                    <li>纸张分类（按用途）：通用包装纸、食品包装纸、包装纸板</li>
+                    <li>包装纸板详解：白卡纸、灰底白板纸、铜版纸/艺术纸</li>
+                    <li>纸张性能参数：克重、白度、挺度、平滑度</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>瓦楞纸板知识</h3>
+                <ul>
+                    <li>瓦楞楞型：A, B, C, E, F 楞的特性与用途</li>
+                    <li>常见结构：单瓦楞（三层）、双瓦楞（五层）</li>
+                    <li>面纸与里纸：牛皮纸、箱板纸、白卡纸等的搭配</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>其他材料</h3>
+                <ul>
+                    <li>特种纸（压纹、充皮、触感纸等）</li>
+                    <li>塑料包装材料（软包装）</li>
+                    <li>复合材料（利乐包、铝塑复合膜）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第三部分：印刷工艺大全 -->
+        <div id="section3" class="section">
+            <h2 class="section-title">印刷工艺大全</h2>
+            <div class="subsection">
+                <h3>基础印刷工艺</h3>
+                <ul>
+                    <li>四色印刷</li>
+                    <li>专色印刷</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>表面处理工艺</h3>
+                <ul>
+                    <li>覆膜（过胶）：光膜 vs. 哑膜</li>
+                    <li>上光：普通光油 vs. 局部UV</li>
+                    <li>过油：水性光油、磨光</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>增值与装饰工艺</h3>
+                <ul>
+                    <li>烫金/烫银：普通烫金、立体烫金、彩葱</li>
+                    <li>击凸/压凹：增加立体触感</li>
+                    <li>模切（啤）：制作异形包装的关键</li>
+                    <li>压纹：在纸张表面压制纹理</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第四部分：印后加工与成型 -->
+        <div id="section4" class="section">
+            <h2 class="section-title">印后加工与成型</h2>
+            <div class="subsection">
+                <h3>盒型设计与结构</h3>
+                <ul>
+                    <li>常见盒型：天地盖、折叠盒、手提袋、抽屉盒等</li>
+                    <li>刀模图（刀版图）的识别与校验</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>成型工艺</h3>
+                <ul>
+                    <li>粘盒工艺与胶水类型</li>
+                    <li>糊盒工艺</li>
+                    <li>打孔、打鸡眼、穿绳等</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第五部分：成本核算与采购技巧 -->
+        <div id="section5" class="section">
+            <h2 class="section-title">成本核算与采购技巧</h2>
+            <div class="subsection">
+                <h3>报价公式深度解析</h3>
+                <ul>
+                    <li>纸价计算：熟练运用"定律×克重×吨价÷开数"公式</li>
+                    <li>印工费：理解开机费的计算逻辑</li>
+                    <li>后道加工费：覆膜、烫金、模切、粘盒等费用的累加</li>
+                    <li>总价构成：纸价 + 印前 + 印工 + 后道 + 税费 + 运费</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>成本优化策略</h3>
+                <ul>
+                    <li>如何通过优化设计降本</li>
+                    <li>如何通过选择材料降本</li>
+                    <li>批量与价格的关系：了解经济生产数量（MOQ）</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>采购流程与供应商管理</h3>
+                <ul>
+                    <li>打样流程与标准确认</li>
+                    <li>生产周期管理</li>
+                    <li>质量检验标准（QC）的制定</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第六部分：质量检测与常见问题 -->
+        <div id="section6" class="section">
+            <h2 class="section-title">质量检测与常见问题</h2>
+            <div class="subsection">
+                <h3>常见印刷瑕疵与成因</h3>
+                <ul>
+                    <li>套印不准、色差、墨屎、刮花、脏点等</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>包装成品检验标准</h3>
+                <ul>
+                    <li>尺寸、颜色、材质、工艺、粘合强度等</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第七部分：实战案例库 -->
+        <div id="section7" class="section">
+            <h2 class="section-title">实战案例库</h2>
+            <div class="subsection">
+                <h3>案例一：高档月饼盒</h3>
+                <ul>
+                    <li>材料：400g 艺术纸 + 1200g 工业灰板（裱糊）</li>
+                    <li>工艺：四色印刷 + 专色烫金 + 激凸 + 模切 + 手工裱糊</li>
+                    <li>成本分析：重点在材料与手工费</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>案例二：食品折叠纸盒</h3>
+                <ul>
+                    <li>材料：350g 灰底白板纸</li>
+                    <li>工艺：四色印刷 + 覆哑膜 + 模切 + 自动粘盒</li>
+                    <li>成本分析：重点在纸张与自动化粘盒效率</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>案例三：瓦楞纸运输箱</h3>
+                <ul>
+                    <li>材料：B楞瓦楞纸板</li>
+                    <li>工艺：单色印刷 + 模切 + 钉箱/粘箱</li>
+                    <li>成本分析：重点在瓦楞纸克重与楞型选择</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第八部分：资源与工具 -->
+        <div id="section8" class="section">
+            <h2 class="section-title">资源与工具</h2>
+            <div class="subsection">
+                <h3>常用单位换算表</h3>
+                <ul>
+                    <li>长度单位换算</li>
+                    <li>重量单位换算</li>
+                    <li>纸张克重换算</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>标准纸张尺寸表</h3>
+                <ul>
+                    <li>正度、大度、A度纸张尺寸</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>开数计算器与模板</h3>
+                <ul>
+                    <li>常用开数计算</li>
+                    <li>模切版模板</li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <h3>优质供应商清单</h3>
+                <ul>
+                    <li>记录联系人、擅长工艺等信息</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // 页面交互功能
+        // 导航切换功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 筛选标签点击事件
-            const filterTags = document.querySelectorAll('.filter-tag');
-            filterTags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    // 移除其他标签的active类
-                    filterTags.forEach(t => t.classList.remove('active'));
-                    // 为当前点击的标签添加active类
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有活动类
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // 添加当前活动类
                     this.classList.add('active');
                     
-                    // 这里可以添加筛选逻辑
-                    // 根据标签内容筛选知识项目
-                });
-            });
-            
-            // 搜索功能
-            const searchBtn = document.querySelector('.search-btn');
-            const searchInput = document.querySelector('.search-input');
-            
-            searchBtn.addEventListener('click', function() {
-                performSearch();
-            });
-            
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-            
-            function performSearch() {
-                const searchTerm = searchInput.value.trim();
-                if (searchTerm) {
-                    // 这里可以添加搜索逻辑
-                    alert(`搜索: ${searchTerm}`);
-                    // 实际应用中应该根据搜索词筛选内容
-                }
-            }
-            
-            // 知识项点击展开详情
-            const knowledgeItems = document.querySelectorAll('.knowledge-item');
-            knowledgeItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // 这里可以添加展开详细内容的逻辑
-                    // 例如跳转到详细页面或展开折叠内容
-                    const title = this.querySelector('.knowledge-item-title').textContent;
-                    console.log(`展开内容: ${title}`);
+                    // 显示对应内容
+                    const targetId = this.querySelector('a').getAttribute('href').substring(1);
+                    document.getElementById(targetId).classList.add('active');
                 });
             });
         });
