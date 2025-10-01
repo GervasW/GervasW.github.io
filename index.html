@@ -280,6 +280,39 @@
             color: var(--food-primary);
         }
         
+        /* 新增：供应商表单按钮 */
+        .supplier-form-section {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .supplier-form-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--food-primary), #c0392b);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .supplier-form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .supplier-form-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
         /* 微信弹窗 */
         .modal {
             display: none;
@@ -400,7 +433,7 @@
     <section class="profile">
         <div class="avatar">
             <!-- 方法1: 使用在线图片URL -->
-            <img src="https://cdn4.winhlb.com/2025/10/01/68dc2bd442859.jpg" alt="王维">
+            <img src="https://cdn4.winhlb.com/2025/10/01/68dc7c93466ea.jpg" alt="王维">
         </div>
         <h1>王维</h1>
         <p>北京同仁堂健康药业（青海）有限公司 | 包装采购</p>
@@ -502,6 +535,16 @@
                     <li>复合材料制品（铝塑复合、纸塑复合）</li>
                 </ul>
             </div>
+            
+            <!-- 新增的供应商表单按钮部分 -->
+            <div class="supplier-form-section">
+                <a href="https://f.kdocs.cn/g/FI7quFBs/" target="_blank" class="supplier-form-btn">
+                    📝 供应商信息登记表
+                </a>
+                <p style="margin-top: 12px; font-size: 14px; color: var(--secondary);">
+                    点击上方按钮填写供应商基本信息，我将尽快与您联系
+                </p>
+            </div>
         </section>
         
         <!-- 采购岗位目标 -->
@@ -518,10 +561,10 @@
                     </div>
                     <div class="goal-item">
                         <div class="goal-title">成本控制</div>
-                        <div>降本增效，优化采购成本，实现企业采购预算目标，提升整体利润率</div>
+                        <div>优化采购成本，实现企业采购预算目标，提升整体利润率</div>
                     </div>
                     <div class="goal-item">
-                        <div class="goal-title">保障供应</div>
+                        <div class="goal-title">供应链稳定</div>
                         <div>建立稳定的供应商体系，确保生产连续性，降低供应链风险</div>
                     </div>
                 </div>
