@@ -1,14 +1,38 @@
-# 博客站点设置
-title: "我的博客"
-description: "这是我的个人博客"
-baseurl: "/blog" # 关键：必须设置为你的博客子目录路径
-url: "https://你的用户名.github.io" # 你的网站主域名
+title: "你的博客名称"
+description: "一段吸引人的博客描述"
+baseurl: "/blog"
+url: "https://你的用户名.github.io"
+
+# 主题设置
+theme: minima
 
 # 构建设置
 markdown: kramdown
-theme: minima # 或你喜欢的主题
+permalink: pretty
+
+# 作者信息
+author:
+  name: "你的名字"
+  bio: "简短的个人介绍"
+  avatar: "/blog/assets/images/avatar.jpg"
+  location: "你的城市"
+  
+# 社交链接
+social:
+  github: 你的GitHub用户名
+  twitter: 你的Twitter用户名
+  email: 你的邮箱@example.com
+
+# 自定义设置
+header_pages:
+  - about.md
+  - archive.md
 
 # 插件
 plugins:
   - jekyll-feed
-  - jekyll-paginate
+  - jekyll-seo-tag
+
+# 外观设置
+accent_color: "#3B82F6"  # 主色调
+secondary_color: "#10B981" # 辅助色
