@@ -3,14 +3,13 @@ layout: default
 ---
 
 <section class="hero">
-    <h1>欢迎来到我的博客</h1>
+    <h1>欢迎来到 gervasw 的博客</h1>
     <p>这里是我分享想法和学习心得的地方</p>
 </section>
 
 <section class="post-list">
     <h2>最新文章</h2>
     
-    <!-- 此循环遍历所有博客文章 -->
     {% for post in site.posts %}
     <article class="post-item">
         <h3 class="post-title">
@@ -26,7 +25,6 @@ layout: default
         </div>
     </article>
     {% else %}
-    <!-- 如果没有文章时显示的内容 -->
     <p>暂无文章，敬请期待。</p>
     {% endfor %}
 </section>
