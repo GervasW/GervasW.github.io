@@ -477,91 +477,17 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
         
-        /* 下单流程卡片 */
-        .process-steps {
+        /* 底部按钮区域 */
+        .action-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .process-step {
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(231, 76, 60, 0.1);
-        }
-        
-        .process-step::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--food-gradient);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.6s ease;
-        }
-        
-        .process-step:hover::before {
-            transform: scaleY(1);
-        }
-        
-        .process-step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--food-gradient);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-weight: 700;
-            font-size: 14px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-        }
-        
-        .step-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .step-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--food-primary);
-        }
-        
-        .step-desc {
-            color: var(--secondary);
-            line-height: 1.6;
-            font-size: 14px;
-            padding-left: 45px;
-        }
-        
-        /* 了解我按钮 */
-        .about-me-section {
-            text-align: center;
-            margin-top: 20px;
+            gap: 30px;
+            margin-top: 30px;
             padding-top: 30px;
+            flex-wrap: wrap;
         }
         
-        .about-me-btn {
+        .action-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -577,9 +503,10 @@
             font-size: 18px;
             position: relative;
             overflow: hidden;
+            min-width: 200px;
         }
         
-        .about-me-btn::after {
+        .action-btn::after {
             content: '';
             position: absolute;
             top: -50%;
@@ -591,11 +518,11 @@
             transition: all 0.6s;
         }
         
-        .about-me-btn:hover::after {
+        .action-btn:hover::after {
             left: 100%;
         }
         
-        .about-me-btn:hover {
+        .action-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
         }
@@ -1022,17 +949,14 @@
                 height: 50px;
             }
             
-            .step-header {
+            .action-buttons {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
             
-            .step-number {
-                margin-bottom: 10px;
-            }
-            
-            .step-desc {
-                padding-left: 0;
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
             }
         }
         
@@ -1054,7 +978,7 @@
                 font-size: 16px;
             }
             
-            .about-me-btn {
+            .action-btn {
                 padding: 15px 30px;
                 font-size: 16px;
             }
@@ -1198,17 +1122,16 @@
                 </ul>
             </div>
         </section>
-                    
-            <div class="about-me-section">
-                <a href="http://gervas.wang/about/" class="about-me-btn">
-                    <i class="fas fa-user"></i>
-                     了解我
-                </a>
-            </div>
-        </section>
-    </div>
-
-     <!-- 了解同仁堂青海按钮 -->
+        
+        <!-- 底部按钮区域 -->
+        <div class="action-buttons">
+            <!-- 了解我按钮 -->
+            <a href="http://gervas.wang/about/" class="action-btn">
+                <i class="fas fa-user"></i>
+                 了解我
+            </a>
+            
+            <!-- 了解同仁堂青海按钮 -->
             <a href="https://gervas.wang/health/" class="action-btn" target="_blank">
                 <i class="fas fa-mountain"></i>
                  了解同仁堂青海
