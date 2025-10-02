@@ -338,84 +338,57 @@
             border: 1px solid rgba(231, 76, 60, 0.1);
         }
         
-        /* 个人优势样式 */
-        .skills-container {
+        /* 技能亮点 */
+        .skills-highlight {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         
-        .skill-item {
+        .skill-highlight-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 25px 15px;
             background: linear-gradient(135deg, #f8f9fa, #ffffff);
             border-radius: 12px;
-            padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
             border: 1px solid rgba(231, 76, 60, 0.1);
         }
         
-        .skill-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--food-gradient);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.6s ease;
-        }
-        
-        .skill-item:hover::before {
-            transform: scaleY(1);
-        }
-        
-        .skill-item:hover {
+        .skill-highlight-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
         }
         
-        .skill-title {
+        .skill-highlight-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--food-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+        
+        .skill-highlight-title {
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 10px;
             color: var(--food-primary);
-            display: flex;
-            align-items: center;
         }
         
-        .skill-title::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--food-secondary);
-            margin-right: 10px;
-        }
-        
-        .skill-list {
-            list-style: none;
-            padding-left: 20px;
-        }
-        
-        .skill-list li {
-            padding: 8px 0;
-            display: flex;
-            align-items: flex-start;
-            transition: var(--transition);
-            font-size: 15px;
-        }
-        
-        .skill-list li:before {
-            content: "•";
-            color: var(--food-secondary);
-            margin-right: 10px;
-            font-size: 18px;
-            font-weight: bold;
+        .skill-highlight-desc {
+            font-size: 14px;
+            color: var(--secondary);
+            line-height: 1.5;
         }
         
         /* 工作目标样式 */
@@ -493,6 +466,72 @@
             font-weight: 700;
             font-size: 13px;
             box-shadow: 0 3px 10px rgba(231, 76, 60, 0.1);
+        }
+        
+        /* 工作目标紧凑布局 */
+        .compact-goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .compact-goal-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(231, 76, 60, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .compact-goal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .compact-goal-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--food-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .compact-goal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--food-primary);
+        }
+        
+        .compact-goal-desc {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-size: 14px;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+        
+        .compact-goal-highlight {
+            display: inline-block;
+            background: var(--food-light);
+            color: var(--food-primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.1);
+            align-self: flex-start;
         }
         
         /* 返回主页按钮 */
@@ -789,6 +828,18 @@
                 max-width: 250px;
             }
             
+            .skills-highlight {
+                flex-direction: column;
+            }
+            
+            .skill-highlight-item {
+                min-width: 100%;
+            }
+            
+            .compact-goals {
+                grid-template-columns: 1fr;
+            }
+            
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
@@ -851,13 +902,10 @@
                         <a href="#" class="nav-link active">个人简介</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#personal-advantage" class="nav-link">个人优势</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="#work-goals" class="nav-link">工作目标</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://gervas.wang/" class="nav-link">返回主页</a>
+                        <a href="index.html" class="nav-link">返回主页</a>
                     </li>
                 </ul>
             </div>
@@ -904,23 +952,32 @@
         <section id="work-goals" class="card">
             <h2 class="card-title"><i class="fas fa-bullseye"></i> 工作目标</h2>
             
-            <div class="goals-container">
-                <div class="goal-item">
-                    <h3 class="goal-title">质量保证</h3>
-                    <p class="goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。通过定期质量审核和供应商评估，持续提升包装质量水平。</p>
-                    <div class="goal-highlight">100%符合食品安全标准</div>
+            <div class="compact-goals">
+                <div class="compact-goal-item">
+                    <div class="compact-goal-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="compact-goal-title">质量保证</h3>
+                    <p class="compact-goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。</p>
+                    <div class="compact-goal-highlight">100%符合食品安全标准</div>
                 </div>
                 
-                <div class="goal-item">
-                    <h3 class="goal-title">成本控制</h3>
-                    <p class="goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。建立成本分析模型，持续监控和优化包装采购成本结构。</p>
-                    <div class="goal-highlight">15-20%成本优化目标</div>
+                <div class="compact-goal-item">
+                    <div class="compact-goal-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="compact-goal-title">成本控制</h3>
+                    <p class="compact-goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。</p>
+                    <div class="compact-goal-highlight">15-20%成本优化目标</div>
                 </div>
                 
-                <div class="goal-item">
-                    <h3 class="goal-title">供应链稳定</h3>
-                    <p class="goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。通过供应商关系管理和风险预警系统，保障供应链的稳定性和韧性。</p>
-                    <div class="goal-highlight">99.5%供应链稳定性</div>
+                <div class="compact-goal-item">
+                    <div class="compact-goal-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="compact-goal-title">供应链稳定</h3>
+                    <p class="compact-goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。</p>
+                    <div class="compact-goal-highlight">99.5%供应链稳定性</div>
                 </div>
             </div>
         </section>
