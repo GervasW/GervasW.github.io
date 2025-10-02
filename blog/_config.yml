@@ -6,7 +6,7 @@ url: "https://gervasw.github.io"
 
 # 构建设置
 markdown: kramdown
-theme: minima
+permalink: pretty
 
 # 作者信息
 author:
