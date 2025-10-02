@@ -1,18 +1,14 @@
-title: "我的个人博客"           # 博客标题
-description: "记录学习与成长"   # 博客描述
-baseurl: ""                   # 保持为空
-url: "https://你的用户名.github.io"  # 你的网站地址
-
-# 主题设置（使用默认主题）
-theme: jekyll-theme-cayman
+# 博客站点设置
+title: "我的博客"
+description: "这是我的个人博客"
+baseurl: "/blog" # 关键：必须设置为你的博客子目录路径
+url: "https://你的用户名.github.io" # 你的网站主域名
 
 # 构建设置
 markdown: kramdown
+theme: minima # 或你喜欢的主题
+
+# 插件
 plugins:
   - jekyll-feed
-  - jekyll-sitemap
-
-# 作者信息
-author:
-  name: "你的名字"
-  email: "你的邮箱"
+  - jekyll-paginate
