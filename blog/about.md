@@ -4,9 +4,9 @@ title: 关于我
 permalink: /about/
 ---
 
-# 关于 gervasw
+# 关于 纪委
 
-你好！我是 gervasw，欢迎来到我的个人博客。
+你好！我是 纪委，欢迎来到我的个人博客。
 
 ## 关于这个博客
 
@@ -20,6 +20,6 @@ permalink: /about/
 
 如果你有任何想法想要分享，欢迎通过以下方式联系我：
 
-- GitHub: [gervasw](https://github.com/gervasw)
+- http://gervas.wang
 
 感谢访问我的博客！
