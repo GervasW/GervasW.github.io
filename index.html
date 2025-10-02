@@ -326,74 +326,125 @@
             font-size: 28px;
         }
         
-        /* 折叠内容 */
-        .demand-item {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px dashed #eee;
+        /* 供应商登记表卡片 */
+        .supplier-card {
+            text-align: center;
+            background: var(--food-gradient);
+            color: white;
         }
         
-        .demand-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .supplier-card .card-title {
+            color: white;
+        }
+        
+        .supplier-card .card-title::after {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .supplier-form-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--food-primary);
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .supplier-form-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+        
+        .supplier-form-btn:hover::after {
+            left: 100%;
+        }
+        
+        .supplier-form-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .supplier-desc {
+            margin-top: 15px;
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        
+        /* 采购需求卡片 - 紧凑简约版 */
+        .demand-category {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .demand-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .demand-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--food-primary);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--food-primary);
-            cursor: pointer;
-            transition: var(--transition);
-            padding: 15px 20px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            font-size: 18px;
-        }
-        
-        .demand-header:hover {
-            color: #c0392b;
-            background: var(--food-light);
-            transform: translateX(10px);
         }
         
         .demand-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
             list-style: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s ease;
-        }
-        
-        .demand-list.active {
-            max-height: 2000px; /* 增加最大高度确保内容完整显示 */
         }
         
         .demand-list li {
-            padding: 12px 0;
-            display: flex;
-            align-items: flex-start;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
-            border-left: 3px solid transparent;
-            padding-left: 25px;
-            font-size: 16px;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .demand-list li:hover {
-            transform: translateX(8px);
-            border-left-color: var(--food-secondary);
-        }
-        
-        .demand-list li:before {
+        .demand-list li::before {
             content: "▸";
             color: var(--food-secondary);
-            margin-right: 15px;
-            font-size: 18px;
+            margin-right: 10px;
+            font-size: 16px;
             font-weight: bold;
         }
         
-        /* 下单流程样式 */
+        .demand-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
+        }
+        
+        /* 下单流程卡片 */
         .process-steps {
             display: flex;
             flex-direction: column;
@@ -468,53 +519,6 @@
             line-height: 1.6;
             font-size: 14px;
             padding-left: 45px;
-        }
-        
-        /* 供应商表单按钮 */
-        .supplier-form-section {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 30px;
-            border-top: 2px dashed #eee;
-        }
-        
-        .supplier-form-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: var(--food-gradient);
-            color: white;
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
-            transition: var(--transition);
-            font-size: 18px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .supplier-form-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255,255,255,0.1);
-            transform: rotate(30deg);
-            transition: all 0.6s;
-        }
-        
-        .supplier-form-btn:hover::after {
-            left: 100%;
-        }
-        
-        .supplier-form-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
         }
         
         /* 微信弹窗 */
@@ -916,6 +920,10 @@
                 font-size: 28px;
             }
             
+            .demand-list {
+                grid-template-columns: 1fr;
+            }
+            
             .heart-like {
                 bottom: 100px;
                 left: 20px;
@@ -956,6 +964,15 @@
             
             .card-title {
                 font-size: 22px;
+            }
+            
+            .demand-category {
+                padding: 15px;
+            }
+            
+            .supplier-form-btn {
+                padding: 15px 30px;
+                font-size: 16px;
             }
         }
     </style>
@@ -1032,11 +1049,21 @@
     </section>
 
     <div class="container">
-        <!-- 采购需求 -->
+        <!-- 供应商信息登记表卡片 -->
+        <section class="card supplier-card">
+            <h2 class="card-title"><i class="fas fa-edit"></i> 供应商信息登记表</h2>
+            <p>如果您是食品包装、食品原料和相关设备供应商，请填写以下表单，我将尽快与您联系</p>
+            <a href="https://f.kdocs.cn/g/FI7quFBs/" target="_blank" class="supplier-form-btn">
+                <i class="fas fa-file-alt"></i>
+                 填写供应商信息
+            </a>
+        </section>
+        
+        <!-- 采购需求卡片 -->
         <section id="procurement-demand" class="card">
             <h2 class="card-title"><i class="fas fa-clipboard-list"></i> 采购需求</h2>
             
-            <div class="demand-item">
+            <div class="demand-category">
                 <div class="demand-header">▶️ 包装制品</div>
                 <ul class="demand-list">
                     <li>各类精装盒、礼品盒</li>
@@ -1048,7 +1075,7 @@
                 </ul>
             </div>
             
-            <div class="demand-item">
+            <div class="demand-category">
                 <div class="demand-header">▶️ 内包装品类</div>
                 <ul class="demand-list">
                     <li>食品直接接触内包装材料</li>
@@ -1060,7 +1087,7 @@
                 </ul>
             </div>
             
-            <div class="demand-item">
+            <div class="demand-category">
                 <div class="demand-header">▶️ 食品包装材料</div>
                 <ul class="demand-list">
                     <li>食品级塑料包装（PET, PP, PE等）</li>
@@ -1071,87 +1098,75 @@
                     <li>生物降解包装材料</li>
                 </ul>
             </div>
-            
-            <!-- 下单流程 -->
-            <div class="demand-item">
-                <div class="demand-header">▶️ 下单流程</div>
-                <div class="demand-list">
-                    <div class="process-steps">
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">1</div>
-                                <h4 class="step-title">产品立项</h4>
-                            </div>
-                            <p class="step-desc">明确产品需求与规格，确定包装方案初步构想，进行初步成本评估，制定项目时间表。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">2</div>
-                                <h4 class="step-title">产品设计</h4>
-                            </div>
-                            <p class="step-desc">设计包装外观与结构，完成包装设计方案，包括材料选择、结构设计和视觉设计，确保符合品牌形象和功能需求。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">3</div>
-                                <h4 class="step-title">产品上会</h4>
-                            </div>
-                            <p class="step-desc">提交设计方案审批，获得内部审批通过，包括设计部门、市场部门和采购部门审核，确保方案可行性和合规性。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">4</div>
-                                <h4 class="step-title">产品备案</h4>
-                            </div>
-                            <p class="step-desc">完成产品备案手续，确保合规性，包括食品安全备案和包装材料合规性审查，获取相关认证和许可。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">5</div>
-                                <h4 class="step-title">产品打样</h4>
-                            </div>
-                            <p class="step-desc">制作样品，确认包装效果与质量，进行样品测试和用户反馈收集，评估包装的实用性和美观性。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">6</div>
-                                <h4 class="step-title">产品下单</h4>
-                            </div>
-                            <p class="step-desc">确认样品后正式下单，安排生产计划，确定交付时间和物流安排，签订采购合同。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">7</div>
-                                <h4 class="step-title">监督生产</h4>
-                            </div>
-                            <p class="step-desc">全程跟踪生产过程，确保质量与进度，定期进行生产现场检查和进度确认，解决生产过程中的问题。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">8</div>
-                                <h4 class="step-title">发货到厂验收</h4>
-                            </div>
-                            <p class="step-desc">产品发货到厂，进行质量验收，包括数量核对、质量检查和文件确认，确保产品符合质量标准。</p>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-header">
-                                <div class="step-number">9</div>
-                                <h4 class="step-title">开票和结算</h4>
-                            </div>
-                            <p class="step-desc">完成发票开具与结算流程，确保财务流程合规，完成采购闭环，归档采购文件和记录。</p>
-                        </div>
+        </section>
+        
+        <!-- 下单流程卡片 -->
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-shipping-fast"></i> 下单流程</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h4 class="step-title">产品立项</h4>
                     </div>
+                    <p class="step-desc">明确产品需求与规格，确定包装方案初步构想，进行初步成本评估，制定项目时间表。</p>
                 </div>
-            </div>
-            
-            <div class="supplier-form-section">
-                <a href="https://f.kdocs.cn/g/FI7quFBs/" target="_blank" class="supplier-form-btn">
-                    <i class="fas fa-edit"></i>
-                     供应商信息登记表
-                </a>
-                <p style="margin-top: 15px; font-size: 15px; color: var(--secondary);">
-                    点击上方按钮填写供应商基本信息，我将尽快与您联系
-                </p>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h4 class="step-title">产品设计</h4>
+                    </div>
+                    <p class="step-desc">设计包装外观与结构，完成包装设计方案，包括材料选择、结构设计和视觉设计，确保符合品牌形象和功能需求。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h4 class="step-title">产品上会</h4>
+                    </div>
+                    <p class="step-desc">提交设计方案审批，获得内部审批通过，包括设计部门、市场部门和采购部门审核，确保方案可行性和合规性。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h4 class="step-title">产品备案</h4>
+                    </div>
+                    <p class="step-desc">完成产品备案手续，确保合规性，包括食品安全备案和包装材料合规性审查，获取相关认证和许可。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h4 class="step-title">产品打样</h4>
+                    </div>
+                    <p class="step-desc">制作样品，确认包装效果与质量，进行样品测试和用户反馈收集，评估包装的实用性和美观性。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <h4 class="step-title">产品下单</h4>
+                    </div>
+                    <p class="step-desc">确认样品后正式下单，安排生产计划，确定交付时间和物流安排，签订采购合同。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">7</div>
+                        <h4 class="step-title">监督生产</h4>
+                    </div>
+                    <p class="step-desc">全程跟踪生产过程，确保质量与进度，定期进行生产现场检查和进度确认，解决生产过程中的问题。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">8</div>
+                        <h4 class="step-title">发货到厂验收</h4>
+                    </div>
+                    <p class="step-desc">产品发货到厂，进行质量验收，包括数量核对、质量检查和文件确认，确保产品符合质量标准。</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-header">
+                        <div class="step-number">9</div>
+                        <h4 class="step-title">开票和结算</h4>
+                    </div>
+                    <p class="step-desc">完成发票开具与结算流程，确保财务流程合规，完成采购闭环，归档采购文件和记录。</p>
+                </div>
             </div>
         </section>
     </div>
@@ -1244,22 +1259,6 @@
             const contactBtn = document.querySelector('.contact-btn');
             contactBtn.addEventListener('click', function() {
                 alert('感谢您的联系！我会尽快回复您。');
-            });
-            
-            // 折叠/展开功能
-            const demandHeaders = document.querySelectorAll('.demand-header');
-            demandHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const list = this.nextElementSibling;
-                    list.classList.toggle('active');
-                    
-                    // 切换箭头方向
-                    if (list.classList.contains('active')) {
-                        this.innerHTML = this.innerHTML.replace('▶️', '▼');
-                    } else {
-                        this.innerHTML = this.innerHTML.replace('▼', '▶️');
-                    }
-                });
             });
             
             // 滚动进度条
