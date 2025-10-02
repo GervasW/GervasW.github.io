@@ -3,287 +3,546 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>包装下单全流程跟踪表</title>
+    <title>王维 - 个人简介 | 同仁堂健康</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <style>
+        /* 基础样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c7be5;
+            --secondary: #6c757d;
+            --success: #00b894;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --food-primary: #e74c3c;
+            --food-secondary: #f39c12;
+            --food-light: #fff5f5;
+            --food-gradient: linear-gradient(135deg, #e74c3c, #f39c12);
+            --border-radius: 16px;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
             color: #333;
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
             min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
-            max-width: 1800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 0 20px;
+        }
+        
+        /* 动态背景 */
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(243, 156, 18, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(52, 152, 219, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+        
+        /* 个人资料区 */
+        .profile {
+            background: var(--food-gradient);
+            color: white;
+            padding: 50px 20px 30px;
+            border-radius: 0 0 30px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.3);
+        }
+        
+        .profile::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>'),
+                linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            background-size: 200px, cover;
+        }
+        
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+            animation: floatAvatar 8s ease-in-out infinite;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
+        }
+        
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .profile h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--food-primary);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            min-width: 160px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+        
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .wechat-btn {
+            background: rgba(7, 193, 96, 0.95);
+            color: white;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 18px 20px;
+            color: var(--food-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
             overflow: hidden;
         }
         
-        header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px 30px;
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--food-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+        
+        .nav-link:hover {
+            background: var(--food-light);
+        }
+        
+        /* 内容卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            color: var(--food-primary);
+            position: relative;
+            padding-bottom: 15px;
         }
         
-        h1 {
-            font-size: 1.8rem;
+        .card-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--food-gradient);
+            border-radius: 2px;
         }
         
-        .controls {
+        .card-title i {
+            margin-right: 12px;
+            font-size: 28px;
+        }
+        
+        /* 个人简介文本样式 */
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        /* 个人优势样式 */
+        .skills-container {
             display: flex;
+            flex-direction: column;
             gap: 15px;
         }
         
-        .btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+        .skill-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--food-gradient);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+        }
+        
+        .skill-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .skill-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--food-primary);
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
         }
         
-        .btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
+        .skill-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--food-secondary);
+            margin-right: 10px;
         }
         
-        .btn-add {
-            background: #2ecc71;
+        .skill-list {
+            list-style: none;
+            padding-left: 20px;
         }
         
-        .btn-add:hover {
-            background: #27ae60;
+        .skill-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            transition: var(--transition);
+            font-size: 15px;
         }
         
-        .btn-export {
-            background: #9b59b6;
-        }
-        
-        .btn-export:hover {
-            background: #8e44ad;
-        }
-        
-        .btn-details {
-            background: #f39c12;
-        }
-        
-        .btn-details:hover {
-            background: #e67e22;
-        }
-        
-        .btn-sort {
-            background: #16a085;
-        }
-        
-        .btn-sort:hover {
-            background: #1abc9c;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-            padding: 20px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1600px;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e1e1e1;
-        }
-        
-        th {
-            background: #34495e;
-            color: white;
-            position: sticky;
-            top: 0;
-        }
-        
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        tr:hover {
-            background: #e8f4fc;
-        }
-        
-        .stage-header {
-            background: #2c3e50 !important;
-            color: white;
+        .skill-list li:before {
+            content: "•";
+            color: var(--food-secondary);
+            margin-right: 10px;
+            font-size: 18px;
             font-weight: bold;
         }
         
-        .stage-header td {
-            padding: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .status {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-align: center;
-            display: inline-block;
-            min-width: 80px;
-        }
-        
-        .status-not-started {
-            background: #ecf0f1;
-            color: #7f8c8d;
-        }
-        
-        .status-in-progress {
-            background: #fff9e6;
-            color: #f39c12;
-        }
-        
-        .status-completed {
-            background: #e8f6f3;
-            color: #27ae60;
-        }
-        
-        .status-delayed {
-            background: #fdeaea;
-            color: #e74c3c;
-        }
-        
-        .status-on-hold {
-            background: #e8eaf6;
-            color: #5c6bc0;
-        }
-        
-        .progress-cell {
-            min-width: 150px;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background: #ecf0f1;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 5px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: #2ecc71;
-            border-radius: 5px;
-            transition: width 0.5s ease;
-        }
-        
-        .progress-text {
-            font-size: 0.85rem;
-            margin-top: 3px;
-            text-align: center;
-        }
-        
-        .date-input {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px 8px;
-            width: 100%;
-        }
-        
-        .action-buttons {
+        /* 工作目标样式 */
+        .goals-container {
             display: flex;
-            gap: 5px;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #3498db;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-        
-        .action-btn:hover {
-            color: #2980b9;
-        }
-        
-        .action-btn.delete {
-            color: #e74c3c;
-        }
-        
-        .action-btn.delete:hover {
-            color: #c0392b;
-        }
-        
-        .notes-cell {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .notes-cell:hover {
-            white-space: normal;
-            overflow: visible;
-            background: #fff9e6;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        .summary {
+        .goal-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 12px;
             padding: 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #e1e1e1;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(231, 76, 60, 0.1);
         }
         
-        .summary-item {
-            flex: 1;
-            min-width: 200px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .goal-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--food-gradient);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
         }
         
-        .summary-item h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+        .goal-item:hover::before {
+            transform: scaleY(1);
         }
         
-        .summary-value {
-            font-size: 1.5rem;
+        .goal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+        }
+        
+        .goal-title {
+            font-size: 18px;
             font-weight: 700;
-            color: #3498db;
+            margin-bottom: 10px;
+            color: var(--food-primary);
+            display: flex;
+            align-items: center;
         }
         
+        .goal-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--food-secondary);
+            margin-right: 10px;
+        }
+        
+        .goal-desc {
+            color: var(--secondary);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .goal-highlight {
+            display: inline-block;
+            background: var(--food-light);
+            color: var(--food-primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.1);
+        }
+        
+        /* 返回主页按钮 */
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed #eee;
+        }
+        
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--food-gradient);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+            transition: var(--transition);
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .back-home-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+        
+        .back-home-btn:hover::after {
+            left: 100%;
+        }
+        
+        .back-home-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
+        }
+        
+        /* 微信弹窗 */
         .modal {
             display: none;
             position: fixed;
@@ -291,947 +550,535 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
+            border-radius: 25px;
+            padding: 35px;
+            text-align: center;
+            max-width: 320px;
             width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            animation: zoomIn 0.4s ease forwards;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        @keyframes zoomIn {
+            to { transform: scale(1); }
+        }
+        
+        .modal h3 {
             margin-bottom: 20px;
+            color: var(--food-primary);
+            font-size: 24px;
+            font-weight: 700;
         }
         
-        .modal-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
+        .wechat-id {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--food-primary);
+        }
+        
+        .copy-btn {
+            background: var(--food-gradient);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
         }
         
         .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 28px;
+            color: #999;
             cursor: pointer;
-            color: #7f8c8d;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .form-actions {
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
         }
         
-        .details-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e1e1e1;
+        .close-modal:hover {
+            color: var(--food-primary);
+            transform: rotate(90deg);
+            background: #f5f5f5;
         }
         
-        .details-section h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.6s;
+            position: relative;
+            overflow: hidden;
         }
         
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M20,20 C40,10 60,10 80,20 C90,40 90,60 80,80 C60,90 40,90 20,80 C10,60 10,40 20,20 Z" fill="white"/></svg>');
+            background-size: 150px;
+        }
+        
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
             gap: 15px;
         }
         
-        .sortable-ghost {
-            opacity: 0.4;
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 20px;
+            backdrop-filter: blur(10px);
         }
         
-        .sortable-chosen {
-            background-color: #e8f4fc;
+        .contact-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.1);
         }
         
-        .sortable-drag {
-            opacity: 0.8;
-            transform: rotate(5deg);
+        /* 滚动进度条 */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
         }
         
-        .sort-handle {
-            cursor: move;
-            color: #95a5a6;
-            margin-right: 10px;
+        .progress-bar {
+            height: 4px;
+            background: var(--food-gradient);
+            width: 0%;
+            transition: width 0.1s ease;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
         }
         
-        .sort-handle:hover {
-            color: #3498db;
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--food-gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+            font-size: 20px;
         }
         
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(231, 76, 60, 0.5);
+        }
+        
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            header {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .nav-container {
                 flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
+                padding: 10px 15px;
             }
             
-            .controls {
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            .nav-link {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .profile {
+                padding: 40px 15px 20px;
+            }
+            
+            .avatar {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .profile h1 {
+                font-size: 28px;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-btn {
                 width: 100%;
-                justify-content: space-between;
+                max-width: 250px;
             }
             
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.9rem;
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 15px;
             }
             
-            .details-grid {
-                grid-template-columns: 1fr;
+            .card-title {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 动态背景 -->
+    <div class="dynamic-bg"></div>
+    
+    <!-- 滚动进度条 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- 个人资料区 -->
+    <section class="profile">
+        <div class="avatar">
+            <img src="https://cdn4.winhlb.com/2025/10/01/68dc80e94e839.jpg" alt="王维">
+        </div>
+        <h1>王维</h1>
+        <p>同仁堂健康青海基地 | 采购</p>
+        <div class="location">
+            📍 常驻杭州办公 | 全国范围采购
+        </div>
+        <div class="contact-buttons">
+            <a href="tel:18094719236" class="contact-btn">
+                <i class="fas fa-phone"></i>
+                 电话联系
+            </a>
+            <a href="#" id="wechat-btn" class="contact-btn wechat-btn">
+                <i class="fab fa-weixin"></i>
+                 添加微信
+            </a>
+        </div>
+        
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">个人简介</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#personal-advantage" class="nav-link">个人优势</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#work-goals" class="nav-link">工作目标</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">返回主页</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
     <div class="container">
-        <header>
-            <h1><i class="fas fa-box-open"></i> 包装下单全流程跟踪表</h1>
-            <div class="controls">
-                <button class="btn btn-add" id="addTaskBtn">
-                    <i class="fas fa-plus"></i> 添加任务
-                </button>
-                <button class="btn btn-sort" id="toggleSortBtn">
-                    <i class="fas fa-arrows-alt"></i> 调整排序
-                </button>
-                <button class="btn btn-details" id="detailsBtn">
-                    <i class="fas fa-info-circle"></i> 流程详情
-                </button>
-                <button class="btn btn-export" id="exportBtn">
-                    <i class="fas fa-file-export"></i> 导出数据
-                </button>
-                <button class="btn" id="saveBtn">
-                    <i class="fas fa-save"></i> 保存更改
-                </button>
+        <!-- 个人简介 -->
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-user"></i> 个人简介</h2>
+            
+            <div class="intro-text">
+                <p>拥有多年食品行业包装采购经验，目前就职于北京同仁堂健康药业（青海）有限公司。专注于为食品及健康产品企业提供全方位的包装解决方案，熟悉各类食品包装材料、工艺及成本控制。</p>
             </div>
-        </header>
+        </section>
+
+        <!-- 个人优势 -->
+        <section id="personal-advantage" class="card">
+            <h2 class="card-title"><i class="fas fa-star"></i> 个人优势</h2>
+            
+            <div class="skills-container">
+                <div class="skill-item">
+                    <h3 class="skill-title">包装材料专业知识</h3>
+                    <ul class="skill-list">
+                        <li>精通卡纸、瓦楞纸等纸质包装材料特性与应用</li>
+                        <li>熟悉各类精装盒结构设计与生产工艺</li>
+                        <li>深入了解玻璃容器、塑料制品性能与成本</li>
+                        <li>掌握复合材料制品的最新发展趋势</li>
+                        <li>了解食品接触材料的安全标准与法规要求</li>
+                        <li>熟悉包装材料的环保性能与可持续发展趋势</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-item">
+                    <h3 class="skill-title">行业资源整合</h3>
+                    <ul class="skill-list">
+                        <li>广泛的包装行业人脉与资源网络</li>
+                        <li>深入了解各地区包装产业特点与优势</li>
+                        <li>定期参加行业展会，掌握最新趋势</li>
+                        <li>与设计公司、印刷厂等产业链企业紧密合作</li>
+                        <li>建立供应商评估与分级管理体系</li>
+                        <li>熟悉包装行业标准与质量认证体系</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-item">
+                    <h3 class="skill-title">采购管理能力</h3>
+                    <ul class="skill-list">
+                        <li>精通采购谈判技巧与合同管理</li>
+                        <li>熟悉采购流程优化与成本控制方法</li>
+                        <li>具备供应商开发与管理能力</li>
+                        <li>擅长采购数据分析与决策支持</li>
+                        <li>熟悉ERP系统与采购信息化管理</li>
+                        <li>具备跨部门协调与项目管理能力</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工作目标 -->
+        <section id="work-goals" class="card">
+            <h2 class="card-title"><i class="fas fa-bullseye"></i> 工作目标</h2>
+            
+            <div class="goals-container">
+                <div class="goal-item">
+                    <h3 class="goal-title">质量保证</h3>
+                    <p class="goal-desc">确保所有包装材料符合食品安全标准，保障产品质量与消费者安全。建立严格的质量检验流程，与供应商共同制定质量改进计划。通过定期质量审核和供应商评估，持续提升包装质量水平。</p>
+                    <div class="goal-highlight">100%符合食品安全标准</div>
+                </div>
+                
+                <div class="goal-item">
+                    <h3 class="goal-title">成本控制</h3>
+                    <p class="goal-desc">优化采购成本，实现企业采购预算目标，提升整体利润率。通过供应商谈判、批量采购和流程优化实现成本节约。建立成本分析模型，持续监控和优化包装采购成本结构。</p>
+                    <div class="goal-highlight">15-20%成本优化目标</div>
+                </div>
+                
+                <div class="goal-item">
+                    <h3 class="goal-title">供应链稳定</h3>
+                    <p class="goal-desc">建立稳定的供应商体系，确保生产连续性，降低供应链风险。发展多元化供应商网络，建立应急响应机制。通过供应商关系管理和风险预警系统，保障供应链的稳定性和韧性。</p>
+                    <div class="goal-highlight">99.5%供应链稳定性</div>
+                </div>
+            </div>
+        </section>
         
-        <div class="table-container">
-            <table id="processTable">
-                <thead>
-                    <tr>
-                        <th width="3%">排序</th>
-                        <th width="5%">序号</th>
-                        <th width="14%">任务名称</th>
-                        <th width="9%">负责人</th>
-                        <th width="7%">计划开始</th>
-                        <th width="7%">计划完成</th>
-                        <th width="7%">实际开始</th>
-                        <th width="7%">实际完成</th>
-                        <th width="7%">状态</th>
-                        <th width="7%">进度</th>
-                        <th width="15%">关键注意事项</th>
-                        <th width="7%">操作</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- 表格数据将通过JavaScript动态生成 -->
-                </tbody>
-            </table>
+        <!-- 返回主页按钮 -->
+        <div class="back-home">
+            <a href="index.html" class="back-home-btn">
+                <i class="fas fa-home"></i>
+                 返回主页
+            </a>
+        </div>
+    </div>
+
+    <!-- 微信弹窗 -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3>添加微信</h3>
+            <p>请复制以下微信号添加好友</p>
+            <div class="wechat-id">
+                <span>EastSeaO</span>
+            </div>
+            <button class="copy-btn" id="copy-wechat">复制微信号</button>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="contact-icons">
+            <div class="contact-icon">📧</div>
+            <div class="contact-icon">📱</div>
+            <div class="contact-icon">🌐</div>
         </div>
         
-        <div class="summary">
-            <div class="summary-item">
-                <h3>总任务数</h3>
-                <div class="summary-value" id="totalTasks">0</div>
-            </div>
-            <div class="summary-item">
-                <h3>已完成</h3>
-                <div class="summary-value" id="completedTasks">0</div>
-            </div>
-            <div class="summary-item">
-                <h3>进行中</h3>
-                <div class="summary-value" id="inProgressTasks">0</div>
-            </div>
-            <div class="summary-item">
-                <h3>整体进度</h3>
-                <div class="summary-value" id="overallProgress">0%</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 添加/编辑任务模态框 -->
-    <div class="modal" id="taskModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">添加新任务</h2>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <form id="taskForm">
-                <input type="hidden" id="taskId">
-                <div class="form-group">
-                    <label for="taskName">任务名称</label>
-                    <input type="text" id="taskName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="taskOwner">负责人</label>
-                    <input type="text" id="taskOwner" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="plannedStart">计划开始日期</label>
-                    <input type="date" id="plannedStart" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="plannedEnd">计划完成日期</label>
-                    <input type="date" id="plannedEnd" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="actualStart">实际开始日期</label>
-                    <input type="date" id="actualStart" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="actualEnd">实际完成日期</label>
-                    <input type="date" id="actualEnd" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="taskStatus">状态</label>
-                    <select id="taskStatus" class="form-control" required>
-                        <option value="not-started">未开始</option>
-                        <option value="in-progress">进行中</option>
-                        <option value="completed">已完成</option>
-                        <option value="delayed">已延期</option>
-                        <option value="on-hold">暂停</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taskProgress">进度 (%)</label>
-                    <input type="number" id="taskProgress" class="form-control" min="0" max="100" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="taskNotes">关键注意事项</label>
-                    <textarea id="taskNotes" class="form-control" placeholder="请输入该任务的关键注意事项..."></textarea>
-                </div>
-                
-                <div class="details-section" id="detailsSection">
-                    <h3>详细信息</h3>
-                    <div class="details-grid">
-                        <div class="form-group">
-                            <label for="taskStage">所属阶段</label>
-                            <select id="taskStage" class="form-control">
-                                <option value="preparation">前期准备阶段</option>
-                                <option value="sourcing">供应商选择与打样</option>
-                                <option value="decision">比价与决策</option>
-                                <option value="production">生产阶段</option>
-                                <option value="delivery">发货与验收</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskPriority">优先级</label>
-                            <select id="taskPriority" class="form-control">
-                                <option value="low">低</option>
-                                <option value="medium">中</option>
-                                <option value="high">高</option>
-                                <option value="critical">紧急</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="btn" id="cancelBtn">取消</button>
-                    <button type="submit" class="btn btn-add">保存</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- 流程详情模态框 -->
-    <div class="modal" id="detailsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">包装下单全流程指南</h2>
-                <button class="close-modal" id="closeDetailsModal">&times;</button>
-            </div>
-            <div>
-                <h3>第一阶段：前期准备阶段</h3>
-                <ul>
-                    <li><strong>产品立项：</strong>明确产品需求、目标市场、预算范围</li>
-                    <li><strong>产品设计：</strong>完成产品外观、结构、功能设计</li>
-                    <li><strong>产品备案：</strong>完成相关法规要求的备案手续</li>
-                    <li><strong>注意事项：</strong>确保设计符合生产要求，备案资料齐全</li>
-                </ul>
-                
-                <h3>第二阶段：供应商选择与打样</h3>
-                <ul>
-                    <li><strong>选择供应商：</strong>评估供应商资质、生产能力、质量体系</li>
-                    <li><strong>产品打样：</strong>要求供应商提供样品进行测试和评估</li>
-                    <li><strong>注意事项：</strong>样品需符合设计要求和质量标准</li>
-                </ul>
-                
-                <h3>第三阶段：比价与决策</h3>
-                <ul>
-                    <li><strong>三方比价：</strong>收集至少三家供应商的报价进行对比</li>
-                    <li><strong>接收计划下单指令：</strong>确认最终供应商和下单数量</li>
-                    <li><strong>注意事项：</strong>综合考虑价格、质量、交期和服务</li>
-                </ul>
-                
-                <h3>第四阶段：生产阶段</h3>
-                <ul>
-                    <li><strong>安排产前样：</strong>确认大货生产前的最终样品</li>
-                    <li><strong>下单生产包装：</strong>正式下达生产订单</li>
-                    <li><strong>现场监督生产：</strong>定期检查生产进度和质量</li>
-                    <li><strong>注意事项：</strong>确保生产过程符合质量要求，及时解决问题</li>
-                </ul>
-                
-                <h3>第五阶段：发货与验收</h3>
-                <ul>
-                    <li><strong>沟通发货细节：</strong>确认运输方式、包装要求、发货时间</li>
-                    <li><strong>大货到厂：</strong>接收并验收大货产品</li>
-                    <li><strong>注意事项：</strong>检查数量、质量、包装完整性，及时处理问题</li>
-                </ul>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn" id="closeDetailsBtn">关闭</button>
-            </div>
-        </div>
-    </div>
+        <div class="copyright">© 2025 王维 - 北京同仁堂健康药业（青海）有限公司 | 保留所有权利</div>
+    </footer>
 
     <script>
-        // 包装下单流程任务数据
-        let tasks = [
-            { 
-                id: 1, 
-                name: "产品立项", 
-                owner: "产品经理", 
-                plannedStart: "2023-11-01", 
-                plannedEnd: "2023-11-05", 
-                actualStart: "2023-11-01", 
-                actualEnd: "2023-11-05", 
-                status: "completed", 
-                progress: 100, 
-                notes: "明确产品需求、目标市场、预算范围、时间节点",
-                stage: "preparation",
-                priority: "high",
-                order: 1
-            },
-            { 
-                id: 2, 
-                name: "产品设计", 
-                owner: "设计部", 
-                plannedStart: "2023-11-03", 
-                plannedEnd: "2023-11-15", 
-                actualStart: "2023-11-04", 
-                actualEnd: "", 
-                status: "in-progress", 
-                progress: 80, 
-                notes: "完成产品外观、结构、功能设计，确保设计符合生产要求",
-                stage: "preparation",
-                priority: "high",
-                order: 2
-            },
-            { 
-                id: 3, 
-                name: "产品备案", 
-                owner: "法规部", 
-                plannedStart: "2023-11-10", 
-                plannedEnd: "2023-11-20", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "完成相关法规要求的备案手续，准备齐全备案资料",
-                stage: "preparation",
-                priority: "medium",
-                order: 3
-            },
-            { 
-                id: 4, 
-                name: "选择供应商", 
-                owner: "采购部", 
-                plannedStart: "2023-11-15", 
-                plannedEnd: "2023-11-25", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "评估供应商资质、生产能力、质量体系、过往业绩",
-                stage: "sourcing",
-                priority: "high",
-                order: 4
-            },
-            { 
-                id: 5, 
-                name: "产品打样", 
-                owner: "质量部", 
-                plannedStart: "2023-11-20", 
-                plannedEnd: "2023-12-05", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "要求供应商提供样品进行测试和评估，确保样品符合设计要求和质量标准",
-                stage: "sourcing",
-                priority: "high",
-                order: 5
-            },
-            { 
-                id: 6, 
-                name: "三方比价", 
-                owner: "采购部", 
-                plannedStart: "2023-11-25", 
-                plannedEnd: "2023-12-05", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "收集至少三家供应商的报价进行对比，综合考虑价格、质量、交期和服务",
-                stage: "decision",
-                priority: "medium",
-                order: 6
-            },
-            { 
-                id: 7, 
-                name: "接收计划下单指令", 
-                owner: "计划部", 
-                plannedStart: "2023-12-01", 
-                plannedEnd: "2023-12-05", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "确认最终供应商和下单数量，准备下单资料",
-                stage: "decision",
-                priority: "high",
-                order: 7
-            },
-            { 
-                id: 8, 
-                name: "安排产前样", 
-                owner: "质量部", 
-                plannedStart: "2023-12-05", 
-                plannedEnd: "2023-12-12", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "确认大货生产前的最终样品，确保与确认样一致",
-                stage: "production",
-                priority: "high",
-                order: 8
-            },
-            { 
-                id: 9, 
-                name: "下单生产包装", 
-                owner: "采购部", 
-                plannedStart: "2023-12-08", 
-                plannedEnd: "2023-12-10", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "正式下达生产订单，确认交期、数量、质量要求",
-                stage: "production",
-                priority: "high",
-                order: 9
-            },
-            { 
-                id: 10, 
-                name: "现场监督生产", 
-                owner: "生产部", 
-                plannedStart: "2023-12-12", 
-                plannedEnd: "2023-12-30", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "定期检查生产进度和质量，确保生产过程符合质量要求，及时解决问题",
-                stage: "production",
-                priority: "medium",
-                order: 10
-            },
-            { 
-                id: 11, 
-                name: "沟通发货细节", 
-                owner: "物流部", 
-                plannedStart: "2023-12-25", 
-                plannedEnd: "2023-12-28", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "确认运输方式、包装要求、发货时间、收货地址等细节",
-                stage: "delivery",
-                priority: "medium",
-                order: 11
-            },
-            { 
-                id: 12, 
-                name: "大货到厂", 
-                owner: "仓库", 
-                plannedStart: "2024-01-05", 
-                plannedEnd: "2024-01-10", 
-                actualStart: "", 
-                actualEnd: "", 
-                status: "not-started", 
-                progress: 0, 
-                notes: "接收并验收大货产品，检查数量、质量、包装完整性，及时处理问题",
-                stage: "delivery",
-                priority: "medium",
-                order: 12
-            }
-        ];
-
-        // DOM元素
-        const tableBody = document.getElementById('tableBody');
-        const taskModal = document.getElementById('taskModal');
-        const detailsModal = document.getElementById('detailsModal');
-        const taskForm = document.getElementById('taskForm');
-        const modalTitle = document.getElementById('modalTitle');
-        const addTaskBtn = document.getElementById('addTaskBtn');
-        const toggleSortBtn = document.getElementById('toggleSortBtn');
-        const detailsBtn = document.getElementById('detailsBtn');
-        const closeModal = document.getElementById('closeModal');
-        const closeDetailsModal = document.getElementById('closeDetailsModal');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const closeDetailsBtn = document.getElementById('closeDetailsBtn');
-        const saveBtn = document.getElementById('saveBtn');
-        const exportBtn = document.getElementById('exportBtn');
-
-        let isSortMode = false;
-        let sortable = null;
-
-        // 初始化表格
-        function renderTable() {
-            tableBody.innerHTML = '';
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 微信弹窗功能
+            const wechatBtn = document.getElementById('wechat-btn');
+            const wechatModal = document.getElementById('wechat-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const copyWechatBtn = document.getElementById('copy-wechat');
             
-            // 按阶段分组
-            const stages = {
-                preparation: { name: "第一阶段：前期准备阶段", tasks: [] },
-                sourcing: { name: "第二阶段：供应商选择与打样", tasks: [] },
-                decision: { name: "第三阶段：比价与决策", tasks: [] },
-                production: { name: "第四阶段：生产阶段", tasks: [] },
-                delivery: { name: "第五阶段：发货与验收", tasks: [] }
-            };
+            // 打开微信弹窗
+            wechatBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                wechatModal.style.display = 'flex';
+            });
             
-            // 将任务按阶段分组
-            tasks.forEach(task => {
-                if (stages[task.stage]) {
-                    stages[task.stage].tasks.push(task);
+            // 关闭微信弹窗
+            closeModal.addEventListener('click', function() {
+                wechatModal.style.display = 'none';
+            });
+            
+            // 点击模态框外部关闭
+            wechatModal.addEventListener('click', function(e) {
+                if (e.target === wechatModal) {
+                    wechatModal.style.display = 'none';
                 }
             });
             
-            // 按order排序
-            Object.values(stages).forEach(stage => {
-                stage.tasks.sort((a, b) => a.order - b.order);
+            // 复制微信号功能
+            copyWechatBtn.addEventListener('click', function() {
+                const wechatId = 'EastSeaO';
+                navigator.clipboard.writeText(wechatId).then(function() {
+                    alert('微信号已复制到剪贴板: ' + wechatId);
+                }, function() {
+                    // 备用方法
+                    const textArea = document.createElement('textarea');
+                    textArea.value = wechatId;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('微信号已复制到剪贴板: ' + wechatId);
+                });
             });
             
-            // 渲染每个阶段的任务
-            Object.values(stages).forEach(stage => {
-                // 添加阶段标题行
-                if (stage.tasks.length > 0) {
-                    const stageRow = document.createElement('tr');
-                    stageRow.className = 'stage-header';
-                    stageRow.innerHTML = `<td colspan="12">${stage.name}</td>`;
-                    tableBody.appendChild(stageRow);
-                }
+            // 电话按钮点击效果
+            const contactBtn = document.querySelector('.contact-btn');
+            contactBtn.addEventListener('click', function() {
+                alert('感谢您的联系！我会尽快回复您。');
+            });
+            
+            // 滚动进度条
+            window.addEventListener('scroll', function() {
+                const winHeight = window.innerHeight;
+                const docHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.pageYOffset;
+                const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+                const progressBar = document.getElementById('progressBar');
+                progressBar.style.width = scrollPercent + '%';
                 
-                // 添加阶段内的任务
-                stage.tasks.forEach((task, index) => {
-                    const row = document.createElement('tr');
-                    row.setAttribute('data-id', task.id);
-                    
-                    // 状态标签
-                    let statusClass = '';
-                    let statusText = '';
-                    
-                    switch(task.status) {
-                        case 'not-started':
-                            statusClass = 'status-not-started';
-                            statusText = '未开始';
-                            break;
-                        case 'in-progress':
-                            statusClass = 'status-in-progress';
-                            statusText = '进行中';
-                            break;
-                        case 'completed':
-                            statusClass = 'status-completed';
-                            statusText = '已完成';
-                            break;
-                        case 'delayed':
-                            statusClass = 'status-delayed';
-                            statusText = '已延期';
-                            break;
-                        case 'on-hold':
-                            statusClass = 'status-on-hold';
-                            statusText = '暂停';
-                            break;
+                // 显示/隐藏返回顶部按钮
+                const backToTop = document.getElementById('backToTop');
+                if (scrollTop > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            // 返回顶部功能
+            document.getElementById('backToTop').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 卡片动画延迟
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.15) + 's';
+            });
+            
+            // 导航栏平滑滚动
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 只处理内部锚点链接
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
                     }
-                    
-                    row.innerHTML = `
-                        <td>
-                            ${isSortMode ? '<i class="fas fa-arrows-alt sort-handle"></i>' : ''}
-                            ${task.order}
-                        </td>
-                        <td>${task.id}</td>
-                        <td>${task.name}</td>
-                        <td>${task.owner}</td>
-                        <td><input type="date" class="date-input" value="${task.plannedStart}" data-field="plannedStart" data-id="${task.id}"></td>
-                        <td><input type="date" class="date-input" value="${task.plannedEnd}" data-field="plannedEnd" data-id="${task.id}"></td>
-                        <td><input type="date" class="date-input" value="${task.actualStart}" data-field="actualStart" data-id="${task.id}"></td>
-                        <td><input type="date" class="date-input" value="${task.actualEnd}" data-field="actualEnd" data-id="${task.id}"></td>
-                        <td>
-                            <select class="status-select" data-id="${task.id}">
-                                <option value="not-started" ${task.status === 'not-started' ? 'selected' : ''}>未开始</option>
-                                <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>进行中</option>
-                                <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>已完成</option>
-                                <option value="delayed" ${task.status === 'delayed' ? 'selected' : ''}>已延期</option>
-                                <option value="on-hold" ${task.status === 'on-hold' ? 'selected' : ''}>暂停</option>
-                            </select>
-                        </td>
-                        <td class="progress-cell">
-                            <div>${task.progress}%</div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${task.progress}%"></div>
-                            </div>
-                            <input type="range" min="0" max="100" value="${task.progress}" class="progress-slider" data-id="${task.id}">
-                        </td>
-                        <td class="notes-cell">${task.notes}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit" data-id="${task.id}"><i class="fas fa-edit"></i></button>
-                                ${isSortMode ? '' : '<button class="action-btn delete" data-id="${task.id}"><i class="fas fa-trash"></i></button>'}
-                            </div>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
+                    // 外部链接不做处理，直接跳转
                 });
             });
-            
-            // 更新统计信息
-            updateSummary();
-            
-            // 添加事件监听器
-            addEventListeners();
-            
-            // 初始化排序功能
-            if (isSortMode) {
-                initSortable();
-            }
-        }
-        
-        // 初始化排序功能
-        function initSortable() {
-            if (sortable) {
-                sortable.destroy();
-            }
-            
-            sortable = new Sortable(tableBody, {
-                animation: 150,
-                ghostClass: 'sortable-ghost',
-                chosenClass: 'sortable-chosen',
-                dragClass: 'sortable-drag',
-                handle: '.sort-handle',
-                filter: '.stage-header',
-                onEnd: function(evt) {
-                    // 获取移动后的任务ID
-                    const movedTaskId = parseInt(evt.item.getAttribute('data-id'));
-                    
-                    // 找到移动的任务
-                    const movedTask = tasks.find(task => task.id === movedTaskId);
-                    if (!movedTask) return;
-                    
-                    // 获取同一阶段的所有任务
-                    const stageTasks = tasks.filter(task => task.stage === movedTask.stage);
-                    
-                    // 更新order值
-                    stageTasks.forEach((task, index) => {
-                        task.order = index + 1;
-                    });
-                    
-                    // 保存并重新渲染
-                    saveToLocalStorage();
-                    renderTable();
-                }
-            });
-        }
-        
-        // 切换排序模式
-        function toggleSortMode() {
-            isSortMode = !isSortMode;
-            toggleSortBtn.innerHTML = isSortMode ? 
-                '<i class="fas fa-check"></i> 完成排序' : 
-                '<i class="fas fa-arrows-alt"></i> 调整排序';
-            
-            toggleSortBtn.style.background = isSortMode ? '#e74c3c' : '#16a085';
-            toggleSortBtn.style.color = 'white';
-            
-            renderTable();
-        }
-        
-        // 更新统计信息
-        function updateSummary() {
-            const totalTasks = tasks.length;
-            const completedTasks = tasks.filter(task => task.status === 'completed').length;
-            const inProgressTasks = tasks.filter(task => task.status === 'in-progress').length;
-            const overallProgress = tasks.reduce((sum, task) => sum + task.progress, 0) / totalTasks;
-            
-            document.getElementById('totalTasks').textContent = totalTasks;
-            document.getElementById('completedTasks').textContent = completedTasks;
-            document.getElementById('inProgressTasks').textContent = inProgressTasks;
-            document.getElementById('overallProgress').textContent = overallProgress.toFixed(1) + '%';
-        }
-        
-        // 添加事件监听器
-        function addEventListeners() {
-            // 日期输入框变化
-            document.querySelectorAll('.date-input').forEach(input => {
-                input.addEventListener('change', function() {
-                    const taskId = parseInt(this.getAttribute('data-id'));
-                    const field = this.getAttribute('data-field');
-                    const value = this.value;
-                    
-                    updateTask(taskId, field, value);
-                });
-            });
-            
-            // 状态选择变化
-            document.querySelectorAll('.status-select').forEach(select => {
-                select.addEventListener('change', function() {
-                    const taskId = parseInt(this.getAttribute('data-id'));
-                    const value = this.value;
-                    
-                    updateTask(taskId, 'status', value);
-                    
-                    // 如果状态变为已完成，自动设置进度为100%
-                    if (value === 'completed') {
-                        updateTask(taskId, 'progress', 100);
-                    }
-                    
-                    renderTable();
-                });
-            });
-            
-            // 进度滑块变化
-            document.querySelectorAll('.progress-slider').forEach(slider => {
-                slider.addEventListener('input', function() {
-                    const taskId = parseInt(this.getAttribute('data-id'));
-                    const value = parseInt(this.value);
-                    
-                    updateTask(taskId, 'progress', value);
-                    renderTable();
-                });
-            });
-            
-            // 编辑按钮
-            document.querySelectorAll('.action-btn.edit').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const taskId = parseInt(this.getAttribute('data-id'));
-                    editTask(taskId);
-                });
-            });
-            
-            // 删除按钮
-            document.querySelectorAll('.action-btn.delete').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const taskId = parseInt(this.getAttribute('data-id'));
-                    deleteTask(taskId);
-                });
-            });
-        }
-        
-        // 更新任务
-        function updateTask(id, field, value) {
-            const taskIndex = tasks.findIndex(task => task.id === id);
-            if (taskIndex !== -1) {
-                tasks[taskIndex][field] = value;
-                
-                // 自动更新状态
-                if (field === 'progress') {
-                    const progress = parseInt(value);
-                    if (progress === 0) {
-                        tasks[taskIndex].status = 'not-started';
-                    } else if (progress > 0 && progress < 100) {
-                        tasks[taskIndex].status = 'in-progress';
-                    } else if (progress === 100) {
-                        tasks[taskIndex].status = 'completed';
-                    }
-                }
-                
-                // 保存到本地存储
-                saveToLocalStorage();
-            }
-        }
-        
-        // 编辑任务
-        function editTask(id) {
-            const task = tasks.find(task => task.id === id);
-            if (task) {
-                document.getElementById('taskId').value = task.id;
-                document.getElementById('taskName').value = task.name;
-                document.getElementById('taskOwner').value = task.owner;
-                document.getElementById('plannedStart').value = task.plannedStart;
-                document.getElementById('plannedEnd').value = task.plannedEnd;
-                document.getElementById('actualStart').value = task.actualStart;
-                document.getElementById('actualEnd').value = task.actualEnd;
-                document.getElementById('taskStatus').value = task.status;
-                document.getElementById('taskProgress').value = task.progress;
-                document.getElementById('taskNotes').value = task.notes;
-                document.getElementById('taskStage').value = task.stage;
-                document.getElementById('taskPriority').value = task.priority;
-                
-                modalTitle.textContent = '编辑任务';
-                taskModal.style.display = 'flex';
-            }
-        }
-        
-        // 删除任务
-        function deleteTask(id) {
-            if (confirm('确定要删除这个任务吗？')) {
-                tasks = tasks.filter(task => task.id !== id);
-                renderTable();
-                saveToLocalStorage();
-            }
-        }
-        
-        // 添加新任务
-        function addNewTask() {
-            // 重置表单
-            taskForm.reset();
-            document.getElementById('taskId').value = '';
-            modalTitle.textContent = '添加新任务';
-            taskModal.style.display = 'flex';
-        }
-        
-        // 保存任务（表单提交）
-        taskForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const taskId = document.getElementById('taskId').value;
-            const stage = document.getElementById('taskStage').value;
-            
-            const taskData = {
-                name: document.getElementById('taskName').value,
-                owner: document.getElementById('taskOwner').value,
-                plannedStart: document.getElementById('plannedStart').value,
-                plannedEnd: document.getElementById('plannedEnd').value,
-                actualStart: document.getElementById('actualStart').value,
-                actualEnd: document.getElementById('actualEnd').value,
-                status: document.getElementById('taskStatus').value,
-                progress: parseInt(document.getElementById('taskProgress').value),
-                notes: document.getElementById('taskNotes').value,
-                stage: stage,
-                priority: document.getElementById('taskPriority').value
-            };
-            
-            if (taskId) {
-                // 更新现有任务
-                const taskIndex = tasks.findIndex(task => task.id === parseInt(taskId));
-                if (taskIndex !== -1) {
-                    tasks[taskIndex] = { ...tasks[taskIndex], ...taskData };
-                }
-            } else {
-                // 添加新任务
-                const newId = tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
-                
-                // 计算新任务的order值
-                const stageTasks = tasks.filter(task => task.stage === stage);
-                const maxOrder = stageTasks.length > 0 ? Math.max(...stageTasks.map(task => task.order)) : 0;
-                
-                tasks.push({ 
-                    id: newId, 
-                    order: maxOrder + 1,
-                    ...taskData 
-                });
-            }
-            
-            renderTable();
-            taskModal.style.display = 'none';
-            saveToLocalStorage();
         });
-        
-        // 保存到本地存储
-        function saveToLocalStorage() {
-            localStorage.setItem('packagingTasks', JSON.stringify(tasks));
-        }
-        
-        // 从本地存储加载
-        function loadFromLocalStorage() {
-            const savedTasks = localStorage.getItem('packagingTasks');
-            if (savedTasks) {
-                tasks = JSON.parse(savedTasks);
-            }
-        }
-        
-        // 导出数据
-        function exportData() {
-            const dataStr = JSON.stringify(tasks, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = '包装下单流程数据.json';
-            link.click();
-        }
-        
-        // 显示流程详情
-        function showDetails() {
-            detailsModal.style.display = 'flex';
-        }
-        
-        // 事件监听
-        addTaskBtn.addEventListener('click', addNewTask);
-        toggleSortBtn.addEventListener('click', toggleSortMode);
-        detailsBtn.addEventListener('click', showDetails);
-        closeModal.addEventListener('click', () => taskModal.style.display = 'none');
-        closeDetailsModal.addEventListener('click', () => detailsModal.style.display = 'none');
-        closeDetailsBtn.addEventListener('click', () => detailsModal.style.display = 'none');
-        cancelBtn.addEventListener('click', () => taskModal.style.display = 'none');
-        saveBtn.addEventListener('click', () => saveToLocalStorage());
-        exportBtn.addEventListener('click', exportData);
-        
-        // 点击模态框外部关闭
-        window.addEventListener('click', (e) => {
-            if (e.target === taskModal) {
-                taskModal.style.display = 'none';
-            }
-            if (e.target === detailsModal) {
-                detailsModal.style.display = 'none';
-            }
-        });
-        
-        // 初始化
-        loadFromLocalStorage();
-        renderTable();
     </script>
 </body>
 </html>
