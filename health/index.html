@@ -169,6 +169,39 @@
             z-index: 5;
         }
         
+        /* 底部按钮区域 */
+        .bottom-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+        
+        .bottom-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .bottom-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
         /* 响应式调整 */
         @media (max-width: 768px) {
             .video-container {
@@ -190,6 +223,19 @@
                 font-size: 12px;
                 min-width: 80px;
             }
+            
+            .bottom-buttons {
+                flex-direction: column;
+                gap: 10px;
+                width: 80%;
+            }
+            
+            .bottom-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
         }
         
         /* 全屏样式 */
@@ -204,6 +250,10 @@
             height: 100%;
             max-width: none;
             border-radius: 0;
+        }
+        
+        .video-wrapper.fullscreen .bottom-buttons {
+            bottom: 40px;
         }
     </style>
 </head>
@@ -231,6 +281,16 @@
             </div>
         </div>
         <div class="hint"></div>
+        
+        <!-- 底部按钮区域 -->
+        <div class="bottom-buttons">
+            <a href="http://gervas.wang" class="bottom-btn">
+                <span>🏠</span> 回到首页
+            </a>
+            <a href="http://gervas.wang/products/" class="bottom-btn">
+                <span>📦</span> 公司产品
+            </a>
+        </div>
     </div>
 
     <script>
