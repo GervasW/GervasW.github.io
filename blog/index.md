@@ -1,11 +1,11 @@
 ---
 layout: default
-title: "gervasw的博客"
+title: "王维的博客"
 description: "记录思考、学习与成长"
 ---
 
 <div class="hero">
-    <h1>欢迎来到 gervasw 的博客</h1>
+    <h1>欢迎来到王维的博客</h1>
     <p>这里是我分享想法和学习心得的地方</p>
 </div>
 
