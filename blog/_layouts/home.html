@@ -1,30 +1,76 @@
----
-layout: default
----
-
-<section class="hero">
-    <h1>欢迎来到 gervasw 的博客</h1>
-    <p>这里是我分享想法和学习心得的地方</p>
-</section>
-
-<section class="post-list">
-    <h2>最新文章</h2>
-    
-    {% for post in site.posts %}
-    <article class="post-item">
-        <h3 class="post-title">
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h3>
-        <div class="post-meta">
-            <time datetime="{{ post.date | date_to_xmlschema }}">
-                {{ post.date | date: "%Y年%m月%d日" }}
-            </time>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+            <nav class="site-nav">
+                <a href="{{ '/' | relative_url }}">首页</a>
+                <a href="{{ '/about' | relative_url }}">关于</a>
+            </nav>
         </div>
-        <div class="post-excerpt">
-            {{ post.excerpt | default: post.content | strip_html | truncate: 150 }}
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>欢迎来到 gervasw 的博客</h1>
+            <p>这里是我分享想法和学习心得的地方</p>
+        </section>
+
+        <section class="post-list">
+            <h2>最新文章</h2>
+            
+            <!-- 调试信息：显示文章数量 -->
+            <!-- 文章数量: {{ site.posts.size }} -->
+            
+            {% if site.posts.size > 0 %}
+                {% for post in site.posts %}
+                <article class="post-item">
+                    <h3 class="post-title">
+                        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </h3>
+                    <div class="post-meta">
+                        <time datetime="{{ post.date | date_to_xmlschema }}">
+                            {{ post.date | date: "%Y年%m月%d日" }}
+                        </time>
+                        {% if post.categories %}
+                        <span class="post-category">{{ post.categories | first }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="post-excerpt">
+                        {% if post.excerpt %}
+                            {{ post.excerpt }}
+                        {% else %}
+                            {{ post.content | strip_html | truncate: 150 }}
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="no-posts">
+                    <p>暂无文章发布。</p>
+                    <p>请检查：</p>
+                    <ul>
+                        <li>文章是否放在 <code>_posts</code> 目录中</li>
+                        <li>文件名格式是否为 <code>YYYY-MM-DD-title.md</code></li>
+                        <li>文章是否包含正确的 Front Matter</li>
+                        <li>文章日期是否为过去或当前日期</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. 由 GitHub Pages 提供支持。</p>
         </div>
-    </article>
-    {% else %}
-    <p>暂无文章，敬请期待。</p>
-    {% endfor %}
-</section>
+    </footer>
+</body>
+</html>
