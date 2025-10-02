@@ -1,8 +1,8 @@
 # 站点基本信息
-title: "gervasw的博客"
+title: "纪委的博客"
 description: "记录思考、学习与成长"
 baseurl: "/blog"
-url: "https://gervasw.github.io"
+url: "http://gervas.wang"
 
 # 构建设置
 markdown: kramdown
@@ -10,7 +10,7 @@ permalink: pretty
 
 # 作者信息
 author:
-  name: "gervasw"
+  name: "纪委"
   bio: "欢迎来到我的数字花园，这里记录我的学习和思考"
 
 # 插件
