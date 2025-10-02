@@ -112,7 +112,7 @@
             z-index: 2;
         }
         
-        /* 导航栏 - 调整为与首页风格一致 */
+        /* 导航栏 - 调整为与首页风格一致并优化布局 */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
             padding: 0;
@@ -120,16 +120,15 @@
             z-index: 10;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             border-radius: 0 0 var(--border-radius) var(--border-radius);
-            margin: 0 auto;
+            margin: 0 auto 30px;
             max-width: 1200px;
-            margin-bottom: 30px;
         }
         
         .nav-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 20px;
+            padding: 0;
         }
         
         .nav-links {
@@ -138,19 +137,26 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            justify-content: space-between;
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
         }
         
         .nav-link {
-            flex: 1;
-            text-align: center;
+            display: block;
             color: var(--food-primary);
             text-decoration: none;
-            padding: 18px 0;
+            padding: 20px 15px;
             font-weight: 600;
             font-size: 16px;
             transition: var(--transition);
-            border-bottom: 3px solid transparent;
             position: relative;
+            overflow: hidden;
+            white-space: nowrap;
         }
         
         .nav-link::before {
@@ -172,10 +178,16 @@
         
         .nav-link:hover {
             background: var(--food-light);
+            transform: translateY(-2px);
         }
         
         .nav-link.active {
             background: var(--food-light);
+        }
+        
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 18px;
         }
         
         /* 产品分类筛选 - 调整为卡片样式 */
@@ -620,6 +632,10 @@
                 flex-direction: column;
             }
             
+            .nav-item {
+                flex: none;
+            }
+            
             .nav-link {
                 padding: 15px;
                 border-bottom: 1px solid #eee;
@@ -719,10 +735,26 @@
         <div class="container">
             <div class="nav-container">
                 <ul class="nav-links">
-                    <li><a href="#" class="nav-link active" data-channel="home">首页</a></li>
-                    <li><a href="#" class="nav-link" data-channel="traditional">传统渠道</a></li>
-                    <li><a href="#" class="nav-link" data-channel="ecommerce">电商渠道</a></li>
-                    <li><a href="#" class="nav-link" data-channel="third">3渠和其他</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-channel="home">
+                            <i class="fas fa-home"></i> 首页
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-channel="traditional">
+                            <i class="fas fa-store"></i> 传统渠道
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-channel="ecommerce">
+                            <i class="fas fa-shopping-cart"></i> 电商渠道
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-channel="third">
+                            <i class="fas fa-network-wired"></i> 3渠和其他
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
