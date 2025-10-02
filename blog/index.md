@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "王维的博客"
+title: "纪委的学习记录"
 description: "记录思考、学习与成长"
 ---
 
 <div class="hero">
-    <h1>欢迎来到王维的博客</h1>
-    <p>这里是我分享想法和学习心得的地方</p>
+    <h1>欢迎来到王维的学习记录</h1>
+    <p>这里是我分享想法和学习记录的地方</p>
 </div>
 
 <div class="post-list">
