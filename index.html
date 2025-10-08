@@ -983,6 +983,31 @@
                 font-size: 16px;
             }
         }
+        
+        /* 新增样式：采购需求合并页面 */
+        .procurement-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .procurement-section {
+            margin-bottom: 30px;
+        }
+        
+        .procurement-section h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: white;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        
+        .procurement-section h3 i {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1029,18 +1054,12 @@
             </a>
         </div>
         
-        <!-- 导航栏 -->
+        <!-- 导航栏 - 已修改为合并采购需求 -->
         <nav class="navbar">
             <div class="nav-container">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="#outer-packaging" class="nav-link active">外包装需求</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#inner-packaging" class="nav-link">内包装需求</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#raw-material" class="nav-link">原料需求</a>
+                        <a href="#procurement-demand" class="nav-link active">采购需求</a>
                     </li>
                     <li class="nav-item">
                         <a href="http://gervas.wang/about/" class="nav-link">个人简介</a>
@@ -1073,53 +1092,51 @@
             </a>
         </section>
         
-        <!-- 外包装品类卡片 -->
-        <section id="outer-packaging" class="card category-card outer-packaging-card">
-            <h2 class="card-title"><i class="fas fa-box"></i> 外包装需求</h2>
+        <!-- 采购需求合并卡片 -->
+        <section id="procurement-demand" class="card">
+            <h2 class="card-title"><i class="fas fa-shopping-cart"></i> 采购需求</h2>
             
-            <div class="demand-category">
-                <ul class="demand-list">
-                    <li>各类精装盒、礼品盒、皮盒、木盒等</li>
-                    <li>纸质包装（卡纸、裱坑盒等）</li>
-                    <li>各种材质手提袋</li>
-                    <li>食品标签/RFID标签</li>
-                    <li>运输包装与外箱</li>
-                    <li>保鲜包装与功能性包装</li>
-                    <li>玻璃容器（食品瓶、罐）</li>
-                    <li>金属包装（罐、盖、箔）</li>
-                    <li>食品级塑料包装（PET, PP, PE等）</li>
-                </ul>
-            </div>
-        </section>
-        
-        <!-- 内包装品类卡片 -->
-        <section id="inner-packaging" class="card category-card inner-packaging-card">
-            <h2 class="card-title"><i class="fas fa-box-open"></i> 内包装需求</h2>
-            
-            <div class="demand-category">
-                <ul class="demand-list">
-                    <li>食品直接接触内包装材料</li>
-                    <li>真空包装袋与复合膜</li>
-                    <li>吸塑包装与泡罩包装</li>
-                    <li>食品级包装内衬材料</li>
-                    <li>干燥剂与保鲜剂</li>
-                </ul>
-            </div>
-        </section>
-        
-        <!-- 原料品类卡片 -->
-        <section id="raw-material" class="card category-card raw-material-card">
-            <h2 class="card-title"><i class="fas fa-seedling"></i> 原料需求</h2>
-            
-            <div class="demand-category">
-                <ul class="demand-list">
-                    <li>各种果汁原浆、浓缩液</li>
-                    <li>红枸杞、黑枸杞等西北特色生物资源</li>
-                    <li>FIC常用食品原料与添加剂</li>
-                    <li>天然植物提取物</li>
-                    <li>功能性食品配料</li>
-                    <li>药食同源原料</li>
-                </ul>
+            <div class="procurement-container">
+                <!-- 外包装需求 -->
+                <div class="procurement-section outer-packaging-card demand-category">
+                    <h3><i class="fas fa-box"></i> 外包装需求</h3>
+                    <ul class="demand-list">
+                        <li>各类精装盒、礼品盒、皮盒、木盒等</li>
+                        <li>纸质包装（卡纸、裱坑盒等）</li>
+                        <li>各种材质手提袋</li>
+                        <li>食品标签/RFID标签</li>
+                        <li>运输包装与外箱</li>
+                        <li>保鲜包装与功能性包装</li>
+                        <li>玻璃容器（食品瓶、罐）</li>
+                        <li>金属包装（罐、盖、箔）</li>
+                        <li>食品级塑料包装（PET, PP, PE等）</li>
+                    </ul>
+                </div>
+                
+                <!-- 内包装需求 -->
+                <div class="procurement-section inner-packaging-card demand-category">
+                    <h3><i class="fas fa-box-open"></i> 内包装需求</h3>
+                    <ul class="demand-list">
+                        <li>食品直接接触内包装材料</li>
+                        <li>真空包装袋与复合膜</li>
+                        <li>吸塑包装与泡罩包装</li>
+                        <li>食品级包装内衬材料</li>
+                        <li>干燥剂与保鲜剂</li>
+                    </ul>
+                </div>
+                
+                <!-- 原料需求 -->
+                <div class="procurement-section raw-material-card demand-category">
+                    <h3><i class="fas fa-seedling"></i> 原料需求</h3>
+                    <ul class="demand-list">
+                        <li>各种果汁原浆、浓缩液</li>
+                        <li>红枸杞、黑枸杞等西北特色生物资源</li>
+                        <li>FIC常用食品原料与添加剂</li>
+                        <li>天然植物提取物</li>
+                        <li>功能性食品配料</li>
+                        <li>药食同源原料</li>
+                    </ul>
+                </div>
             </div>
         </section>
         
