@@ -653,31 +653,6 @@
             background-size: 150px;
         }
         
-        .contact-icons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-            gap: 15px;
-        }
-        
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            font-size: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .contact-icon:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px) scale(1.1);
-        }
-        
         /* 访问统计 */
         .stats-container {
             display: flex;
@@ -942,7 +917,7 @@
                 <i class="fas fa-phone"></i>
                  电话联系
             </a>
-            <a href="#" id="EastSeaO" class="contact-btn wechat-btn">
+            <a href="#" id="wechat-btn" class="contact-btn wechat-btn">
                 <i class="fab fa-weixin"></i>
                  添加微信
             </a>
@@ -1046,7 +1021,7 @@
                 <i class="fas fa-phone"></i>
                 电话联系
             </a>
-            <a href="#" id="EastSeaO" class="action-btn">
+            <a href="#" id="wechat-action-btn" class="action-btn">
                 <i class="fab fa-weixin"></i>
                 添加微信
             </a>
@@ -1061,7 +1036,7 @@
             <p>请扫描下方二维码或添加微信ID</p>
             <div class="wechat-id">
                 <i class="fab fa-weixin"></i>
-                &nbsp; wangwei_trt
+                &nbsp; EastSeaO
             </div>
             <button class="copy-btn" id="copyWechat">复制微信号</button>
         </div>
@@ -1069,25 +1044,13 @@
     
     <!-- 页脚 -->
     <footer class="footer">
-        <div class="contact-icons">
-            <a href="tel:18094719236" class="contact-icon">
-                <i class="fas fa-phone"></i>
-            </a>
-            <a href="mailto:gervas@trthealth.com" class="contact-icon">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="#" id="footer-wechat-btn" class="contact-icon">
-                <i class="fab fa-weixin"></i>
-            </a>
-        </div>
-        
         <div class="stats-container">
             <div class="stat-item">
-                <div class="stat-number">8+</div>
+                <div class="stat-number">5+</div>
                 <div class="stat-label">年采购经验</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">100+</div>
+                <div class="stat-number">200+</div>
                 <div class="stat-label">合作供应商</div>
             </div>
             <div class="stat-item">
@@ -1097,7 +1060,8 @@
         </div>
         
         <div class="copyright">
-            &copy; 2023 同仁堂健康青海基地 - 王维 | 食品包装采购
+            &copy; 2025 同仁堂健康青海基地 - 王维 | 食品包装采购<br>
+            邮箱: 51928505@qq.com
         </div>
     </footer>
 
@@ -1124,7 +1088,7 @@
         });
         
         // 微信弹窗功能
-        const wechatBtns = document.querySelectorAll("#wechat-btn, #wechat-action-btn, #footer-wechat-btn");
+        const wechatBtns = document.querySelectorAll("#wechat-btn, #wechat-action-btn");
         const wechatModal = document.getElementById("wechatModal");
         const closeModal = document.getElementById("closeModal");
         const copyWechat = document.getElementById("copyWechat");
@@ -1149,7 +1113,7 @@
         // 复制微信号功能
         copyWechat.addEventListener("click", function() {
             const textArea = document.createElement("textarea");
-            textArea.value = "wangwei_trt";
+            textArea.value = "EastSeaO";
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand("copy");
