@@ -897,10 +897,19 @@
             border-bottom: 2px solid rgba(255, 255, 255, 0.3);
             display: flex;
             align-items: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .procurement-section h3 i {
             margin-right: 10px;
+        }
+        
+        /* 修复：确保采购需求标题可见 */
+        .procurement-section.outer-packaging-card h3,
+        .procurement-section.inner-packaging-card h3,
+        .procurement-section.raw-material-card h3 {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -961,6 +970,10 @@
                     <li class="nav-item">
                         <a href="https://gervas.wang/printing/" class="nav-link" target="_blank">印刷知识库</a>
                     </li>
+                    <!-- 新增的Blog链接 -->
+                    <li class="nav-item">
+                        <a href="https://seamoonappear.github.io/" class="nav-link" target="_blank">Blog</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -1018,4 +1031,154 @@
                         <li>红枸杞、黑枸杞等西北特色生物资源</li>
                         <li>FIC常用食品原料与添加剂</li>
                         <li>天然植物提取物</li>
-      
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 底部按钮区域 -->
+        <div class="action-buttons">
+            <a href="https://f.kdocs.cn/g/FI7quFBs/" target="_blank" class="action-btn">
+                <i class="fas fa-file-alt"></i>
+                供应商登记
+            </a>
+            <a href="tel:18094719236" class="action-btn">
+                <i class="fas fa-phone"></i>
+                电话联系
+            </a>
+            <a href="#" id="wechat-action-btn" class="action-btn">
+                <i class="fab fa-weixin"></i>
+                添加微信
+            </a>
+        </div>
+    </div>
+    
+    <!-- 微信弹窗 -->
+    <div class="modal" id="wechatModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h3>添加微信</h3>
+            <p>请扫描下方二维码或添加微信ID</p>
+            <div class="wechat-id">
+                <i class="fab fa-weixin"></i>
+                &nbsp; wangwei_trt
+            </div>
+            <button class="copy-btn" id="copyWechat">复制微信号</button>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="contact-icons">
+            <a href="tel:18094719236" class="contact-icon">
+                <i class="fas fa-phone"></i>
+            </a>
+            <a href="mailto:gervas@trthealth.com" class="contact-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="#" id="footer-wechat-btn" class="contact-icon">
+                <i class="fab fa-weixin"></i>
+            </a>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">8+</div>
+                <div class="stat-label">年采购经验</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">合作供应商</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">采购品类</div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 同仁堂健康青海基地 - 王维 | 食品包装采购
+        </div>
+    </footer>
+
+    <script>
+        // 滚动进度条
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+            
+            // 返回顶部按钮
+            const backToTop = document.getElementById("backToTop");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.classList.add("active");
+            } else {
+                backToTop.classList.remove("active");
+            }
+        };
+        
+        // 返回顶部功能
+        document.getElementById("backToTop").addEventListener("click", function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+        
+        // 微信弹窗功能
+        const wechatBtns = document.querySelectorAll("#wechat-btn, #wechat-action-btn, #footer-wechat-btn");
+        const wechatModal = document.getElementById("wechatModal");
+        const closeModal = document.getElementById("closeModal");
+        const copyWechat = document.getElementById("copyWechat");
+        
+        wechatBtns.forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault();
+                wechatModal.style.display = "flex";
+            });
+        });
+        
+        closeModal.addEventListener("click", function() {
+            wechatModal.style.display = "none";
+        });
+        
+        window.addEventListener("click", function(e) {
+            if (e.target === wechatModal) {
+                wechatModal.style.display = "none";
+            }
+        });
+        
+        // 复制微信号功能
+        copyWechat.addEventListener("click", function() {
+            const textArea = document.createElement("textarea");
+            textArea.value = "wangwei_trt";
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            
+            const originalText = copyWechat.innerHTML;
+            copyWechat.innerHTML = "✓ 已复制";
+            setTimeout(() => {
+                copyWechat.innerHTML = originalText;
+            }, 2000);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
