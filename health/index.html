@@ -81,6 +81,7 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: #000;
         }
         
         .video-container {
@@ -203,9 +204,6 @@
         }
         
         .intro-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
             margin-top: 20px;
         }
         
@@ -216,18 +214,6 @@
         
         .intro-text p {
             margin-bottom: 15px;
-        }
-        
-        .intro-image {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .intro-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
         
         .features {
@@ -339,17 +325,6 @@
         }
         
         /* 响应式设计 */
-        @media (max-width: 992px) {
-            .intro-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .intro-image {
-                order: -1;
-                height: 300px;
-            }
-        }
-        
         @media (max-width: 768px) {
             h1 {
                 font-size: 28px;
@@ -422,7 +397,7 @@
             <div class="video-wrapper">
                 <div class="video-container">
                     <div class="loader"></div>
-                    <video id="myVideo" poster="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80">
+                    <video id="myVideo">
                         <source src="https://www.tongrentang.com/file/upload/jkqinghai.mp4" type="video/mp4">
                         您的浏览器不支持 HTML5 视频播放。
                     </video>
@@ -454,9 +429,6 @@
                     <p>公司秉承同仁堂"炮制虽繁必不敢省人工，品味虽贵必不敢减物力"的古训，坚持"安全、有效、稳定、可控"的质量方针，建立了完善的质量管理体系，确保每一款产品都符合同仁堂的至高标准。</p>
                     
                     <p>未来，同仁堂健康青海基地将继续发挥区域资源优势，深化产学研合作，推动传统中医药与现代健康理念的融合创新，为消费者提供更加优质的健康产品和服务，助力"健康中国"战略实施。</p>
-                </div>
-                <div class="intro-image">
-                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="同仁堂健康青海基地">
                 </div>
             </div>
             
