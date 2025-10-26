@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,7 +25,7 @@
         .card {
             background-color: white;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
             overflow: hidden;
@@ -37,7 +37,7 @@
         }
         
         .header {
-            background: linear-gradient(to right, #2c3e50, #4a6491);
+            background: linear-gradient(to right, #c62828, #d32f2f);
             color: white;
             padding: 30px 20px;
             text-align: center;
@@ -54,6 +54,12 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar:hover {
+            transform: scale(1.05);
         }
         
         .avatar img {
@@ -64,7 +70,7 @@
         
         .avatar-placeholder {
             font-size: 48px;
-            color: #2c3e50;
+            color: #c62828;
         }
         
         h1 {
@@ -89,7 +95,7 @@
         
         .section-title {
             font-size: 18px;
-            color: #2c3e50;
+            color: #c62828;
             margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 1px solid #eaeaea;
@@ -99,7 +105,7 @@
         
         .section-title i {
             margin-right: 10px;
-            color: #4a6491;
+            color: #d32f2f;
         }
         
         .contact-info {
@@ -115,7 +121,7 @@
         
         .contact-item i {
             width: 30px;
-            color: #4a6491;
+            color: #d32f2f;
             font-size: 18px;
         }
         
@@ -127,8 +133,8 @@
         }
         
         .contact-value:hover {
-            background-color: #f0f4f8;
-            color: #2c3e50;
+            background-color: #ffebee;
+            color: #c62828;
         }
         
         .work-info {
@@ -148,33 +154,52 @@
         }
         
         .goals {
-            background-color: #f8f9fa;
+            background-color: #ffebee;
             border-radius: 10px;
             padding: 15px;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .goals-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
         
         .goal-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            flex: 1;
+            justify-content: center;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
         }
         
-        .goal-item:last-child {
-            margin-bottom: 0;
+        .goal-item:hover {
+            background-color: rgba(211, 47, 47, 0.1);
         }
         
         .goal-icon {
             width: 24px;
             height: 24px;
-            background-color: #4a6491;
+            background-color: #d32f2f;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
+            margin-right: 8px;
             color: white;
             font-size: 12px;
+            flex-shrink: 0;
+        }
+        
+        .goal-text {
+            font-size: 14px;
+            white-space: nowrap;
         }
         
         .footer {
@@ -190,7 +215,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: #4a6491;
+            background-color: #d32f2f;
             color: white;
             padding: 12px 24px;
             border-radius: 4px;
@@ -203,6 +228,69 @@
             transform: translateX(-50%) translateY(0);
         }
         
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* 移动端适配 */
         @media (max-width: 480px) {
             .card {
                 max-width: 100%;
@@ -215,13 +303,43 @@
             .content {
                 padding: 20px;
             }
+            
+            .goals {
+                flex-direction: row;
+                padding: 12px;
+            }
+            
+            .goal-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px 5px;
+            }
+            
+            .goal-icon {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            
+            .goal-text {
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .goal-text {
+                font-size: 12px;
+            }
+            
+            .goal-item {
+                padding: 8px 3px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="header">
-            <div class="avatar">
+            <div class="avatar" id="avatar">
                 <!-- 头像图片路径 -->
                 <img src="/assets/img/avatar.jpg" alt="王维" onerror="this.style.display='none'; document.querySelector('.avatar-placeholder').style.display='flex';">
                 <div class="avatar-placeholder" style="display: none;">
@@ -281,19 +399,19 @@
                         <div class="goal-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div>稳定供货</div>
+                        <div class="goal-text">稳定供应</div>
                     </div>
                     <div class="goal-item">
                         <div class="goal-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div>保证质量</div>
+                        <div class="goal-text">质量保证</div>
                     </div>
                     <div class="goal-item">
                         <div class="goal-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div>降本增效</div>
+                        <div class="goal-text">降本增效</div>
                     </div>
                 </div>
             </div>
@@ -301,6 +419,16 @@
         
         <div class="footer">
             <p>感谢访问我的个人名片页面</p>
+        </div>
+    </div>
+
+    <!-- 头像放大模态框 -->
+    <div class="modal" id="avatar-modal">
+        <div class="modal-close" id="modal-close">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="modal-content">
+            <img src="/assets/img/avatar.jpg" alt="王维" id="modal-avatar">
         </div>
     </div>
 
@@ -336,12 +464,61 @@
                     showToast('电话号码已复制到剪贴板');
                 }
             });
+            
+            // 添加头像点击放大功能
+            const avatar = document.getElementById('avatar');
+            const modal = document.getElementById('avatar-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalAvatar = document.getElementById('modal-avatar');
+            
+            avatar.addEventListener('click', function() {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            });
+            
+            modalClose.addEventListener('click', function() {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // 按ESC键关闭模态框
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
         });
         
         // 复制文本到剪贴板
         function copyToClipboard(text) {
+            // 使用现代剪贴板API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    // 成功
+                }).catch(err => {
+                    // 如果现代API失败，使用传统方法
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                // 使用传统方法
+                fallbackCopyToClipboard(text);
+            }
+        }
+        
+        // 传统复制方法
+        function fallbackCopyToClipboard(text) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand('copy');
