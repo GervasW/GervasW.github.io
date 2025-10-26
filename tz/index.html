@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>包材物料台账查询系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 包材物料台账查询系统</h1>
+            <p>近两年包材采购记录在线查询</p>
+        </header>
+
+        <!-- 搜索筛选区域 -->
+        <div class="search-section">
+            <div class="search-row">
+                <div class="search-group">
+                    <label for="supplierSearch">供应商名称:</label>
+                    <input type="text" id="supplierSearch" placeholder="输入供应商名称...">
+                </div>
+                <div class="search-group">
+                    <label for="projectNoSearch">项目号:</label>
+                    <input type="text" id="projectNoSearch" placeholder="输入项目号...">
+                </div>
+                <div class="search-group">
+                    <label for="projectNameSearch">项目名称:</label>
+                    <input type="text" id="projectNameSearch" placeholder="输入项目名称...">
+                </div>
+            </div>
+            <div class="search-actions">
+                <button id="searchBtn" class="btn-primary">搜索</button>
+                <button id="resetBtn" class="btn-secondary">重置</button>
+                <span id="resultCount" class="result-count">共 0 条记录</span>
+            </div>
+        </div>
+
+        <!-- 结果显示区域 -->
+        <div class="results-section">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>合同编号</th>
+                        <th>采购订单号</th>
+                        <th>供应商名称</th>
+                        <th>项目号</th>
+                        <th>项目名称</th>
+                        <th>数量</th>
+                        <th>单位</th>
+                        <th>采购单价</th>
+                        <th>订单总额</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- 数据将通过JavaScript动态填充 -->
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results" style="display: none;">
+                未找到匹配的记录
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
