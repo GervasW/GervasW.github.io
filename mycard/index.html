@@ -210,6 +210,30 @@
             font-size: 14px;
         }
         
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background-color: transparent;
+        }
+        
+        .home-link:hover {
+            color: #d32f2f;
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+        
+        .home-link i {
+            margin-right: 6px;
+            font-size: 12px;
+        }
+        
         .toast {
             position: fixed;
             bottom: 20px;
@@ -341,16 +365,39 @@
         <div class="header">
             <div class="avatar" id="avatar">
                 <!-- 头像图片路径 -->
-                <img src="/assets/img/avatar.jpg" alt="王维" onerror="this.style.display='none'; document.querySelector('.avatar-placeholder').style.display='flex';">
+                <img src="assets/img/avatar.jpg" alt="王维" onerror="this.style.display='none'; document.querySelector('.avatar-placeholder').style.display='flex';">
                 <div class="avatar-placeholder" style="display: none;">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
             <h1>王维</h1>
-            <div class="title">包装方案解决专员</div>
+            <div class="title">采购</div>
         </div>
         
         <div class="content">
+            <!-- 工作信息 -->
+            <div class="info-section">
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    <span>工作信息</span>
+                </div>
+                <div class="work-info">
+                    <div class="work-item">
+                        <div class="work-label">公司:</div>
+                        <div>北京同仁堂健康药业（青海）有限公司</div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-label">职位:</div>
+                        <div>采购</div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-label">主要工作:</div>
+                        <div>包装方案解决</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 联系信息 -->
             <div class="info-section">
                 <div class="section-title">
                     <i class="fas fa-address-card"></i>
@@ -365,30 +412,10 @@
                         <i class="fab fa-weixin"></i>
                         <span class="contact-value" id="wechat-id">EastSeaO</span>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-building"></i>
-                        <span>北京同仁堂健康药业（青海）有限公司</span>
-                    </div>
                 </div>
             </div>
             
-            <div class="info-section">
-                <div class="section-title">
-                    <i class="fas fa-briefcase"></i>
-                    <span>工作信息</span>
-                </div>
-                <div class="work-info">
-                    <div class="work-item">
-                        <div class="work-label">职位:</div>
-                        <div>采购</div>
-                    </div>
-                    <div class="work-item">
-                        <div class="work-label">主要工作:</div>
-                        <div>包装方案解决</div>
-                    </div>
-                </div>
-            </div>
-            
+            <!-- 主要目标 -->
             <div class="info-section">
                 <div class="section-title">
                     <i class="fas fa-bullseye"></i>
@@ -399,13 +426,13 @@
                         <div class="goal-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div class="goal-text">稳定供应</div>
+                        <div class="goal-text">稳定供货</div>
                     </div>
                     <div class="goal-item">
                         <div class="goal-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div class="goal-text">质量保证</div>
+                        <div class="goal-text">保证质量</div>
                     </div>
                     <div class="goal-item">
                         <div class="goal-icon">
@@ -418,6 +445,10 @@
         </div>
         
         <div class="footer">
+            <!-- 回到首页按钮 -->
+            <a href="https://www.gervas.wang" class="home-link" target="_blank">
+                <i class="fas fa-home"></i> 回到首页
+            </a>
             <p>感谢访问我的个人名片页面</p>
         </div>
     </div>
@@ -428,7 +459,7 @@
             <i class="fas fa-times"></i>
         </div>
         <div class="modal-content">
-            <img src="/assets/img/avatar.jpg" alt="王维" id="modal-avatar">
+            <img src="assets/img/avatar.jpg" alt="王维" id="modal-avatar">
         </div>
     </div>
 
