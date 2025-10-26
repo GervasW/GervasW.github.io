@@ -120,7 +120,13 @@
   <div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
 
   <script>
-    let data = [];
+    // 内置测试数据
+    let data = [
+      { "项目号": "P001", "物料名称": "纸箱", "供应商名称": "供应商A" },
+      { "项目号": "P002", "物料名称": "胶带", "供应商名称": "供应商B" },
+      { "项目号": "P003", "物料名称": "标签纸", "供应商名称": "供应商C" },
+      { "项目号": "P004", "物料名称": "泡沫板", "供应商名称": "供应商A" }
+    ];
 
     // 供应商颜色映射
     const supplierColors = {};
@@ -133,12 +139,6 @@
       }
       return supplierColors[name];
     }
-
-    // 加载 JSON 数据
-    fetch('data.json')
-      .then(response => response.json())
-      .then(json => { data = json; })
-      .catch(err => console.error('加载数据出错:', err));
 
     function searchData() {
       const projectVal = document.getElementById('projectSearch').value.trim().toLowerCase();
