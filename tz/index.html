@@ -93,13 +93,13 @@
 <div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
 
 <script>
-// 测试数据
-let data = [
-  { "项目号":"P001", "项目名称":"项目A", "单价":"10", "数量":"100", "金额":"1000", "下单时间":"2025-10-01", "供应商名称":"供应商A" },
-  { "项目号":"P002", "项目名称":"项目B", "单价":"5", "数量":"200", "金额":"1000", "下单时间":"2025-10-05", "供应商名称":"供应商B" },
-  { "项目号":"P003", "项目名称":"项目C", "单价":"8", "数量":"150", "金额":"1200", "下单时间":"2025-10-10", "供应商名称":"供应商A" },
-  { "项目号":"P004", "项目名称":"项目D", "单价":"12", "数量":"80", "金额":"960", "下单时间":"2025-10-12", "供应商名称":"供应商C" }
-];
+let data = [];
+
+// 从 data.json 加载
+fetch('data.json')
+  .then(response => response.json())
+  .then(json => { data = json; })
+  .catch(err => console.error('加载 data.json 出错:', err));
 
 function searchData() {
   const projectNo = document.getElementById('projectNoSearch').value.trim().toLowerCase();
@@ -110,9 +110,9 @@ function searchData() {
   resultsContainer.innerHTML = '';
 
   const filtered = data.filter(item => {
-    const matchNo = projectNo && item['项目号'].toLowerCase().includes(projectNo);
-    const matchName = projectName && item['项目名称'].toLowerCase().includes(projectName);
-    const matchSupplier = supplier && item['供应商名称'].toLowerCase().includes(supplier);
+    const matchNo = projectNo && item['项目号'] && item['项目号'].toLowerCase().includes(projectNo);
+    const matchName = projectName && item['项目名称'] && item['项目名称'].toLowerCase().includes(projectName);
+    const matchSupplier = supplier && item['供应商名称'] && item['供应商名称'].toLowerCase().includes(supplier);
     return matchNo || matchName || matchSupplier;
   });
 
