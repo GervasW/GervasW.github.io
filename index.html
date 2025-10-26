@@ -70,11 +70,11 @@
             66% { transform: translateY(10px) rotate(-1deg); }
         }
         
-        /* 个人资料区 */
+        /* 个人资料区 - 已简化 */
         .profile {
             background: var(--food-gradient);
             color: white;
-            padding: 50px 20px 30px;
+            padding: 20px 20px 0;
             border-radius: 0 0 30px 30px;
             text-align: center;
             margin-bottom: 30px;
@@ -96,125 +96,6 @@
             background-size: 200px, cover;
         }
         
-        .avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 6px solid rgba(255, 255, 255, 0.3);
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            transition: var(--transition);
-            animation: floatAvatar 8s ease-in-out infinite;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-        
-        @keyframes floatAvatar {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-15px) scale(1.02); }
-        }
-        
-        .avatar:hover {
-            transform: scale(1.05) rotate(5deg);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        
-        .profile h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 2;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .profile p {
-            font-size: 18px;
-            opacity: 0.95;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
-            font-weight: 400;
-        }
-        
-        .location {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 2;
-            opacity: 0.9;
-        }
-        
-        .contact-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--food-primary);
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            min-width: 160px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .contact-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.6s;
-        }
-        
-        .contact-btn:hover::before {
-            left: 100%;
-        }
-        
-        .contact-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-        }
-        
-        .wechat-btn {
-            background: rgba(7, 193, 96, 0.95);
-            color: white;
-        }
-        
         /* 导航栏 */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
@@ -222,7 +103,7 @@
             position: relative;
             z-index: 10;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            border-radius: var(--border-radius);
             margin: 0 auto;
             max-width: 1200px;
         }
@@ -772,26 +653,7 @@
             }
             
             .profile {
-                padding: 40px 15px 20px;
-            }
-            
-            .avatar {
-                width: 140px;
-                height: 140px;
-            }
-            
-            .profile h1 {
-                font-size: 28px;
-            }
-            
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .contact-btn {
-                width: 100%;
-                max-width: 250px;
+                padding: 20px 15px 0;
             }
             
             .stats-container {
@@ -872,18 +734,24 @@
             display: flex;
             align-items: center;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: white; /* 确保标题颜色为白色 */
         }
         
         .procurement-section h3 i {
             margin-right: 10px;
         }
         
-        /* 修复：采购需求标题改为橙色 */
-        .procurement-section.outer-packaging-card h3,
-        .procurement-section.inner-packaging-card h3,
-        .procurement-section.raw-material-card h3 {
-            color: #f39c12; /* 使用橙色替代白色 */
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        /* 调整采购需求二级标题颜色 */
+        .outer-packaging-card h3 {
+            color: #ffeb3b; /* 黄色 */
+        }
+        
+        .inner-packaging-card h3 {
+            color: #8bc34a; /* 浅绿色 */
+        }
+        
+        .raw-material-card h3 {
+            color: #ff9800; /* 橙色 */
         }
     </style>
 </head>
@@ -901,28 +769,9 @@
         <i class="fas fa-arrow-up"></i>
     </div>
     
-    <!-- 个人资料区 -->
+    <!-- 个人资料区 - 已简化，只保留导航栏 -->
     <section class="profile">
-        <div class="avatar">
-            <img src="assets/img/avatar.jpg" alt="王维">
-        </div>
-        <h1>王维</h1>
-        <p>同仁堂健康集团青海基地</p>
-        <div class="location">
-            📍 常驻杭州办公 | 全国范围采购
-        </div>
-        <div class="contact-buttons">
-            <a href="tel:18094719236" class="contact-btn">
-                <i class="fas fa-phone"></i>
-                 电话联系
-            </a>
-            <a href="#" id="wechat-btn" class="contact-btn wechat-btn">
-                <i class="fab fa-weixin"></i>
-                 添加微信
-            </a>
-        </div>
-        
-        <!-- 导航栏 - 已修改为合并采购需求 -->
+        <!-- 导航栏 -->
         <nav class="navbar">
             <div class="nav-container">
                 <ul class="nav-menu">
@@ -1053,7 +902,7 @@
         </div>
         
         <div class="copyright">
-            &copy; 王维 2025 保留部分权利 <br>
+            &copy; 2020-2025·王维 保留部分权利 <br>
         </div>
     </footer>
 
@@ -1080,7 +929,7 @@
         });
         
         // 微信弹窗功能
-        const wechatBtns = document.querySelectorAll("#wechat-btn, #wechat-action-btn");
+        const wechatBtns = document.querySelectorAll("#wechat-action-btn");
         const wechatModal = document.getElementById("wechatModal");
         const closeModal = document.getElementById("closeModal");
         const copyWechat = document.getElementById("copyWechat");
