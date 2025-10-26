@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王维 - 个人名片</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 15px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .avatar-placeholder {
+            font-size: 48px;
+            color: #2c3e50;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .title {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #4a6491;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-item i {
+            width: 30px;
+            color: #4a6491;
+            font-size: 18px;
+        }
+        
+        .contact-value {
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+        
+        .contact-value:hover {
+            background-color: #f0f4f8;
+            color: #2c3e50;
+        }
+        
+        .work-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .work-item {
+            display: flex;
+        }
+        
+        .work-label {
+            font-weight: 600;
+            width: 100px;
+            color: #555;
+        }
+        
+        .goals {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .goal-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .goal-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .goal-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #4a6491;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: #4a6491;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <div class="avatar">
+                <!-- 头像图片路径 -->
+                <img src="mycard/assets/img/avatar.jpg" alt="王维" onerror="this.style.display='none'; document.querySelector('.avatar-placeholder').style.display='flex';">
+                <div class="avatar-placeholder" style="display: none;">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <h1>王维</h1>
+            <div class="title">包装方案解决专员</div>
+        </div>
+        
+        <div class="content">
+            <div class="info-section">
+                <div class="section-title">
+                    <i class="fas fa-address-card"></i>
+                    <span>联系信息</span>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="contact-value" id="phone-number">18094719236</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-weixin"></i>
+                        <span class="contact-value" id="wechat-id">EastSeaO</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-building"></i>
+                        <span>北京同仁堂健康药业（青海）有限公司</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    <span>工作信息</span>
+                </div>
+                <div class="work-info">
+                    <div class="work-item">
+                        <div class="work-label">职位:</div>
+                        <div>包装方案解决专员</div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-label">主要工作:</div>
+                        <div>包装方案解决</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="section-title">
+                    <i class="fas fa-bullseye"></i>
+                    <span>主要目标</span>
+                </div>
+                <div class="goals">
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>稳定供货</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>保证质量</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>降本增效</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>感谢访问我的个人名片页面</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 如果头像加载失败，显示占位符
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarImg = document.querySelector('.avatar img');
+            const avatarPlaceholder = document.querySelector('.avatar-placeholder');
+            
+            // 检查图片是否已加载成功
+            if (avatarImg.complete && avatarImg.naturalHeight === 0) {
+                avatarImg.style.display = 'none';
+                avatarPlaceholder.style.display = 'flex';
+            }
+            
+            // 添加微信号复制功能
+            const wechatId = document.getElementById('wechat-id');
+            wechatId.addEventListener('click', function() {
+                copyToClipboard('EastSeaO');
+                showToast('微信号已复制到剪贴板');
+            });
+            
+            // 添加电话拨打功能
+            const phoneNumber = document.getElementById('phone-number');
+            phoneNumber.addEventListener('click', function() {
+                // 在移动设备上直接拨打电话，在桌面设备上显示号码
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    window.location.href = 'tel:18094719236';
+                } else {
+                    copyToClipboard('18094719236');
+                    showToast('电话号码已复制到剪贴板');
+                }
+            });
+        });
+        
+        // 复制文本到剪贴板
+        function copyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+        
+        // 显示提示消息
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
