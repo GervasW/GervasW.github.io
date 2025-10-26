@@ -1,67 +1,116 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>包材物料台账查询系统</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台账查询</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      margin: 0 5px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 250px;
+    }
+    .card p {
+      margin: 5px 0;
+    }
+    .no-results {
+      text-align: center;
+      color: #888;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📦 包材物料台账查询系统</h1>
-            <p>近两年包材采购记录在线查询</p>
-        </header>
+  <h1>台账查询</h1>
+  <div class="search-container">
+    <input type="text" id="projectSearch" placeholder="请输入项目号">
+    <input type="text" id="materialSearch" placeholder="请输入物料名称">
+    <input type="text" id="supplierSearch" placeholder="请输入供应商名称">
+    <button onclick="searchData()">查询</button>
+  </div>
 
-        <!-- 搜索筛选区域 -->
-        <div class="search-section">
-            <div class="search-row">
-                <div class="search-group">
-                    <label for="supplierSearch">供应商名称:</label>
-                    <input type="text" id="supplierSearch" placeholder="输入供应商名称...">
-                </div>
-                <div class="search-group">
-                    <label for="projectNoSearch">项目号:</label>
-                    <input type="text" id="projectNoSearch" placeholder="输入项目号...">
-                </div>
-                <div class="search-group">
-                    <label for="projectNameSearch">项目名称:</label>
-                    <input type="text" id="projectNameSearch" placeholder="输入项目名称...">
-                </div>
-            </div>
-            <div class="search-actions">
-                <button id="searchBtn" class="btn-primary">搜索</button>
-                <button id="resetBtn" class="btn-secondary">重置</button>
-                <span id="resultCount" class="result-count">共 0 条记录</span>
-            </div>
-        </div>
+  <div class="results" id="results"></div>
+  <div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
 
-        <!-- 结果显示区域 -->
-        <div class="results-section">
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th>合同编号</th>
-                        <th>采购订单号</th>
-                        <th>供应商名称</th>
-                        <th>项目号</th>
-                        <th>项目名称</th>
-                        <th>数量</th>
-                        <th>单位</th>
-                        <th>采购单价</th>
-                        <th>订单总额</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- 数据将通过JavaScript动态填充 -->
-                </tbody>
-            </table>
-            <div id="noResults" class="no-results" style="display: none;">
-                未找到匹配的记录
-            </div>
-        </div>
-    </div>
+  <script>
+    let data = [];
 
-    <script src="script.js"></script>
+    // 加载 JSON 数据
+    fetch('data.json')
+      .then(response => response.json())
+      .then(json => { data = json; })
+      .catch(err => console.error('加载数据出错:', err));
+
+    function searchData() {
+      const projectVal = document.getElementById('projectSearch').value.trim().toLowerCase();
+      const materialVal = document.getElementById('materialSearch').value.trim().toLowerCase();
+      const supplierVal = document.getElementById('supplierSearch').value.trim().toLowerCase();
+      const resultsContainer = document.getElementById('results');
+      const noResults = document.getElementById('noResults');
+      resultsContainer.innerHTML = '';
+
+      const filtered = data.filter(item => {
+        const projectMatch = projectVal === '' || (item['项目号'] && item['项目号'].toLowerCase().includes(projectVal));
+        const materialMatch = materialVal === '' || (item['物料名称'] && item['物料名称'].toLowerCase().includes(materialVal));
+        const supplierMatch = supplierVal === '' || (item['供应商名称'] && item['供应商名称'].toLowerCase().includes(supplierVal));
+        return projectMatch && materialMatch && supplierMatch;
+      });
+
+      if (filtered.length === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+        filtered.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          for (let key in item) {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${key}:</strong> ${item[key]}`;
+            card.appendChild(p);
+          }
+          resultsContainer.appendChild(card);
+        });
+      }
+    }
+  </script>
 </body>
 </html>
