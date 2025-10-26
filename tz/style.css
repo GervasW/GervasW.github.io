@@ -1,49 +1,61 @@
-/* 高亮匹配文本 */
-.highlight {
-    background-color: #ffeb3b;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-weight: bold;
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f5f5f5;
 }
 
-/* 搜索结果计数样式 */
-.result-count.has-results {
-    color: #28a745;
-    font-weight: bold;
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.result-count.no-results {
-    color: #dc3545;
-    font-weight: bold;
+.search-container {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* 表格单元格优化 */
-.supplier-cell {
-    max-width: 200px;
-    word-wrap: break-word;
+input[type="text"] {
+  padding: 8px;
+  margin: 0 5px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.project-name-cell {
-    max-width: 300px;
-    word-wrap: break-word;
+button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.number-cell {
-    text-align: right;
-    font-family: 'Courier New', monospace;
+button:hover {
+  background-color: #45a049;
 }
 
-.unit-cell {
-    text-align: center;
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
 }
 
-.total-price {
-    font-weight: bold;
-    color: #2c5aa0;
+.card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 250px;
 }
 
-/* 加载状态 */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
+.card p {
+  margin: 5px 0;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
 }
