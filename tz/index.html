@@ -120,12 +120,11 @@
   <div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
 
   <script>
-    // 内置测试数据
+    // 测试数据
     let data = [
-      { "项目号": "P001", "物料名称": "纸箱", "供应商名称": "供应商A" },
-      { "项目号": "P002", "物料名称": "胶带", "供应商名称": "供应商B" },
-      { "项目号": "P003", "物料名称": "标签纸", "供应商名称": "供应商C" },
-      { "项目号": "P004", "物料名称": "泡沫板", "供应商名称": "供应商A" }
+      { "项目名称": "项目A", "单价": "10", "数量": "100", "金额": "1000", "下单时间": "2025-10-01", "供应商名称": "供应商A" },
+      { "项目名称": "项目B", "单价": "5", "数量": "200", "金额": "1000", "下单时间": "2025-10-05", "供应商名称": "供应商B" },
+      { "项目名称": "项目C", "单价": "8", "数量": "150", "金额": "1200", "下单时间": "2025-10-10", "供应商名称": "供应商A" }
     ];
 
     // 供应商颜色映射
@@ -149,8 +148,8 @@
       resultsContainer.innerHTML = '';
 
       const filtered = data.filter(item => {
-        const projectMatch = projectVal && item['项目号'] && item['项目号'].toLowerCase().includes(projectVal);
-        const materialMatch = materialVal && item['物料名称'] && item['物料名称'].toLowerCase().includes(materialVal);
+        const projectMatch = projectVal && item['项目名称'] && item['项目名称'].toLowerCase().includes(projectVal);
+        const materialMatch = materialVal && item['项目名称'] && item['项目名称'].toLowerCase().includes(materialVal); // 如果物料名称对应字段不同，可改这里
         const supplierMatch = supplierVal && item['供应商名称'] && item['供应商名称'].toLowerCase().includes(supplierVal);
         return projectMatch || materialMatch || supplierMatch;
       });
@@ -172,12 +171,15 @@
             card.appendChild(label);
           }
 
-          // 添加其他字段
-          for (let key in item) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>${key}:</strong> ${item[key]}`;
-            card.appendChild(p);
-          }
+          // 只显示指定字段
+          const fields = ['项目名称', '单价', '数量', '金额', '下单时间', '供应商名称'];
+          fields.forEach(key => {
+            if (item[key]) {
+              const p = document.createElement('p');
+              p.innerHTML = `<strong>${key}:</strong> ${item[key]}`;
+              card.appendChild(p);
+            }
+          });
 
           resultsContainer.appendChild(card);
         });
