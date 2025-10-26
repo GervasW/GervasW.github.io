@@ -1,190 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>台账查询</title>
-  <style>
-    body { 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      margin: 0; 
-      padding: 20px; 
-      background-color: #f0f2f5; 
-    }
-
-    h1 { 
-      text-align: center; 
-      margin-bottom: 30px; 
-      color: #333; 
-      font-size: 2em;
-    }
-
-    .search-container { 
-      text-align: center; 
-      margin-bottom: 30px; 
-    }
-
-    input[type="text"] { 
-      padding: 10px; 
-      margin: 0 5px 10px 5px; 
-      width: 220px; 
-      border: 1px solid #ccc; 
-      border-radius: 6px; 
-      transition: 0.3s;
-    }
-
-    input[type="text"]:focus {
-      border-color: #4CAF50;
-      outline: none;
-      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    }
-
-    button { 
-      padding: 10px 20px; 
-      border: none; 
-      background-color: #4CAF50; 
-      color: white; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      font-size: 1em;
-      transition: 0.3s;
-    }
-
-    button:hover { 
-      background-color: #45a049; 
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .results { 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 20px; 
-      justify-content: center; 
-    }
-
-    .card { 
-      background: linear-gradient(145deg, #ffffff, #f9f9f9); 
-      padding: 20px; 
-      border-radius: 12px; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-      width: 260px; 
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover { 
-      transform: translateY(-5px); 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .card p { 
-      margin: 6px 0; 
-      color: #555;
-    }
-
-    .card strong { 
-      color: #333; 
-    }
-
-    .supplier-label {
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      display: inline-block;
-      font-size: 0.85em;
-      margin-bottom: 10px;
-    }
-
-    .no-results { 
-      text-align: center; 
-      color: #999; 
-      margin-top: 30px; 
-      font-size: 1.1em;
-    }
-
-    @media (max-width: 768px) {
-      input[type="text"] { width: 80%; margin-bottom: 10px; }
-      .card { width: 90%; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台账查询</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .search-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  input[type="text"] {
+    padding: 8px;
+    margin: 0 5px 10px 5px;
+    width: 180px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+  input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  button {
+    padding: 8px 18px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    color: #333;
+  }
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  .no-results {
+    text-align: center;
+    color: #999;
+    margin-top: 20px;
+    font-size: 1.1em;
+  }
+  @media (max-width: 768px) {
+    input[type="text"] { width: 70%; margin-bottom: 10px; }
+    th, td { padding: 8px; font-size: 0.9em; }
+  }
+</style>
 </head>
 <body>
-  <h1>台账查询</h1>
-  <div class="search-container">
-    <input type="text" id="projectSearch" placeholder="请输入项目号">
-    <input type="text" id="materialSearch" placeholder="请输入物料名称">
-    <input type="text" id="supplierSearch" placeholder="请输入供应商名称">
-    <button onclick="searchData()">查询</button>
-  </div>
+<h1>台账查询</h1>
+<div class="search-container">
+  <input type="text" id="projectNoSearch" placeholder="请输入项目号">
+  <input type="text" id="projectNameSearch" placeholder="请输入项目名称">
+  <input type="text" id="supplierSearch" placeholder="请输入供应商名称">
+  <button onclick="searchData()">查询</button>
+</div>
 
-  <div class="results" id="results"></div>
-  <div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
+<div id="results"></div>
+<div class="no-results" id="noResults" style="display:none;">没有找到匹配结果</div>
 
-  <script>
-    // 测试数据
-    let data = [
-      { "项目名称": "项目A", "单价": "10", "数量": "100", "金额": "1000", "下单时间": "2025-10-01", "供应商名称": "供应商A" },
-      { "项目名称": "项目B", "单价": "5", "数量": "200", "金额": "1000", "下单时间": "2025-10-05", "供应商名称": "供应商B" },
-      { "项目名称": "项目C", "单价": "8", "数量": "150", "金额": "1200", "下单时间": "2025-10-10", "供应商名称": "供应商A" }
-    ];
+<script>
+// 测试数据
+let data = [
+  { "项目号":"P001", "项目名称":"项目A", "单价":"10", "数量":"100", "金额":"1000", "下单时间":"2025-10-01", "供应商名称":"供应商A" },
+  { "项目号":"P002", "项目名称":"项目B", "单价":"5", "数量":"200", "金额":"1000", "下单时间":"2025-10-05", "供应商名称":"供应商B" },
+  { "项目号":"P003", "项目名称":"项目C", "单价":"8", "数量":"150", "金额":"1200", "下单时间":"2025-10-10", "供应商名称":"供应商A" },
+  { "项目号":"P004", "项目名称":"项目D", "单价":"12", "数量":"80", "金额":"960", "下单时间":"2025-10-12", "供应商名称":"供应商C" }
+];
 
-    // 供应商颜色映射
-    const supplierColors = {};
-    const colors = ['#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#E91E63', '#009688', '#FFC107'];
+function searchData() {
+  const projectNo = document.getElementById('projectNoSearch').value.trim().toLowerCase();
+  const projectName = document.getElementById('projectNameSearch').value.trim().toLowerCase();
+  const supplier = document.getElementById('supplierSearch').value.trim().toLowerCase();
+  const resultsContainer = document.getElementById('results');
+  const noResults = document.getElementById('noResults');
+  resultsContainer.innerHTML = '';
 
-    function getSupplierColor(name) {
-      if (!supplierColors[name]) {
-        const color = colors[Object.keys(supplierColors).length % colors.length];
-        supplierColors[name] = color;
-      }
-      return supplierColors[name];
-    }
+  const filtered = data.filter(item => {
+    const matchNo = projectNo && item['项目号'].toLowerCase().includes(projectNo);
+    const matchName = projectName && item['项目名称'].toLowerCase().includes(projectName);
+    const matchSupplier = supplier && item['供应商名称'].toLowerCase().includes(supplier);
+    return matchNo || matchName || matchSupplier;
+  });
 
-    function searchData() {
-      const projectVal = document.getElementById('projectSearch').value.trim().toLowerCase();
-      const materialVal = document.getElementById('materialSearch').value.trim().toLowerCase();
-      const supplierVal = document.getElementById('supplierSearch').value.trim().toLowerCase();
-      const resultsContainer = document.getElementById('results');
-      const noResults = document.getElementById('noResults');
-      resultsContainer.innerHTML = '';
+  if (filtered.length === 0) {
+    noResults.style.display = 'block';
+  } else {
+    noResults.style.display = 'none';
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    thead.innerHTML = `<tr>
+      <th>项目号</th>
+      <th>项目名称</th>
+      <th>单价</th>
+      <th>数量</th>
+      <th>金额</th>
+      <th>下单时间</th>
+      <th>供应商名称</th>
+    </tr>`;
+    table.appendChild(thead);
 
-      const filtered = data.filter(item => {
-        const projectMatch = projectVal && item['项目名称'] && item['项目名称'].toLowerCase().includes(projectVal);
-        const materialMatch = materialVal && item['项目名称'] && item['项目名称'].toLowerCase().includes(materialVal); // 如果物料名称对应字段不同，可改这里
-        const supplierMatch = supplierVal && item['供应商名称'] && item['供应商名称'].toLowerCase().includes(supplierVal);
-        return projectMatch || materialMatch || supplierMatch;
-      });
-
-      if (filtered.length === 0) {
-        noResults.style.display = 'block';
-      } else {
-        noResults.style.display = 'none';
-        filtered.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          // 添加供应商标签
-          if (item['供应商名称']) {
-            const label = document.createElement('div');
-            label.textContent = item['供应商名称'];
-            label.className = 'supplier-label';
-            label.style.backgroundColor = getSupplierColor(item['供应商名称']);
-            card.appendChild(label);
-          }
-
-          // 只显示指定字段
-          const fields = ['项目名称', '单价', '数量', '金额', '下单时间', '供应商名称'];
-          fields.forEach(key => {
-            if (item[key]) {
-              const p = document.createElement('p');
-              p.innerHTML = `<strong>${key}:</strong> ${item[key]}`;
-              card.appendChild(p);
-            }
-          });
-
-          resultsContainer.appendChild(card);
-        });
-      }
-    }
-  </script>
+    const tbody = document.createElement('tbody');
+    filtered.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${item['项目号']}</td>
+                      <td>${item['项目名称']}</td>
+                      <td>${item['单价']}</td>
+                      <td>${item['数量']}</td>
+                      <td>${item['金额']}</td>
+                      <td>${item['下单时间']}</td>
+                      <td>${item['供应商名称']}</td>`;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    resultsContainer.appendChild(table);
+  }
+}
+</script>
 </body>
 </html>
