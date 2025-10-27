@@ -83,13 +83,13 @@
   <main>
     <div class="search-box">
       <input type="text" id="supplier" placeholder="供应商名称（可模糊）">
-      <input type="text" id="projectNo" placeholder="项目号（精确匹配）">
+      <input type="text" id="projectNo" placeholder="项目号（可模糊）">
       <input type="text" id="projectName" placeholder="项目名称（可模糊）">
       <button onclick="searchData()">查询</button>
     </div>
     <div id="result"></div>
   </main>
-  <footer>© 2025 由王维设计，只可查询包材和原料</footer>
+  <footer>© 2025 由王维设计</footer>
 
   <script>
     let dataCache = [];
@@ -103,7 +103,7 @@
       })
       .catch(err => {
         console.error("❌ 数据加载失败:", err);
-        alert("无法读取数据文件，请确认路径 tz/data.json 是否正确。");
+        alert("无法读取数据文件，请确认路径 data.json 是否正确。");
       });
 
     function searchData() {
@@ -117,9 +117,15 @@
       }
 
       let filtered = dataCache.filter(item => {
-        const matchSupplier = supplier ? item["供应商名称"].includes(supplier) : true;
-        const matchProjectNo = projectNo ? item["项目号"] === projectNo : true;
-        const matchProjectName = projectName ? item["项目名称"].includes(projectName) : true;
+        // 强制转换成字符串，避免数字类型报错
+        const supplierStr = item["供应商名称"] ? String(item["供应商名称"]) : "";
+        const projectNoStr = item["项目号"] ? String(item["项目号"]) : "";
+        const projectNameStr = item["项目名称"] ? String(item["项目名称"]) : "";
+
+        const matchSupplier = supplier ? supplierStr.includes(supplier) : true;
+        const matchProjectNo = projectNo ? projectNoStr.includes(projectNo) : true;
+        const matchProjectName = projectName ? projectNameStr.includes(projectName) : true;
+
         return matchSupplier && matchProjectNo && matchProjectName;
       });
 
@@ -128,7 +134,7 @@
         return;
       }
 
-      let total = filtered.reduce((sum, item) => sum + parseFloat(item["订单总额"]), 0);
+      let total = filtered.reduce((sum, item) => sum + Number(item["订单总额"] || 0), 0);
 
       let tableHTML = `
         <table>
@@ -147,14 +153,14 @@
           <tbody>
             ${filtered.map(row => `
               <tr>
-                <td>${row["合同编号"]}</td>
-                <td>${row["供应商名称"]}</td>
-                <td>${row["项目号"]}</td>
-                <td>${row["项目名称"]}</td>
-                <td>${row["数量"]}</td>
-                <td>${row["单位"]}</td>
-                <td>${row["采购单价"]}</td>
-                <td>${row["订单总额"]}</td>
+                <td>${row["合同编号"] || ""}</td>
+                <td>${row["供应商名称"] || ""}</td>
+                <td>${row["项目号"] || ""}</td>
+                <td>${row["项目名称"] || ""}</td>
+                <td>${row["数量"] || ""}</td>
+                <td>${row["单位"] || ""}</td>
+                <td>${row["采购单价"] || ""}</td>
+                <td>${row["订单总额"] || ""}</td>
               </tr>
             `).join('')}
           </tbody>
