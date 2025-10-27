@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>产品BOM查询系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.4s ease-in; }
+    table th { position: sticky; top: 0; background-color: #f87171; z-index: 10; }
+  </style>
+</head>
+
+<body class="bg-gray-100 font-sans leading-relaxed text-gray-800">
+  <!-- 页头：红色渐变 + LOGO -->
+  <header class="bg-gradient-to-r from-red-600 to-red-400 text-white py-6 shadow flex flex-col items-center justify-center">
+    <img src="/assets/img/trtlogo.png" alt="LOGO" class="h-16 w-auto mb-2 object-contain">
+    <h1 class="text-3xl font-bold tracking-wide">产品BOM查询系统</h1>
+  </header>
+
+  <main class="max-w-7xl mx-auto bg-white mt-8 p-8 rounded-xl shadow-lg fade-in">
+    <!-- 信息提示 -->
+    <div class="bg-gray-50 border border-red-200 text-center text-sm text-gray-700 py-3 rounded-lg mb-6">
+      <p class="flex flex-wrap justify-center gap-2">
+        <span class="px-2">📊 数据来源：生产/采购部门</span> |
+        <span class="px-2">🔍 查询范围：产品BOM及物料信息</span> |
+        <span class="px-2 text-red-600 font-semibold">⚠️ 保密声明：请注意，所有数据均属内部信息，严禁泄露。</span>
+      </p>
+    </div>
+
+    <!-- 查询区域 -->
+    <div class="flex flex-wrap gap-3 mb-6 items-center">
+      <input id="prodNo" type="text" placeholder="产品项目号" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="prodName" type="text" placeholder="产品名称" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="spec" type="text" placeholder="规格" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="brand" type="text" placeholder="品牌" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="series" type="text" placeholder="系列" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="materialNo" type="text" placeholder="物料项目号" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="materialName" type="text" placeholder="物料名称" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <input id="quantity" type="text" placeholder="数量" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-red-400"/>
+      <button onclick="searchData()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">查询</button>
+      <button onclick="resetForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">重置</button>
+      <button onclick="exportTableToExcel('BOM查询结果.xlsx')" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">导出Excel</button>
+    </div>
+
+    <!-- 汇总区 -->
+    <div id="summary" class="hidden mb-4 fade-in flex gap-4">
+      <div class="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 font-semibold">匹配结果：<span id="count"></span> 条</div>
+      <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-green-700 font-semibold">数量总计：<span id="total"></span></div>
+    </div>
+
+    <!-- 查询结果 -->
+    <div id="loading" class="text-center text-red-600 font-medium my-6">⏳ 数据加载中...</div>
+    <div id="result" class="fade-in overflow-x-auto"></div>
+  </main>
+
+  <footer class="text-center text-gray-500 text-sm mt-8 mb-4">© 2025 德令哈生产/采购部门</footer>
+
+  <script>
+    let dataCache = [];
+
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        dataCache = data;
+        document.getElementById("loading").style.display = "none";
+        console.log("✅ 数据已加载:", dataCache.length, "条");
+      })
+      .catch(err => {
+        console.error("❌ 数据加载失败:", err);
+        document.getElementById("loading").textContent = "❌ 无法加载数据，请检查 data.json 文件路径。";
+      });
+
+    function searchData() {
+      const prodNo = document.getElementById("prodNo").value.trim();
+      const prodName = document.getElementById("prodName").value.trim();
+      const spec = document.getElementById("spec").value.trim();
+      const brand = document.getElementById("brand").value.trim();
+      const series = document.getElementById("series").value.trim();
+      const materialNo = document.getElementById("materialNo").value.trim();
+      const materialName = document.getElementById("materialName").value.trim();
+      const quantity = document.getElementById("quantity").value.trim();
+
+      if (!prodNo && !prodName && !spec && !brand && !series && !materialNo && !materialName && !quantity) {
+        alert("请输入至少一项查询条件！");
+        return;
+      }
+
+      let filtered = dataCache.filter(item => {
+        return (!prodNo || String(item["产品项目号"] || "").includes(prodNo))
+            && (!prodName || String(item["产品名称"] || "").includes(prodName))
+            && (!spec || String(item["规格"] || "").includes(spec))
+            && (!brand || String(item["品牌"] || "").includes(brand))
+            && (!series || String(item["系列"] || "").includes(series))
+            && (!materialNo || String(item["物料项目号"] || "").includes(materialNo))
+            && (!materialName || String(item["物料名称"] || "").includes(materialName))
+            && (!quantity || String(item["数量"] || "").includes(quantity));
+      });
+
+      if (filtered.length === 0) {
+        document.getElementById("summary").classList.add("hidden");
+        document.getElementById("result").innerHTML = "<p class='text-center text-gray-500'>未找到匹配的数据。</p>";
+        return;
+      }
+
+      let total = filtered.reduce((sum, item) => sum + Number(item["数量"] || 0), 0);
+
+      document.getElementById("summary").classList.remove("hidden");
+      document.getElementById("count").textContent = filtered.length;
+      document.getElementById("total").textContent = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+
+      let tableHTML = `
+        <table class="w-full text-sm text-center border border-gray-200 rounded-lg shadow-sm">
+          <thead class="bg-red-600 text-white">
+            <tr>
+              <th class="p-2">产品项目号</th>
+              <th class="p-2">产品名称</th>
+              <th class="p-2">规格</th>
+              <th class="p-2">品牌</th>
+              <th class="p-2">系列</th>
+              <th class="p-2">物料项目号</th>
+              <th class="p-2">物料名称</th>
+              <th class="p-2">数量</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map((row, i) => `
+              <tr class="${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-red-50 transition">
+                <td class="p-2">${row["产品项目号"] || ""}</td>
+                <td class="p-2">${row["产品名称"] || ""}</td>
+                <td class="p-2">${row["规格"] || ""}</td>
+                <td class="p-2">${row["品牌"] || ""}</td>
+                <td class="p-2">${row["系列"] || ""}</td>
+                <td class="p-2">${row["物料项目号"] || ""}</td>
+                <td class="p-2">${row["物料名称"] || ""}</td>
+                <td class="p-2">${row["数量"] || ""}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("result").innerHTML = tableHTML;
+    }
+
+    function resetForm() {
+      ["prodNo","prodName","spec","brand","series","materialNo","materialName","quantity"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("summary").classList.add("hidden");
+    }
+
+    function exportTableToExcel(filename) {
+      const table = document.querySelector("#result table");
+      if (!table) { alert("请先执行查询！"); return; }
+      const html = table.outerHTML.replace(/ /g, '%20');
+      const link = document.createElement("a");
+      link.href = 'data:application/vnd.ms-excel,' + html;
+      link.download = filename;
+      link.click();
+    }
+  </script>
+</body>
+</html>
