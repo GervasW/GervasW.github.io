@@ -5,96 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>物料查询系统</title>
   <style>
-    body {
-      font-family: "Microsoft YaHei", sans-serif;
-      background-color: #f9fafb;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #2563eb;
-      color: white;
-      padding: 16px;
-      text-align: center;
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .search-box {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .search-box input {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    button {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background-color: #1e40af;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-      font-size: 14px;
-    }
-    th {
-      background-color: #f3f4f6;
-    }
-    tfoot td {
-      font-weight: bold;
-      background-color: #f9fafb;
-    }
-    footer {
-      text-align: center;
-      margin: 30px 0 10px 0;
-      color: #666;
-      font-size: 14px;
-    }
+    body { font-family: "Microsoft YaHei", sans-serif; background-color: #f9fafb; margin: 0; padding: 0; }
+    header { background-color: #2563eb; color: white; padding: 16px; text-align: center; font-size: 1.5em; font-weight: bold; }
+    main { max-width: 900px; margin: 30px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .info-text { margin-bottom:15px; font-size:14px; color:#555; }
+    .search-box { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .search-box select, .search-box input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    .search-box select { width: 120px; }
+    .search-box input { flex: 1; }
+    button { background-color: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    button:hover { background-color: #1e40af; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 14px; }
+    th { background-color: #f3f4f6; }
+    tfoot td { font-weight: bold; background-color: #f9fafb; }
+    footer { text-align: center; margin: 30px 0 10px 0; color: #666; font-size: 14px; }
   </style>
 </head>
 <body>
   <header>物料查询系统</header>
   <main>
+    <!-- 信息提示 -->
+    <p class="info-text">
+      本页面由采购部提供数据，数据范围为2022.1.1-2025.10.14，只可查询生产部的包材和原料。数据不可泄露。
+    </p>
+
+    <!-- 查询区域 -->
     <div class="search-box">
+      <select id="year">
+        <option value="">全部年份</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
       <input type="text" id="supplier" placeholder="供应商名称（可模糊）">
       <input type="text" id="projectNo" placeholder="项目号（可模糊）">
       <input type="text" id="projectName" placeholder="项目名称（可模糊）">
       <button onclick="searchData()">查询</button>
     </div>
+
     <div id="result"></div>
   </main>
-  <footer>本页面由采购部提供设计和数据，只可查询生产部的包材和原料，数据范围为2022.1.1-2025.10.14</footer>
+  <footer>© 2025 由采购部设计</footer>
 
   <script>
     let dataCache = [];
 
-    // 页面加载时预先读取数据
     fetch('data.json')
       .then(res => res.json())
       .then(data => {
@@ -107,26 +64,35 @@
       });
 
     function searchData() {
+      const year = document.getElementById("year").value.trim();
       const supplier = document.getElementById("supplier").value.trim();
       const projectNo = document.getElementById("projectNo").value.trim();
       const projectName = document.getElementById("projectName").value.trim();
 
-      if (!supplier && !projectNo && !projectName) {
+      if (!year && !supplier && !projectNo && !projectName) {
         alert("请输入至少一项查询条件！");
         return;
       }
 
       let filtered = dataCache.filter(item => {
-        // 强制转换成字符串，避免数字类型报错
         const supplierStr = item["供应商名称"] ? String(item["供应商名称"]) : "";
         const projectNoStr = item["项目号"] ? String(item["项目号"]) : "";
         const projectNameStr = item["项目名称"] ? String(item["项目名称"]) : "";
+        const contractNoStr = item["合同编号"] ? String(item["合同编号"]) : "";
 
+        const matchYear = year ? contractNoStr.includes(year) : true;
         const matchSupplier = supplier ? supplierStr.includes(supplier) : true;
         const matchProjectNo = projectNo ? projectNoStr.includes(projectNo) : true;
         const matchProjectName = projectName ? projectNameStr.includes(projectName) : true;
 
-        return matchSupplier && matchProjectNo && matchProjectName;
+        return matchYear && matchSupplier && matchProjectNo && matchProjectName;
+      });
+
+      // 按合同编号从最新到最旧排序
+      filtered.sort((a, b) => {
+        const aNum = Number(a["合同编号"].match(/\d+/g).join(''));
+        const bNum = Number(b["合同编号"].match(/\d+/g).join(''));
+        return bNum - aNum;
       });
 
       if (filtered.length === 0) {
