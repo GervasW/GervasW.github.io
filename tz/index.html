@@ -9,7 +9,7 @@
 <body class="bg-gray-50 min-h-screen flex flex-col items-center p-6">
   <h1 class="text-3xl font-bold text-gray-800 mb-6">物料查询系统</h1>
 
-  <!-- 查询区域 -->
+  <!-- 查询输入区 -->
   <div class="w-full max-w-4xl bg-white p-6 rounded-2xl shadow mb-8">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       <input id="supplier" type="text" placeholder="供应商名称" class="border p-2 rounded w-full" />
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- 结果表格 -->
+  <!-- 查询结果表格 -->
   <div class="w-full max-w-6xl bg-white p-6 rounded-2xl shadow">
     <table class="min-w-full border border-gray-300 text-sm text-gray-700">
       <thead class="bg-gray-100">
@@ -49,22 +49,26 @@
   </footer>
 
   <script>
-    document.getElementById('searchBtn').addEventListener('click', async () => {
+    async function loadData() {
+      try {
+        const response = await fetch('data.json?t=' + Date.now()); // 加随机参数防止缓存
+        return await response.json();
+      } catch (err) {
+        alert('❌ 无法读取 data.json，请确认 index.html 与 data.json 在同一文件夹下（tz/）');
+        console.error(err);
+        return [];
+      }
+    }
+
+    async function searchData() {
       const supplier = document.getElementById('supplier').value.trim();
       const projectId = document.getElementById('projectId').value.trim();
       const projectName = document.getElementById('projectName').value.trim();
 
-      // 读取 JSON 数据
-      let data;
-      try {
-        const response = await fetch('tz/data.json');
-        data = await response.json();
-      } catch (err) {
-        alert('❌ 无法读取数据文件，请检查路径 tz/data.json');
-        return;
-      }
+      const data = await loadData();
+      const resultTable = document.getElementById('resultTable');
+      const totalAmountEl = document.getElementById('totalAmount');
 
-      // 过滤逻辑（模糊匹配）
       const filtered = data.filter(item => {
         const supplierMatch = supplier === "" || item.供应商名称.includes(supplier);
         const projectIdMatch = projectId === "" || item.项目号.includes(projectId);
@@ -72,13 +76,11 @@
         return supplierMatch && projectIdMatch && projectNameMatch;
       });
 
-      const tableBody = document.getElementById('resultTable');
-      const totalAmountEl = document.getElementById('totalAmount');
-      tableBody.innerHTML = "";
+      resultTable.innerHTML = "";
       totalAmountEl.textContent = "";
 
       if (filtered.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-gray-400 py-4">未找到匹配的记录</td></tr>`;
+        resultTable.innerHTML = `<tr><td colspan="8" class="text-center text-gray-400 py-4">未找到匹配的记录</td></tr>`;
         return;
       }
 
@@ -96,10 +98,17 @@
           <td class="border px-3 py-2 text-right">${row.采购单价}</td>
           <td class="border px-3 py-2 text-right">${row.订单总额}</td>
         `;
-        tableBody.appendChild(tr);
+        resultTable.appendChild(tr);
       });
 
       totalAmountEl.textContent = "💰 金额总计：" + total.toLocaleString() + " 元";
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', searchData);
+
+    // 按回车键触发查询
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchData();
     });
   </script>
 </body>
