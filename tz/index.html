@@ -45,17 +45,22 @@
 
   <!-- 页脚 -->
   <footer class="mt-10 text-gray-500 text-sm">
-    © 2025 由王维设计
+    © 2025 由王维设计，只能查询包材和原料。
   </footer>
 
   <script>
     async function loadData() {
       try {
-        const response = await fetch('data.json?t=' + Date.now()); // 加随机参数防止缓存
-        return await response.json();
+        const url = 'data.json?t=' + Date.now();
+        console.log("尝试加载数据文件：", url);
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("HTTP状态 " + response.status);
+        const json = await response.json();
+        console.log("✅ 成功读取 JSON 数据，共", json.length, "条记录");
+        return json;
       } catch (err) {
-        alert('❌ 无法读取 data.json，请确认 index.html 与 data.json 在同一文件夹下（tz/）');
-        console.error(err);
+        console.error("❌ 加载 data.json 失败：", err);
+        alert("无法读取数据文件，请确认路径正确（tz/data.json）并已在 GitHub Pages 发布。");
         return [];
       }
     }
@@ -64,6 +69,8 @@
       const supplier = document.getElementById('supplier').value.trim();
       const projectId = document.getElementById('projectId').value.trim();
       const projectName = document.getElementById('projectName').value.trim();
+
+      console.log("🔍 搜索条件：", { supplier, projectId, projectName });
 
       const data = await loadData();
       const resultTable = document.getElementById('resultTable');
@@ -105,11 +112,7 @@
     }
 
     document.getElementById('searchBtn').addEventListener('click', searchData);
-
-    // 按回车键触发查询
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') searchData();
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') searchData(); });
   </script>
 </body>
 </html>
