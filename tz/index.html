@@ -3,52 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>物料查询系统</title>
+  <title>采购部物料查询系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: "Microsoft YaHei", sans-serif; background-color: #f9fafb; margin: 0; padding: 0; }
-    header { background-color: #2563eb; color: white; padding: 16px; text-align: center; font-size: 1.5em; font-weight: bold; }
-    main { max-width: 900px; margin: 30px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .info-text { margin-bottom:15px; font-size:14px; color:#555; }
-    .search-box { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-    .search-box select, .search-box input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-    .search-box select { width: 120px; }
-    .search-box input { flex: 1; }
-    button { background-color: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
-    button:hover { background-color: #1e40af; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 14px; }
-    th { background-color: #f3f4f6; }
-    tfoot td { font-weight: bold; background-color: #f9fafb; }
-    footer { text-align: center; margin: 30px 0 10px 0; color: #666; font-size: 14px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.4s ease-in; }
+    table th { position: sticky; top: 0; }
   </style>
 </head>
-<body>
-  <header>采购部物料查询系统</header>
-  <main>
-    <!-- 信息提示 -->
-    <p class="info-text">
-      数据支持：采购部 | 可查询包材及原料信息，时间范围：2022.1.1 - 2025.10.14 | 注意数据保密
-    </p>
+
+<body class="bg-gray-100 font-sans leading-relaxed text-gray-800">
+  <!-- 页头 -->
+  <header class="bg-blue-600 text-white py-4 shadow">
+    <h1 class="text-center text-2xl font-bold tracking-wide">采购部物料查询系统</h1>
+  </header>
+
+  <main class="max-w-6xl mx-auto bg-white mt-8 p-8 rounded-xl shadow-lg">
+    <!-- 信息提示（新版居中样式） -->
+    <div class="bg-gray-50 border border-blue-200 text-center text-sm text-gray-700 py-3 rounded-lg mb-6">
+      <p class="flex flex-wrap justify-center gap-2">
+        <span class="px-2">📊 数据来源：采购部</span> |
+        <span class="px-2">🔍 查询范围：包材及原料信息（2022年1月1日 - 2025年10月14日）</span> |
+        <span class="px-2 text-red-600 font-semibold">⚠️ 保密声明：请注意，所有数据均属内部信息，严禁泄露。</span>
+      </p>
+    </div>
 
     <!-- 查询区域 -->
-    <div class="search-box">
-      <select id="year">
+    <div class="flex flex-wrap gap-3 mb-6 items-center">
+      <select id="year" class="border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400">
         <option value="">全部年份</option>
         <option value="2025">2025</option>
         <option value="2024">2024</option>
         <option value="2023">2023</option>
         <option value="2022">2022</option>
       </select>
-      <input type="text" id="supplier" placeholder="供应商名称（可简称）">
-      <input type="text" id="projectNo" placeholder="项目号（需精准）">
-      <input type="text" id="projectName" placeholder="项目名称（可简称）">
-      <button onclick="searchData()">查询</button>
-      <button onclick="resetForm()">重置</button>
+      <input id="supplier" type="text" placeholder="供应商名称（可简称）" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-blue-400" />
+      <input id="projectNo" type="text" placeholder="项目号（需精准）" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-blue-400" />
+      <input id="projectName" type="text" placeholder="项目名称（可简称）" class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-blue-400" />
+      <button onclick="searchData()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">查询</button>
+      <button onclick="resetForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">重置</button>
+      <button onclick="exportTableToExcel('查询结果.xlsx')" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">导出Excel</button>
     </div>
 
-    <div id="result"></div>
+    <!-- 汇总区 -->
+    <div id="summary" class="hidden mb-4 fade-in flex gap-4">
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-blue-700 font-semibold">匹配结果：<span id="count"></span> 条</div>
+      <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-green-700 font-semibold">金额总计：<span id="total"></span> 元</div>
+    </div>
+
+    <!-- 查询结果 -->
+    <div id="loading" class="text-center text-blue-600 font-medium my-6">⏳ 数据加载中...</div>
+    <div id="result" class="fade-in overflow-x-auto"></div>
   </main>
-  <footer>© 2025 德令哈采购部</footer>
+
+  <footer class="text-center text-gray-500 text-sm mt-8 mb-4">© 2025 德令哈采购部</footer>
 
   <script>
     let dataCache = [];
@@ -57,11 +68,12 @@
       .then(res => res.json())
       .then(data => {
         dataCache = data;
+        document.getElementById("loading").style.display = "none";
         console.log("✅ 数据已加载:", dataCache.length, "条");
       })
       .catch(err => {
         console.error("❌ 数据加载失败:", err);
-        alert("无法读取数据文件，请确认路径 data.json 是否正确。");
+        document.getElementById("loading").textContent = "❌ 无法加载数据，请检查 data.json 文件路径。";
       });
 
     function searchData() {
@@ -89,7 +101,6 @@
         return matchYear && matchSupplier && matchProjectNo && matchProjectName;
       });
 
-      // 按合同编号从最新到最旧排序
       filtered.sort((a, b) => {
         const aNum = Number(a["合同编号"].match(/\d+/g).join(''));
         const bNum = Number(b["合同编号"].match(/\d+/g).join(''));
@@ -97,42 +108,50 @@
       });
 
       if (filtered.length === 0) {
-        document.getElementById("result").innerHTML = "<p>未找到匹配的数据。</p>";
+        document.getElementById("summary").classList.add("hidden");
+        document.getElementById("result").innerHTML = "<p class='text-center text-gray-500'>未找到匹配的数据。</p>";
         return;
       }
 
       let total = filtered.reduce((sum, item) => sum + Number(item["订单总额"] || 0), 0);
 
+      document.getElementById("summary").classList.remove("hidden");
+      document.getElementById("count").textContent = filtered.length;
+      document.getElementById("total").textContent = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+
       let tableHTML = `
-        <table>
-          <thead>
+        <table class="w-full text-sm text-center border border-gray-200 rounded-lg shadow-sm">
+          <thead class="bg-blue-600 text-white">
             <tr>
-              <th>项目号</th>
-              <th>项目名称</th>
-              <th>数量</th>
-              <th>单位</th>
-              <th>采购单价</th>
-              <th>订单总额</th>
-              <th>供应商名称</th>
-              <th>合同编号</th>
+              <th class="p-2">项目号</th>
+              <th class="p-2">项目名称</th>
+              <th class="p-2">数量</th>
+              <th class="p-2">单位</th>
+              <th class="p-2">采购单价</th>
+              <th class="p-2">订单总额</th>
+              <th class="p-2">供应商名称</th>
+              <th class="p-2">合同编号</th>
             </tr>
           </thead>
           <tbody>
-            ${filtered.map(row => `
-              <tr>
-                <td>${row["项目号"] || ""}</td>
-                <td>${row["项目名称"] || ""}</td>
-                <td>${row["数量"] || ""}</td>
-                <td>${row["单位"] || ""}</td>
-                <td>${row["采购单价"] || ""}</td>
-                <td>${row["订单总额"] || ""}</td>
-                <td>${row["供应商名称"] || ""}</td>
-                <td>${row["合同编号"] || ""}</td>
+            ${filtered.map((row, i) => `
+              <tr class="${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50 transition">
+                <td class="p-2">${row["项目号"] || ""}</td>
+                <td class="p-2">${row["项目名称"] || ""}</td>
+                <td class="p-2">${row["数量"] || ""}</td>
+                <td class="p-2">${row["单位"] || ""}</td>
+                <td class="p-2">${Number(row["采购单价"] || 0).toLocaleString()}</td>
+                <td class="p-2">${Number(row["订单总额"] || 0).toLocaleString()}</td>
+                <td class="p-2">${row["供应商名称"] || ""}</td>
+                <td class="p-2">${row["合同编号"] || ""}</td>
               </tr>
             `).join('')}
           </tbody>
-          <tfoot>
-            <tr><td colspan="6">金额总计</td><td colspan="2">${total.toFixed(2)}</td></tr>
+          <tfoot class="bg-gray-100 font-semibold">
+            <tr>
+              <td colspan="6" class="p-2 text-right">金额总计：</td>
+              <td colspan="2" class="p-2 text-blue-700">${total.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+            </tr>
           </tfoot>
         </table>
       `;
@@ -141,11 +160,19 @@
     }
 
     function resetForm() {
-      document.getElementById("year").value = "";
-      document.getElementById("supplier").value = "";
-      document.getElementById("projectNo").value = "";
-      document.getElementById("projectName").value = "";
+      ["year","supplier","projectNo","projectName"].forEach(id => document.getElementById(id).value = "");
       document.getElementById("result").innerHTML = "";
+      document.getElementById("summary").classList.add("hidden");
+    }
+
+    function exportTableToExcel(filename) {
+      const table = document.querySelector("#result table");
+      if (!table) { alert("请先执行查询！"); return; }
+      const html = table.outerHTML.replace(/ /g, '%20');
+      const link = document.createElement("a");
+      link.href = 'data:application/vnd.ms-excel,' + html;
+      link.download = filename;
+      link.click();
     }
   </script>
 </body>
