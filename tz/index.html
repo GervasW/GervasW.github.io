@@ -89,13 +89,13 @@
     </div>
     <div id="result"></div>
   </main>
-  <footer>© 2025 由王维设计</footer>
+  <footer>© 2025 由王维设计，只可查询包材和原料</footer>
 
   <script>
     let dataCache = [];
 
     // 页面加载时预先读取数据
-    fetch('tz/data.json')
+    fetch('data.json')
       .then(res => res.json())
       .then(data => {
         dataCache = data;
