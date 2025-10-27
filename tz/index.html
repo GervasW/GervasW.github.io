@@ -27,7 +27,7 @@
   <main>
     <!-- 信息提示 -->
     <p class="info-text">
-      本页面由采购部提供数据，数据范围为2022.1.1-2025.10.14，只可查询生产部的包材和原料。数据不可泄露。
+      本页面由采购部提供设计和数据，只可查询生产部的包材和原料，数据范围为2022.1.1-2025.10.14
     </p>
 
     <!-- 查询区域 -->
@@ -43,11 +43,12 @@
       <input type="text" id="projectNo" placeholder="项目号（可模糊）">
       <input type="text" id="projectName" placeholder="项目名称（可模糊）">
       <button onclick="searchData()">查询</button>
+      <button onclick="resetForm()">重置</button>
     </div>
 
     <div id="result"></div>
   </main>
-  <footer>© 2025 由采购部设计</footer>
+  <footer>© 2025 由王维设计</footer>
 
   <script>
     let dataCache = [];
@@ -106,37 +107,45 @@
         <table>
           <thead>
             <tr>
-              <th>合同编号</th>
-              <th>供应商名称</th>
               <th>项目号</th>
               <th>项目名称</th>
               <th>数量</th>
               <th>单位</th>
               <th>采购单价</th>
               <th>订单总额</th>
+              <th>供应商名称</th>
+              <th>合同编号</th>
             </tr>
           </thead>
           <tbody>
             ${filtered.map(row => `
               <tr>
-                <td>${row["合同编号"] || ""}</td>
-                <td>${row["供应商名称"] || ""}</td>
                 <td>${row["项目号"] || ""}</td>
                 <td>${row["项目名称"] || ""}</td>
                 <td>${row["数量"] || ""}</td>
                 <td>${row["单位"] || ""}</td>
                 <td>${row["采购单价"] || ""}</td>
                 <td>${row["订单总额"] || ""}</td>
+                <td>${row["供应商名称"] || ""}</td>
+                <td>${row["合同编号"] || ""}</td>
               </tr>
             `).join('')}
           </tbody>
           <tfoot>
-            <tr><td colspan="7">金额总计</td><td>${total.toFixed(2)}</td></tr>
+            <tr><td colspan="6">金额总计</td><td colspan="2">${total.toFixed(2)}</td></tr>
           </tfoot>
         </table>
       `;
 
       document.getElementById("result").innerHTML = tableHTML;
+    }
+
+    function resetForm() {
+      document.getElementById("year").value = "";
+      document.getElementById("supplier").value = "";
+      document.getElementById("projectNo").value = "";
+      document.getElementById("projectName").value = "";
+      document.getElementById("result").innerHTML = "";
     }
   </script>
 </body>
