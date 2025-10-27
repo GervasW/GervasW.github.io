@@ -13,10 +13,11 @@
         }
         
         body {
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             padding: 20px;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .container {
@@ -24,8 +25,20 @@
             margin: 0 auto;
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
         }
         
         header {
@@ -38,6 +51,7 @@
         h1 {
             color: #2c3e50;
             margin-bottom: 10px;
+            font-size: 32px;
         }
         
         .description {
@@ -50,6 +64,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
+            border-left: 4px solid #3498db;
         }
         
         .search-form {
@@ -77,7 +92,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
         
         input:focus {
@@ -94,27 +109,48 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: bold;
         }
         
         .btn:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
         }
         
         .btn:disabled {
             background-color: #95a5a6;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-reset {
+            background-color: #e74c3c;
+        }
+        
+        .btn-reset:hover {
+            background-color: #c0392b;
         }
         
         .results-section {
             overflow-x: auto;
             display: none;
+            margin-top: 20px;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
         
         th, td {
@@ -124,17 +160,23 @@
         }
         
         th {
-            background-color: #f8f9fa;
+            background-color: #2c3e50;
+            color: white;
             font-weight: bold;
-            color: #2c3e50;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
         }
         
         tr:hover {
-            background-color: #f5f7fa;
+            background-color: #e3f2fd;
         }
         
         .total-section {
-            background-color: #2c3e50;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
             color: white;
             padding: 15px;
             border-radius: 4px;
@@ -142,6 +184,7 @@
             font-size: 18px;
             font-weight: bold;
             display: none;
+            margin-top: 20px;
         }
         
         .no-results {
@@ -165,6 +208,25 @@
             color: #e74c3c;
             font-size: 16px;
             display: none;
+            background-color: #ffeaea;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 10px;
+            color: #27ae60;
+            font-size: 14px;
+            display: none;
+            background-color: #e8f8ef;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
         }
         
         @media (max-width: 768px) {
@@ -172,8 +234,12 @@
                 min-width: 100%;
             }
             
-            .btn {
+            .button-group {
                 width: 100%;
+            }
+            
+            .button-group .btn {
+                flex: 1;
             }
             
             table {
@@ -183,6 +249,13 @@
             th, td {
                 padding: 8px 10px;
             }
+        }
+        
+        .data-source {
+            margin-top: 20px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -197,7 +270,7 @@
             <form class="search-form" id="searchForm">
                 <div class="form-group">
                     <label for="supplier">供应商名称</label>
-                    <input type="text" id="supplier" placeholder="输入供应商名称">
+                    <input type="text" id="supplier" placeholder="输入供应商名称，支持模糊查询">
                 </div>
                 
                 <div class="form-group">
@@ -207,17 +280,30 @@
                 
                 <div class="form-group">
                     <label for="projectName">项目名称</label>
-                    <input type="text" id="projectName" placeholder="输入项目名称">
+                    <input type="text" id="projectName" placeholder="输入项目名称，支持模糊查询">
                 </div>
                 
                 <div class="form-group">
-                    <button type="button" class="btn" id="searchBtn" disabled>查询</button>
+                    <div class="button-group">
+                        <button type="button" class="btn" id="searchBtn">查询</button>
+                        <button type="button" class="btn btn-reset" id="resetBtn">重置</button>
+                    </div>
                 </div>
             </form>
         </section>
         
         <div class="loading" id="loadingMessage">正在加载数据...</div>
-        <div class="error-message" id="errorMessage">数据加载失败，请刷新页面重试</div>
+        <div class="error-message" id="errorMessage">
+            <h3>数据加载失败</h3>
+            <p>无法从 tz/data.json 加载数据。系统将使用模拟数据进行演示。</p>
+            <p>请检查：</p>
+            <ul style="text-align: left; margin: 10px 0; padding-left: 20px;">
+                <li>数据文件路径是否正确</li>
+                <li>数据文件是否为有效的JSON格式</li>
+                <li>服务器是否允许跨域请求（如果使用本地文件）</li>
+            </ul>
+        </div>
+        <div class="success-message" id="successMessage">数据加载成功！</div>
         
         <section class="results-section" id="resultsSection">
             <table id="resultsTable">
@@ -239,21 +325,39 @@
             </table>
             
             <div id="noResults" class="no-results">
-                未找到匹配的记录
+                未找到匹配的记录，请尝试其他搜索条件
             </div>
         </section>
         
         <section class="total-section" id="totalSection">
             金额总计：<span id="totalAmount">0</span> 元
         </section>
+        
+        <div class="data-source" id="dataSource">
+            数据来源: tz/data.json
+        </div>
     </div>
 
     <script>
+        // 模拟数据 - 当外部数据加载失败时使用
+        const mockData = [
+            {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003852","项目名称":"雪菊瓶身","数量":"7000","单位":"个","采购单价":"1.21","订单总额":"8470"},
+            {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003853","项目名称":"雪菊瓶盖","数量":"7000","单位":"个","采购单价":"0.33","订单总额":"2310"},
+            {"合同编号":"SC2022-1-4-03","供应商名称":"东莞铭丰包装股份有限公司","项目号":"81009751","项目名称":"12罐小罐茶亚克力盒","数量":"5000","单位":"套","采购单价":"30.67","订单总额":"153350"},
+            {"合同编号":"SC2022-1-4-05","供应商名称":"温州市瑞欣印务包装有限公司","项目号":"81010491","项目名称":"宽47cm热收缩膜","数量":"300","单位":"公斤","采购单价":"21","订单总额":"6300"},
+            {"合同编号":"SC2022-1-4-02","供应商名称":"揭阳市恒顺泰金属制品有限公司","项目号":"81003989","项目名称":"勺子","数量":"10000","单位":"支","采购单价":"2.62","订单总额":"26200"},
+            {"合同编号":"SC2022-1-4-06","供应商名称":"上海华明包装有限公司","项目号":"81010492","项目名称":"礼品盒","数量":"2000","单位":"个","采购单价":"15.50","订单总额":"31000"},
+            {"合同编号":"SC2022-1-4-07","供应商名称":"深圳光华印刷有限公司","项目号":"81010493","项目名称":"产品说明书","数量":"15000","单位":"份","采购单价":"2.80","订单总额":"42000"},
+            {"合同编号":"SC2022-1-4-08","供应商名称":"广州精美标签有限公司","项目号":"81010494","项目名称":"产品标签","数量":"25000","单位":"张","采购单价":"0.45","订单总额":"11250"}
+        ];
+        
         // 全局变量
         let materialData = [];
+        let dataSource = "模拟数据";
         
         // DOM元素
         const searchBtn = document.getElementById('searchBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const supplierInput = document.getElementById('supplier');
         const projectCodeInput = document.getElementById('projectCode');
         const projectNameInput = document.getElementById('projectName');
@@ -264,19 +368,31 @@
         const totalAmount = document.getElementById('totalAmount');
         const loadingMessage = document.getElementById('loadingMessage');
         const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const dataSourceElement = document.getElementById('dataSource');
 
         // 加载数据
         async function loadData() {
             try {
+                // 尝试从 tz/data.json 加载数据
                 const response = await fetch('tz/data.json');
                 
                 if (!response.ok) {
-                    throw new Error('数据加载失败');
+                    throw new Error(`HTTP错误! 状态: ${response.status}`);
                 }
                 
                 materialData = await response.json();
+                
+                // 验证数据格式
+                if (!Array.isArray(materialData) || materialData.length === 0) {
+                    throw new Error('数据格式不正确或为空');
+                }
+                
+                // 数据加载成功
                 loadingMessage.style.display = 'none';
-                searchBtn.disabled = false;
+                successMessage.style.display = 'block';
+                dataSource = "tz/data.json";
+                dataSourceElement.textContent = `数据来源: ${dataSource}`;
                 
                 // 初始时不显示任何数据
                 resultsSection.style.display = 'none';
@@ -285,8 +401,18 @@
                 
             } catch (error) {
                 console.error('数据加载错误:', error);
+                
+                // 使用模拟数据
+                materialData = mockData;
                 loadingMessage.style.display = 'none';
                 errorMessage.style.display = 'block';
+                dataSource = "模拟数据 (实际数据加载失败)";
+                dataSourceElement.textContent = `数据来源: ${dataSource}`;
+                
+                // 初始时不显示任何数据
+                resultsSection.style.display = 'none';
+                noResults.style.display = 'none';
+                totalSection.style.display = 'none';
             }
         }
 
@@ -312,7 +438,7 @@
                 
                 // 项目号精确匹配
                 const projectCodeMatch = !projectCodeValue || 
-                    item.项目号 === projectCodeValue;
+                    item.项目号.includes(projectCodeValue);
                 
                 // 项目名称模糊匹配
                 const projectNameMatch = !projectNameValue || 
@@ -349,18 +475,18 @@
                 const row = document.createElement('tr');
                 
                 // 将订单总额转换为数字并累加
-                const orderAmount = parseFloat(item.订单总额);
+                const orderAmount = parseFloat(item.订单总额) || 0;
                 total += orderAmount;
                 
                 row.innerHTML = `
-                    <td>${item.合同编号}</td>
-                    <td>${item.供应商名称}</td>
-                    <td>${item.项目号}</td>
-                    <td>${item.项目名称}</td>
-                    <td>${item.数量}</td>
-                    <td>${item.单位}</td>
-                    <td>${item.采购单价}</td>
-                    <td>${item.订单总额}</td>
+                    <td>${item.合同编号 || ''}</td>
+                    <td>${item.供应商名称 || ''}</td>
+                    <td>${item.项目号 || ''}</td>
+                    <td>${item.项目名称 || ''}</td>
+                    <td>${item.数量 || ''}</td>
+                    <td>${item.单位 || ''}</td>
+                    <td>${item.采购单价 || ''}</td>
+                    <td>${item.订单总额 || ''}</td>
                 `;
                 
                 resultsBody.appendChild(row);
@@ -370,8 +496,19 @@
             totalAmount.textContent = total.toLocaleString();
         }
 
+        // 重置表单
+        function resetForm() {
+            supplierInput.value = '';
+            projectCodeInput.value = '';
+            projectNameInput.value = '';
+            resultsSection.style.display = 'none';
+            noResults.style.display = 'none';
+            totalSection.style.display = 'none';
+        }
+
         // 事件监听
         searchBtn.addEventListener('click', performSearch);
+        resetBtn.addEventListener('click', resetForm);
         
         // 输入框回车键触发查询
         [supplierInput, projectCodeInput, projectNameInput].forEach(input => {
