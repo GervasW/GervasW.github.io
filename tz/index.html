@@ -119,6 +119,13 @@
             box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
         }
         
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
         .btn-reset {
             background: linear-gradient(135deg, #95a5a6, #7f8c8d);
             margin-left: 10px;
@@ -199,6 +206,26 @@
             border-left: 4px solid #3498db;
         }
         
+        .error-message {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fde8e8;
+            border-radius: 8px;
+            color: #e74c3c;
+            font-size: 14px;
+            border-left: 4px solid #e74c3c;
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #3498db;
+            font-size: 16px;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .form-group {
                 min-width: 100%;
@@ -233,8 +260,16 @@
             <p class="description">根据供应商名称、项目号或项目名称查询物料信息</p>
         </header>
         
-        <div class="data-info">
-            当前使用演示数据。在实际使用中，数据将从 tz/data.json 加载。
+        <div class="data-info" id="dataInfo">
+            正在从 tz/data.json 加载数据...
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            无法从 tz/data.json 加载数据。系统将使用模拟数据进行演示。
+        </div>
+        
+        <div class="loading" id="loadingMessage">
+            正在加载数据，请稍候...
         </div>
         
         <section class="search-section">
@@ -255,7 +290,7 @@
                 </div>
                 
                 <div class="form-group btn-container">
-                    <button type="button" class="btn" id="searchBtn">查询</button>
+                    <button type="button" class="btn" id="searchBtn" disabled>查询</button>
                     <button type="button" class="btn btn-reset" id="resetBtn">重置</button>
                 </div>
             </form>
@@ -291,8 +326,8 @@
     </div>
 
     <script>
-        // 模拟数据 - 使用用户提供的示例数据
-        const materialData = [
+        // 模拟数据 - 作为备用数据
+        const backupData = [
             {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003852","项目名称":"雪菊瓶身","数量":"7000","单位":"个","采购单价":"1.21","订单总额":"8470"},
             {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003853","项目名称":"雪菊瓶盖","数量":"7000","单位":"个","采购单价":"0.33","订单总额":"2310"},
             {"合同编号":"SC2022-1-4-03","供应商名称":"东莞铭丰包装股份有限公司","项目号":"81009751","项目名称":"12罐小罐茶亚克力盒","数量":"5000","单位":"套","采购单价":"30.67","订单总额":"153350"},
@@ -303,6 +338,9 @@
             {"合同编号":"SC2022-1-4-08","供应商名称":"广州永盛纸品有限公司","项目号":"81012056","项目名称":"包装纸箱","数量":"8000","单位":"个","采购单价":"2.75","订单总额":"22000"}
         ];
 
+        // 全局变量
+        let materialData = [];
+        
         // DOM元素
         const searchBtn = document.getElementById('searchBtn');
         const resetBtn = document.getElementById('resetBtn');
@@ -314,6 +352,41 @@
         const noResults = document.getElementById('noResults');
         const totalSection = document.getElementById('totalSection');
         const totalAmount = document.getElementById('totalAmount');
+        const dataInfo = document.getElementById('dataInfo');
+        const errorMessage = document.getElementById('errorMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+
+        // 加载数据函数
+        async function loadData() {
+            try {
+                loadingMessage.style.display = 'block';
+                dataInfo.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                const response = await fetch('tz/data.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                materialData = await response.json();
+                
+                // 更新数据信息
+                dataInfo.textContent = `成功从 tz/data.json 加载数据，共 ${materialData.length} 条记录`;
+                loadingMessage.style.display = 'none';
+                searchBtn.disabled = false;
+                
+            } catch (error) {
+                console.error('数据加载错误:', error);
+                
+                // 使用备用数据
+                materialData = backupData;
+                dataInfo.style.display = 'none';
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+                searchBtn.disabled = false;
+            }
+        }
 
         // 查询功能
         function performSearch() {
@@ -418,11 +491,12 @@
             });
         });
         
-        // 页面加载时不显示任何数据
+        // 页面加载时加载数据
         window.addEventListener('load', function() {
             resultsSection.style.display = 'none';
             noResults.style.display = 'none';
             totalSection.style.display = 'none';
+            loadData();
         });
     </script>
 </body>
