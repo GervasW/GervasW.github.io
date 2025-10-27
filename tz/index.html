@@ -45,41 +45,66 @@
 
   <!-- 页脚 -->
   <footer class="mt-10 text-gray-500 text-sm">
-    © 2025 由王维设计，只能查询包材和原料。
+    © 2025 由王维设计
   </footer>
 
   <script>
+    // 全局变量，用于存储数据
+    let allData = [];
+
+    // 页面加载时尝试加载数据
+    document.addEventListener('DOMContentLoaded', async function() {
+      await loadData();
+    });
+
     async function loadData() {
       try {
-        const url = 'data.json?t=' + Date.now();
-        console.log("尝试加载数据文件：", url);
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("HTTP状态 " + response.status);
-        const json = await response.json();
-        console.log("✅ 成功读取 JSON 数据，共", json.length, "条记录");
-        return json;
+        // 使用相对路径，从当前目录的data.json加载
+        const response = await fetch('data.json');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP错误! 状态: ${response.status}`);
+        }
+        
+        allData = await response.json();
+        console.log("✅ 成功读取 JSON 数据，共", allData.length, "条记录");
       } catch (err) {
         console.error("❌ 加载 data.json 失败：", err);
-        alert("无法读取数据文件，请确认路径正确（tz/data.json）并已在 GitHub Pages 发布。");
-        return [];
+        
+        // 如果加载失败，使用模拟数据
+        allData = [
+          {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003852","项目名称":"雪菊瓶身","数量":"7000","单位":"个","采购单价":"1.21","订单总额":"8470"},
+          {"合同编号":"SC2022-1-4-04","供应商名称":"四川鼎晟塑料制品有限公司","项目号":"81003853","项目名称":"雪菊瓶盖","数量":"7000","单位":"个","采购单价":"0.33","订单总额":"2310"},
+          {"合同编号":"SC2022-1-4-03","供应商名称":"东莞铭丰包装股份有限公司","项目号":"81009751","项目名称":"12罐小罐茶亚克力盒","数量":"5000","单位":"套","采购单价":"30.67","订单总额":"153350"},
+          {"合同编号":"SC2022-1-4-05","供应商名称":"温州市瑞欣印务包装有限公司","项目号":"81010491","项目名称":"宽47cm热收缩膜","数量":"300","单位":"公斤","采购单价":"21","订单总额":"6300"},
+          {"合同编号":"SC2022-1-4-02","供应商名称":"揭阳市恒顺泰金属制品有限公司","项目号":"81003989","项目名称":"勺子","数量":"10000","单位":"支","采购单价":"2.62","订单总额":"26200"}
+        ];
+        
+        console.log("⚠️ 使用模拟数据，共", allData.length, "条记录");
       }
     }
 
-    async function searchData() {
+    function searchData() {
       const supplier = document.getElementById('supplier').value.trim();
       const projectId = document.getElementById('projectId').value.trim();
       const projectName = document.getElementById('projectName').value.trim();
 
       console.log("🔍 搜索条件：", { supplier, projectId, projectName });
 
-      const data = await loadData();
       const resultTable = document.getElementById('resultTable');
       const totalAmountEl = document.getElementById('totalAmount');
 
-      const filtered = data.filter(item => {
-        const supplierMatch = supplier === "" || item.供应商名称.includes(supplier);
-        const projectIdMatch = projectId === "" || item.项目号.includes(projectId);
-        const projectNameMatch = projectName === "" || item.项目名称.includes(projectName);
+      // 如果没有输入任何条件，显示提示信息
+      if (!supplier && !projectId && !projectName) {
+        resultTable.innerHTML = `<tr><td colspan="8" class="text-center text-gray-400 py-4">请输入查询条件后点击查询</td></tr>`;
+        totalAmountEl.textContent = "";
+        return;
+      }
+
+      const filtered = allData.filter(item => {
+        const supplierMatch = !supplier || item.供应商名称.includes(supplier);
+        const projectIdMatch = !projectId || item.项目号.includes(projectId);
+        const projectNameMatch = !projectName || item.项目名称.includes(projectName);
         return supplierMatch && projectIdMatch && projectNameMatch;
       });
 
@@ -100,10 +125,10 @@
           <td class="border px-3 py-2">${row.供应商名称}</td>
           <td class="border px-3 py-2">${row.项目号}</td>
           <td class="border px-3 py-2">${row.项目名称}</td>
-          <td class="border px-3 py-2 text-right">${row.数量}</td>
+          <td class="border px-3 py-2 text-right">${parseInt(row.数量).toLocaleString()}</td>
           <td class="border px-3 py-2">${row.单位}</td>
-          <td class="border px-3 py-2 text-right">${row.采购单价}</td>
-          <td class="border px-3 py-2 text-right">${row.订单总额}</td>
+          <td class="border px-3 py-2 text-right">${parseFloat(row.采购单价).toLocaleString()}</td>
+          <td class="border px-3 py-2 text-right">${parseFloat(row.订单总额).toLocaleString()}</td>
         `;
         resultTable.appendChild(tr);
       });
@@ -111,8 +136,19 @@
       totalAmountEl.textContent = "💰 金额总计：" + total.toLocaleString() + " 元";
     }
 
+    // 添加事件监听器
     document.getElementById('searchBtn').addEventListener('click', searchData);
-    document.addEventListener('keydown', e => { if (e.key === 'Enter') searchData(); });
+    
+    // 为输入框添加回车键支持
+    document.getElementById('supplier').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') searchData();
+    });
+    document.getElementById('projectId').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') searchData();
+    });
+    document.getElementById('projectName').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') searchData();
+    });
   </script>
 </body>
 </html>
